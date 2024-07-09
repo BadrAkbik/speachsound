@@ -6,11 +6,3 @@
 .fi-sidebar-nav-groups {
     @apply gap-y-4;
 }
-
-.fi-account-widget{
-    @apply hidden;
-}
-
-.fi-filament-info-widget {
-    @apply hidden;
-}
