@@ -1,0 +1,16 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+
+.fi-sidebar-nav-groups {
+    @apply gap-y-4;
+}
+
+.fi-account-widget{
+    @apply hidden;
+}
+
+.fi-filament-info-widget {
+    @apply hidden;
+}

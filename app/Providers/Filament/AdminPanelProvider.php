@@ -94,7 +94,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-list-bullet')
                     ->collapsed(),
             ])
-            ->sidebarFullyCollapsibleOnDesktop();
-            /* ->viteTheme('resources/css/filament/admin/theme.css'); */
+            ->sidebarFullyCollapsibleOnDesktop()
+            ->viteTheme('resources/css/filament/admin/theme.css');
     }
 }
