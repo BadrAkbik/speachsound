@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TraineeResource\Pages;
-use App\Filament\Resources\TraineeResource\RelationManagers;
 use App\Models\Trainee;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TraineeResource extends Resource
 {
@@ -36,32 +35,41 @@ class TraineeResource extends Resource
     {
         return __('dashboard.trainees');
     }
-    
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return __('dashboard.The number of trainees');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gender')
+                TextInput::make('gender')
                     ->required(),
-                Forms\Components\DatePicker::make('date_of_birth')
+                DatePicker::make('date_of_birth')
                     ->required(),
-                Forms\Components\TextInput::make('training_result')
+                TextInput::make('training_result')
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('general_rating')
+                TextInput::make('general_rating')
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\DatePicker::make('start_date')
+                DatePicker::make('start_date')
                     ->required(),
-                Forms\Components\DatePicker::make('end_date'),
-                Forms\Components\TextInput::make('trainer_type')
+                DatePicker::make('end_date'),
+                TextInput::make('trainer_type')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('trainer_id')
+                TextInput::make('trainer_id')
                     ->required()
                     ->numeric(),
             ]);
@@ -71,37 +79,57 @@ class TraineeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
+                    ->label(__('dashboard.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gender'),
-                Tables\Columns\TextColumn::make('date_of_birth')
-                    ->date()
+                TextColumn::make('gender')
+                    ->label(__('dashboard.gender'))
+                    ->badge()
+                    ->color(function ($record) {
+                        return $record->gender == 'male' ? 'info' : 'danger';
+                    }),
+                TextColumn::make('date_of_birth')
+                    ->label(__('dashboard.date_of_birth'))
+                    ->date('Y/m/d')
+                    ->badge()
+                    ->color('gray')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('training_result')
+                TextColumn::make('training_result')
+                    ->label(__('dashboard.training_result'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('general_rating')
+                TextColumn::make('general_rating')
+                    ->label(__('dashboard.general_rating'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('start_date')
-                    ->date()
+                TextColumn::make('start_date')
+                    ->label(__('dashboard.start_date'))
+                    ->date('Y/m/d')
+                    ->badge()
+                    ->color('gray')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
-                    ->date()
+                TextColumn::make('end_date')
+                    ->label(__('dashboard.end_date'))
+                    ->date('Y/m/d')
+                    ->badge()
+                    ->color('gray')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('trainer_type')
+                TextColumn::make('trainer_type')
+                    ->label(__('dashboard.trainer_type'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('trainer_id')
-                    ->numeric()
+                TextColumn::make('trainer_id')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('dashboard.updated_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
+                TextColumn::make('deleted_at')
+                    ->label(__('dashboard.deleted_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

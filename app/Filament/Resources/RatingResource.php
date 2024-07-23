@@ -5,10 +5,16 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RatingResource\Pages;
 use App\Filament\Resources\RatingResource\RelationManagers;
 use App\Models\Rating;
+use App\Models\Test;
+use App\Models\Trainee;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -41,13 +47,24 @@ class RatingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('trainee_id')
+                Select::make('trainee_id')
+                    ->label(__('dashboard.trainee'))
+                    ->relationship('trainee')
+                    ->exists('trainees', 'id')
+                    ->live()
+                    ->preload()
+                    ->getOptionLabelFromRecordUsing(fn (Trainee $record) => "{$record->name}"),
+                Select::make('test_id')
+                    ->label(__('dashboard.test'))
+                    ->relationship('test')
+                    ->exists('tests', 'id')
+                    ->live()
+                    ->preload()
+                    ->getOptionLabelFromRecordUsing(fn (Test $record) => "{$record->name_en} - {$record->name_ar}"),
+                TextInput::make('degree')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('degree')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Textarea::make('notes')
+                Textarea::make('notes')
                     ->columnSpanFull(),
             ]);
     }
@@ -56,18 +73,23 @@ class RatingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('trainee_id')
+                TextColumn::make('trainee.name')
+                    ->label(__('dashboard.trainee_name')),
+                TextColumn::make('test.name_en')
+                    ->label(__('dashboard.test_name_en')),
+                TextColumn::make('test.name_ar')
+                    ->label(__('dashboard.test_name_ar')),
+                TextColumn::make('degree')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('degree')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('dashboard.updated_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -76,6 +98,7 @@ class RatingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

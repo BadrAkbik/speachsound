@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -76,7 +77,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-user-circle')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.subscribtions_management'))
+                    ->label(fn (): string => __('dashboard.subscriptions_management'))
                     ->icon('heroicon-o-inbox-stack')
                     ->collapsed(),
                 NavigationGroup::make()

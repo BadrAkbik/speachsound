@@ -4,11 +4,17 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TestResource\Pages;
 use App\Filament\Resources\TestResource\RelationManagers;
+use App\Models\Level;
 use App\Models\Test;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -41,21 +47,27 @@ class TestResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name_ar')
+                TextInput::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('name_en')
+                TextInput::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('level_id')
-                    ->numeric()
+                Select::make('level_id')
+                    ->label(__('dashboard.level'))
+                    ->relationship('level')
+                    ->exists('level', 'id')
+                    ->live()
+                    ->preload()
+                    ->getOptionLabelFromRecordUsing(fn (Level $record) => "{$record->name_en} - {$record->name_ar}"),
+                FileUpload::make('audio')
                     ->default(null),
-                Forms\Components\TextInput::make('audio')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\Textarea::make('images')
+                FileUpload::make('images')
+                    ->multiple()
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('words')
+                Textarea::make('words')
                     ->columnSpanFull(),
             ]);
     }
@@ -64,21 +76,24 @@ class TestResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name_ar')
+                TextColumn::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name_en')
+                TextColumn::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('level_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('audio')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('level.name_ar')
+                    ->label(__('dashboard.level_name_ar')),
+                TextColumn::make('level.name_en')
+                    ->label(__('dashboard.level_name_en')),
+                    TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('dashboard.updated_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -87,6 +102,7 @@ class TestResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

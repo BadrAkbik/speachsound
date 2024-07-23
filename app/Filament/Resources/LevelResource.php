@@ -4,11 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LevelResource\Pages;
 use App\Filament\Resources\LevelResource\RelationManagers;
+use App\Models\AgeGroup;
 use App\Models\Level;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -42,25 +46,45 @@ class LevelResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name_ar')
+                TextInput::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('name_en')
+                TextInput::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('age_group_id')
+                Select::make('age_group_id')
+                    ->label(__('dashboard.age_group'))
+                    ->relationship('ageGroup')
+                    ->exists('age_groups', 'id')
+                    ->live()
+                    ->preload()
+                    ->getOptionLabelFromRecordUsing(fn (AgeGroup $record) => "{$record->name_en} - {$record->name_ar}"),
+                Select::make('gender')
+                    ->label(__('dashboard.gender'))
+                    ->enum('male', 'female')
+                    ->options([
+                        'male' => __('dashboard.males'),
+                        'female' => __('dashboard.females'),
+                        null => __('dashboard.both'),
+                    ]),
+                TextInput::make('success_rate')
+                    ->label(__('dashboard.success_rate'))
                     ->numeric()
                     ->default(null),
-                Forms\Components\TextInput::make('gender'),
-                Forms\Components\TextInput::make('success_rate')
+                TextInput::make('attemtps_count')
+                    ->label(__('dashboard.attemtps_count'))
                     ->numeric()
                     ->default(null),
-                Forms\Components\TextInput::make('attemtps_count')
-                    ->numeric()
-                    ->default(null),
-                Forms\Components\TextInput::make('status')
+                Select::make('status')
+                    ->label(__('dashboard.status'))
                     ->required()
-                    ->maxLength(255),
+                    ->options([
+                        'active' => 'Active',
+                        'inactive' => 'Inactive',
+                    ])
+                    ->default('active'),
             ]);
     }
 
@@ -68,28 +92,43 @@ class LevelResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name_ar')
+                TextColumn::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name_en')
+                TextColumn::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('age_group_id')
+                TextColumn::make('ageGroup.name_ar')
+                    ->label(__('dashboard.age_group_name_ar'))
+                    ->sortable(),
+                TextColumn::make('ageGroup.name_en')
+                    ->label(__('dashboard.age_group_name_en'))
+                    ->sortable(),
+                TextColumn::make('gender')
+                    ->label(__('dashboard.gender'))
+                    ->badge()
+                    ->color(function ($record) {
+                        return $record->gender == 'male' ? 'info' : 'danger';
+                    }),
+                TextColumn::make('success_rate')
+                    ->label(__('dashboard.success_rate'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('gender'),
-                Tables\Columns\TextColumn::make('success_rate')
+                TextColumn::make('attemtps_count')
+                    ->label(__('dashboard.attemtps_count'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('attemtps_count')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
+                    ->label(__('dashboard.status'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('dashboard.updated_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('deleted_at')
+                    ->label(__('dashboard.deleted_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -98,6 +137,7 @@ class LevelResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

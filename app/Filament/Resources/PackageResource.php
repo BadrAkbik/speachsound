@@ -6,9 +6,11 @@ use App\Filament\Resources\PackageResource\Pages;
 use App\Filament\Resources\PackageResource\RelationManagers;
 use App\Models\Package;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,7 +21,7 @@ class PackageResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('dashboard.subscribtions_management');
+        return __('dashboard.subscriptions_management');
     }
 
     public static function getNavigationLabel(): string
@@ -41,17 +43,21 @@ class PackageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name_ar')
+                TextInput::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('name_en')
+                TextInput::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('price')
+                TextInput::make('price')
+                    ->label(__('dashboard.price'))
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
-                Forms\Components\TextInput::make('patiant_count')
+                    ->prefix('SAR'),
+                TextInput::make('patiant_count')
+                    ->label(__('dashboard.patiant_count'))
                     ->required()
                     ->numeric(),
             ]);
@@ -61,26 +67,33 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name_ar')
+                TextColumn::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name_en')
+                TextColumn::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('price')
+                TextColumn::make('price')
+                    ->label(__('dashboard.price'))
                     ->money()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('patiant_count')
+                TextColumn::make('patiant_count')
+                    ->label(__('dashboard.patiant_count'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('dashboard.updated_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
+                TextColumn::make('deleted_at')
+                    ->label(__('dashboard.deleted_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -89,6 +102,7 @@ class PackageResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

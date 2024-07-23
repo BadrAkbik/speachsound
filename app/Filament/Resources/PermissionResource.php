@@ -3,12 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PermissionResource\Pages;
-use App\Filament\Resources\PermissionResource\RelationManagers;
 use App\Models\Permission;
-use Filament\Forms;
+use App\Models\Role;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -42,12 +43,17 @@ class PermissionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('name_ar')
-                    ->required()
-                    ->maxLength(255),
+                Select::make('roles')
+                    ->label(__('dashboard.roles'))
+                    ->relationship('roles', 'id')
+                    ->multiple()
+                    ->live()
+                    ->notIn(Role::firstWhere('name', 'owner')->id)
+                    ->preload()
+                    ->exists('roles', 'id')
+                    ->options(Role::whereNot('name', 'owner')->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
             ]);
     }
 
@@ -55,16 +61,21 @@ class PermissionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('id')
+                    ->label(__('dashboard.id'))
+                    ->sortable(),
+                TextColumn::make('name')
+                    ->label(__('dashboard.permission'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name_ar')
+                TextColumn::make('name_ar')
+                    ->label(__('dashboard.permission_ar'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('roles.name')
+                    ->label(__('dashboard.role'))
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -72,12 +83,7 @@ class PermissionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                EditAction::make(),
             ]);
     }
 
@@ -92,7 +98,6 @@ class PermissionResource extends Resource
     {
         return [
             'index' => Pages\ListPermissions::route('/'),
-            'create' => Pages\CreatePermission::route('/create'),
             'edit' => Pages\EditPermission::route('/{record}/edit'),
         ];
     }

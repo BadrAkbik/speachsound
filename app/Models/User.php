@@ -53,12 +53,12 @@ class User extends Authenticatable implements IMustVerifyMobile
 
     public function packages()
     {
-        return $this->belongsToMany(Package::class, 'subscribtions')->withPivot('start_date', 'end_date', 'status', 'renew')->withTimestamps();
+        return $this->belongsToMany(Package::class, 'subscriptions')->withPivot('start_date', 'end_date', 'status', 'renew')->withTimestamps();
     }
 
-    public function subscribtions()
+    public function subscriptions()
     {
-        return $this->hasMany(Subscribtion::class, 'user_id');
+        return $this->hasMany(Subscription::class, 'user_id');
     }
 
     public function trainees()
@@ -69,5 +69,23 @@ class User extends Authenticatable implements IMustVerifyMobile
     public function specialist()
     {
         return $this->hasOne(Specialist::class, 'user_id');
+    }
+
+    /**
+     * Check if the user has a specific permission.
+     *
+     * @param string $permission
+     * @return bool
+     */
+    public function hasPermission($permission)
+    {
+        if ($this->role->name === 'owner') {
+            return true;
+        }
+        $permission = $this->role->permissions()->where('name', $permission)->first();
+        if ($permission)
+            return true;
+        else
+            return false;
     }
 }

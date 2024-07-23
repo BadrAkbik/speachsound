@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\AgeGroupResource\Pages;
+namespace App\Filament\Resources\SubscriptionResource\Pages;
 
-use App\Filament\Resources\AgeGroupResource;
+use App\Filament\Resources\SubscriptionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditAgeGroup extends EditRecord
+class EditSubscription extends EditRecord
 {
-    protected static string $resource = AgeGroupResource::class;
+    protected static string $resource = SubscriptionResource::class;
 
     protected function getHeaderActions(): array
     {

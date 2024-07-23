@@ -10,10 +10,4 @@ class ListPermissions extends ListRecords
 {
     protected static string $resource = PermissionResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 }

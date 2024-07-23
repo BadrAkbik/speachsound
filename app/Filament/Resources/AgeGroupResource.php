@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AgeGroupResource\Pages;
-use App\Filament\Resources\AgeGroupResource\RelationManagers;
 use App\Models\AgeGroup;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class AgeGroupResource extends Resource
 {
@@ -41,16 +40,20 @@ class AgeGroupResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name_ar')
+                TextInput::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('name_en')
+                TextInput::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('from_age')
+                TextInput::make('from_age')
+                    ->label(__('dashboard.from_age'))
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('to_age')
+                TextInput::make('to_age')
+                    ->label(__('dashboard.to_age'))
                     ->required()
                     ->numeric(),
             ]);
@@ -60,22 +63,28 @@ class AgeGroupResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name_ar')
+                TextColumn::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name_en')
+                TextColumn::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('from_age')
+                TextColumn::make('from_age')
+                    ->label(__('dashboard.from_age'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('to_age')
+                TextColumn::make('to_age')
+                    ->label(__('dashboard.to_age'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('dashboard.updated_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -84,6 +93,7 @@ class AgeGroupResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

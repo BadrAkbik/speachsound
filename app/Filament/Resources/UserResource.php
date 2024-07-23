@@ -3,11 +3,18 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Models\Role;
 use App\Models\User;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 
@@ -15,9 +22,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    /* protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; */
 
-    protected static ?string $navigationBadgeTooltip = 'The number of users';
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return __('dashboard.The number of users');
+    }
 
     public static function getNavigationGroup(): ?string
     {
@@ -44,34 +53,78 @@ class UserResource extends Resource
         return static::getModel()::count();
     }
 
+    public static function canEdit($record): bool
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        return $record->role->name !== 'owner' && $user->hasPermission('user.update');
+    }
+
+    public static function canDelete($record): bool
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        return $record->role->name !== 'owner' && $user->hasPermission('user.delete');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
+                    ->label(__('dashboard.name'))
+                    ->minLength(2)->maxLength(15)->string()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
+                TextInput::make('email')
+                    ->label(__('dashboard.email'))
                     ->email()
+                    ->unique(User::class, 'email', ignoreRecord: true)
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('phone_number')
+                    ->label(__('dashboard.phone_number'))
+                    ->tel()
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('phone_number')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\TextInput::make('role_id')
-                    ->numeric()
-                    ->default(null),
-                Forms\Components\TextInput::make('type')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\DateTimePicker::make('phone_verified_at'),
-                Forms\Components\TextInput::make('password')
+                Select::make('role_id')
+                    ->label(__('dashboard.role'))
+                    ->relationship('role', 'id')
+                    ->exists('roles', 'id')
+                    ->notIn(Role::firstWhere('name', 'owner')->id)
+                    ->live()
+                    ->preload()
+                    ->options(
+                        function () {
+                            return Role::whereNotIn('name', ['owner'])->pluck('name', 'id');
+                        }
+                    ),
+                TextInput::make('password')
+                    ->label(__('dashboard.password'))
                     ->password()
+                    ->hiddenOn('edit')
                     ->required()
                     ->maxLength(255),
+                Hidden::make('email_verified_at')->default(now()),
+                ToggleButtons::make('type')
+                    ->label(__('dashboard.type'))
+                    ->inline()
+                    ->options([
+                        'personal' => __('dashboard.personal'),
+                        'parent' => __('dashboard.parent'),
+                        'specialist' => __('dashboard.specialist')
+                    ])
+                    ->colors([
+                        'personal' => 'info',
+                        'parent' => 'warning',
+                        'specialist' => 'success',
+                    ])
+                    ->required(),
+                FileUpload::make('image')
+                    ->disk('public')
+                    ->previewable(false)
+                    ->directory('images')
+                    ->image(),
             ]);
     }
 
@@ -79,33 +132,40 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('phone_number')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('role_id')
-                    ->numeric()
+                TextColumn::make('id')
+                    ->label(__('dashboard.id'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
+                ImageColumn::make('image')
+                    ->label(__('dashboard.image'))
+                    ->circular(),
+                TextColumn::make('type')
+                    ->label(__('dashboard.type'))
+                    ->badge()
+                    ->color(function ($record) {
+                        return $record->type == 'personal' ? 'info' : ($record->type == 'parent' ? 'danger' : ($record->type == 'specialist' ?? 'success'));
+                    })
+                    ->formatStateUsing(fn ($record) =>
+                    $record->type == 'personal' ? __('dashboard.personal') : ($record->type == 'parent' ? __('dashboard.parent') : ($record->type == 'specialist' ?? __('dashboard.specialist')))),
+                TextColumn::make('name')
+                    ->label(__('dashboard.name'))
+                    ->searchable(),
+                TextColumn::make('email')
+                    ->label(__('dashboard.email'))
+                    ->searchable(),
+                TextColumn::make('phone_num')
+                    ->label(__('dashboard.phone_number'))
+                    ->searchable(),
+                TextColumn::make('role.name')
+                    ->label(__('dashboard.role'))
+                    ->badge()
+                    ->color(function ($record) {
+                        return $record->role->name == 'owner' ? 'danger' : 'warning';
+                    })
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('phone_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
+                TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -114,6 +174,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -20,4 +20,9 @@ class Level extends Model
     {
         return $this->hasMany(Training::class, 'level_id');
     }
+
+    public function ageGroup()
+    {
+        return $this->belongsTo(AgeGroup::class, 'age_group_id');
+    }
 }

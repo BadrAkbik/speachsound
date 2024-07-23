@@ -14,6 +14,6 @@ class Package extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'subscribtions')->withPivot('start_date', 'end_date', 'status', 'renew')->withTimestamps();
+        return $this->belongsToMany(User::class, 'subscriptions')->withPivot('start_date', 'end_date', 'status', 'renew')->withTimestamps();
     }
 }

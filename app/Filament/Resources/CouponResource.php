@@ -6,9 +6,15 @@ use App\Filament\Resources\CouponResource\Pages;
 use App\Filament\Resources\CouponResource\RelationManagers;
 use App\Models\Coupon;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -41,33 +47,47 @@ class CouponResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('code')
+                TextInput::make('code')
+                    ->label(__('dashboard.code'))
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('start')
+                DatePicker::make('start')
+                    ->label(__('dashboard.start_date'))
                     ->required(),
-                Forms\Components\DatePicker::make('end')
+                DatePicker::make('end')
+                    ->label(__('dashboard.end_date'))
                     ->required(),
-                Forms\Components\TextInput::make('name_ar')
+                TextInput::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('name_en')
+                TextInput::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\Toggle::make('active')
-                    ->required(),
-                Forms\Components\TextInput::make('uses_limit')
+                TextInput::make('uses_limit')
+                    ->label(__('dashboard.uses_limit'))
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('uses_count')
+                TextInput::make('uses_count')
+                    ->label(__('dashboard.uses_count'))
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('type')
+                Select::make('type')
+                    ->label(__('dashboard.type'))
+                    ->options([
+                        'percentage' => __('dashboard.percentage'),
+                        'amount' => __('dashboard.amount')
+                    ])
                     ->required(),
-                Forms\Components\TextInput::make('value')
+                TextInput::make('value')
+                    ->label(__('dashboard.value'))
                     ->required()
                     ->numeric(),
+                Toggle::make('active')
+                    ->label(__('dashboard.active'))
+                    ->required(),
             ]);
     }
 
@@ -75,36 +95,51 @@ class CouponResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('code')
+                TextColumn::make('code')
+                    ->label(__('dashboard.code'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('start')
-                    ->date()
+                TextColumn::make('start')
+                    ->label(__('dashboard.start_date'))
+                    ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end')
-                    ->date()
+                TextColumn::make('end')
+                    ->label(__('dashboard.end_date'))
+                    ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name_ar')
+                TextColumn::make('name_ar')
+                    ->label(__('dashboard.name_ar'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name_en')
+                TextColumn::make('name_en')
+                    ->label(__('dashboard.name_en'))
                     ->searchable(),
-                Tables\Columns\IconColumn::make('active')
+                IconColumn::make('active')
+                    ->label(__('dashboard.active'))
                     ->boolean(),
-                Tables\Columns\TextColumn::make('uses_limit')
+                TextColumn::make('uses_limit')
+                    ->label(__('dashboard.uses_limit'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('uses_count')
+                TextColumn::make('uses_count')
+                    ->label(__('dashboard.uses_count'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('value')
+                TextColumn::make('type')
+                    ->label(__('dashboard.type'))
+                    ->formatStateUsing(function ($record) {
+                        return $record->type == 'amount' ? __('dashboard.amount') : __('dashboard.percentage');
+                    }),
+                TextColumn::make('value')
+                    ->label(__('dashboard.value'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('dashboard.updated_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make('created_at')
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -113,6 +148,7 @@ class CouponResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

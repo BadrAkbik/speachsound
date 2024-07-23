@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subscribtions', function (Blueprint $table) {
-            $table->primary(['package_id', 'user_id']);
+        Schema::create('subscriptions', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('package_id')->constrained('packages')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->date('start_date');
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('renew')->default(false);
             $table->timestamps();
             $table->softDeletes();
+            $table->unique(['package_id', 'user_id']);
         });
     }
 

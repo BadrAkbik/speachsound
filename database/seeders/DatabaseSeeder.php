@@ -25,15 +25,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $role_id = Role::firstOrCreate(['name' => 'owner'])->id;
-
+        Role::firstOrCreate(['name' => 'user']);
         $user = User::where('email', 'admin@admin.com')->first();
         if (!$user) {
             $user = User::create([
-                'name' => 'badr',
+                'name' => 'admin',
                 'phone_number' => '945496372',
                 'email' => 'admin@admin.com',
                 'role_id' => $role_id,
-                'password' => 'badr12345',
+                'password' => 'admin123456',
             ]);
         }
 
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
         Training::factory(20)->create();
         Trainee::factory(50)->create();
         Video::factory(20)->create();
-        
+
         $user->each(
             function (User $user) {
                 $package_id = Package::all()->random(1)->first()->id;

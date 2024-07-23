@@ -10,7 +10,7 @@ class Rating extends Model
     use HasFactory;
 
     protected $guarded = [];
-/* 
+
     public function trainee()
     {
         return $this->belongsTo(Trainee::class);
@@ -19,5 +19,5 @@ class Rating extends Model
     public function test()
     {
         return $this->belongsTo(Test::class);
-    } */
+    }
 }

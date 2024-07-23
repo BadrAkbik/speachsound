@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('trainee_id')->constrained('trainees')->cascadeOnDelete();
+            $table->foreignId('test_id')->nullable()->constrained('tests')->cascadeOnDelete();
             $table->float('degree', 2);
             $table->text('notes')->nullable();
             $table->timestamps();

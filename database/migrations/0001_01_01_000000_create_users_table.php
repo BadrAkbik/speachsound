@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone_number')->unique();
             $table->string('image')->nullable();
-            $table->foreignId('role_id')->nullable()->constrained('roles')->cascadeOnDelete();
+            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
             $table->enum('type', ['personal', 'parent', 'specialist'])->default('personal');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
