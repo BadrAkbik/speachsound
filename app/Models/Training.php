@@ -35,13 +35,8 @@ class Training extends Model
         });
     }
 
-    public function videos()
+    public function words()
     {
-        return $this->morphMany(Video::class, 'related');
-    }
-
-    public function level()
-    {
-        return $this->belongsTo(Level::class);
+        return $this->hasMany(Word::class);
     }
 }

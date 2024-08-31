@@ -51,24 +51,19 @@ class User extends Authenticatable implements IMustVerifyMobile
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function packages()
+    public function package()
     {
-        return $this->belongsToMany(Package::class, 'subscriptions')->withPivot('start_date', 'end_date', 'status', 'renew')->withTimestamps();
+        return $this->hasOneThrough(Package::class, Subscription::class);
     }
 
     public function subscriptions()
     {
-        return $this->hasMany(Subscription::class, 'user_id');
+        return $this->hasOne(Subscription::class, 'user_id');
     }
 
     public function trainees()
     {
         return $this->morphMany(Trainee::class, 'trainer');
-    }
-
-    public function specialist()
-    {
-        return $this->hasOne(Specialist::class, 'user_id');
     }
 
     /**

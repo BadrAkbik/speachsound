@@ -11,4 +11,13 @@ class Sound extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    public function words()
+    {
+        return $this->hasMany(Word::class);
+    }
 }

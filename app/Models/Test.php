@@ -35,18 +35,13 @@ class Test extends Model
         });
     }
 
-    public function videos()
-    {
-        return $this->morphMany(Video::class, 'related');
-    }
-
-    public function level()
-    {
-        return $this->belongsTo(Level::class);
-    }
-
     public function ratings()
     {
-        return $this->belongsToMany(Rating::class, 'ratings');
+        return $this->hasOne(Rating::class);
+    }
+
+    public function word()
+    {
+        return $this->belongsTo(Word::class);
     }
 }

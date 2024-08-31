@@ -12,4 +12,20 @@ class Word extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $casts = ['words' => 'array'];
+
+
+    public function training()
+    {
+        return $this->belongsTo(Training::class);
+    }
+
+    public function sound()
+    {
+        return $this->belongsTo(Sound::class);
+    }
+
+    public function tests()
+    {
+        return $this->hasMany(Test::class);
+    }
 }

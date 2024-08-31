@@ -12,8 +12,8 @@ class Package extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function users()
+    public function subscriptions()
     {
-        return $this->belongsToMany(User::class, 'subscriptions')->withPivot('start_date', 'end_date', 'status', 'renew')->withTimestamps();
+        return $this->hasMany(Subscription::class);
     }
 }

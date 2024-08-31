@@ -14,7 +14,12 @@ class Trainee extends Model
 
     public function ratings()
     {
-        return $this->belongsToMany(Rating::class, 'ratings');
+        return $this->hasMany(Rating::class);
+    }
+
+    public function test()
+    {
+        return $this->hasManyThrough(Test::class, Rating::Class);
     }
 
     public function trainer()

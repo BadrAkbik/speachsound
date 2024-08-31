@@ -33,8 +33,8 @@ class Video extends Model
         });
     }
 
-    public function related()
+    public function sound()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Sound::class);
     }
 }
