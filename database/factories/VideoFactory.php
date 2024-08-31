@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Sound;
 use App\Models\Test;
 use App\Models\Training;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,10 +20,9 @@ class VideoFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => 'normal',
-            'path' => fake()->image(),
-            'related_type' => fake()->randomElement(['test', 'training']),
-            'related_id' => fake()->randomElement([Test::all()->random(1)->first()->id, Training::all()->random(1)->first()->id]),
+            'type' => 'natural',
+            'video' => fake()->image(),
+            'sound_id' => Sound::all()->random(1)->first()->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];

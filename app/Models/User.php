@@ -21,7 +21,7 @@ class User extends Authenticatable implements IMustVerifyMobile
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     /**
      * The attributes that should be hidden for serialization.

@@ -7,6 +7,7 @@ use App\Models\Coupon;
 use App\Models\Level;
 use App\Models\Package;
 use App\Models\Role;
+use App\Models\Sound;
 use App\Models\Subscribtion;
 use App\Models\Test;
 use App\Models\Trainee;
@@ -14,6 +15,7 @@ use App\Models\Training;
 use App\Models\User;
 use App\Models\Video;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Word;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -38,14 +40,14 @@ class DatabaseSeeder extends Seeder
         }
 
         $users = User::factory(100)->create();
-        AgeGroup::factory(5)->create();
         Coupon::factory(10)->create();
-        Level::factory(5)->create();
         Package::factory(10)->create();
-        Test::factory(20)->create();
         Training::factory(20)->create();
         Trainee::factory(50)->create();
+        Sound::factory(1)->create();
+        Word::factory(2)->create();
         Video::factory(20)->create();
+        Test::factory(20)->create();
 
         $user->each(
             function (User $user) {

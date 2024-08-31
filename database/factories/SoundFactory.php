@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Specialist>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sound>
  */
-class SpecialistFactory extends Factory
+class SoundFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,8 @@ class SpecialistFactory extends Factory
     public function definition(): array
     {
         return [
-            'created_at' => now(),
-            'updated_at' => now(),
+            'sound' => 'أ',
+            'audio' => fake()->url(),
         ];
     }
 }

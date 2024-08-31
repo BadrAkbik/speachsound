@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Level;
+use App\Models\Word;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +20,7 @@ class TestFactory extends Factory
     {
         return [
             'name_en' => fake()->unique()->name(),
-            'level_id' => Level::all()->random(1)->first()->id,
-            'images' => fake()->image(),
+            'word_id' => Word::all()->random(1)->first()->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];

@@ -15,10 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_ar')->unique()->nullable();
             $table->string('name_en')->unique()->nullable();
-            $table->foreignId('level_id')->nullable()->constrained('levels')->cascadeOnDelete();
-            $table->string('audio')->nullable();
-            $table->json('images')->nullable();
-            $table->json('words')->nullable();
+            $table->foreignId('word_id')->constrained('words')->cascadeOnDelete();
             $table->timestamps();
         });
     }

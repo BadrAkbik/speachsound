@@ -5,19 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
+class Sound extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function trainee()
-    {
-        return $this->belongsTo(Trainee::class);
-    }
-
-    public function test()
-    {
-        return $this->belongsTo(Test::class);
-    }
 }

@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('words', function (Blueprint $table) {
             $table->id();
-            $table->string('type'); // xray or natural 
-            $table->string('video');
+            $table->string('words');
+            $table->enum('type', ['test', 'training'])->default('training');
             $table->foreignId('sound_id')->constrained('sounds')->cascadeOnDelete();
+            $table->foreignId('training_id')->nullable()->constrained('trainings')->cascadeOnDelete();
+            $table->text('images')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('words');
     }
 };

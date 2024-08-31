@@ -19,8 +19,8 @@ class TrainingFactory extends Factory
     {
         return [
             'name_en' => fake()->unique()->name(),
-            'level_id' => Level::all()->random(1)->first()->id,
-            'images' => fake()->image(),
+            'success_attempts' => fake()->numberBetween(10,20),
+            'success_rate' => fake()->numberBetween(10,20),
             'created_at' => now(),
             'updated_at' => now(),
         ];

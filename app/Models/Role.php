@@ -9,13 +9,13 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function users()
     {
         return $this->hasMany(User::class);
     }
-    
+
     public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'permission_role')->withTimestamps();
