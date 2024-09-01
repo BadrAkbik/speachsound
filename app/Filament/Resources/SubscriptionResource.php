@@ -54,7 +54,7 @@ class SubscriptionResource extends Resource
                     ->exists('packages', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Package $record) => "{$record->name_en} - {$record->name_ar}"),
+                    ->getOptionLabelFromRecordUsing(fn (Package $record) => "{$record->name}"),
                 Select::make('user_id')
                     ->label(__('dashboard.user'))
                     ->relationship('user')
@@ -87,10 +87,8 @@ class SubscriptionResource extends Resource
                 TextColumn::make('id')
                     ->label(__('dashboard.id'))
                     ->sortable(),
-                TextColumn::make('package.name_ar')
-                    ->label(__('dashboard.package_name_ar')),
-                TextColumn::make('package.name_en')
-                    ->label(__('dashboard.package_name_en')),
+                TextColumn::make('package.name')
+                    ->label(__('dashboard.package_name')),
                 TextColumn::make('user.name')
                     ->label(__('dashboard.user_name')),
                 TextColumn::make('start_date')

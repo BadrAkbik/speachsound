@@ -56,7 +56,7 @@ class User extends Authenticatable implements IMustVerifyMobile
         return $this->hasOneThrough(Package::class, Subscription::class);
     }
 
-    public function subscriptions()
+    public function subscription()
     {
         return $this->hasOne(Subscription::class, 'user_id');
     }

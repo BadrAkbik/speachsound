@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->date('start');
             $table->date('end');
-            $table->string('name_ar')->nullable();
+            $table->string('name')->nullable();
             $table->string('name_en')->nullable();
             $table->boolean('active')->default(true);
             $table->integer('uses_limit');

@@ -20,7 +20,7 @@ class CouponFactory extends Factory
             'code' => fake()->unique()->numberBetween(0, 99999),
             'start' => now(),
             'end' => now()->addMonth(),
-            'name_en' => fake()->unique()->name(),
+            'name' => fake()->unique()->name(),
             'uses_limit' => fake()->numberBetween(0, 100),
             'type' => fake()->randomElement(['amount', 'percentage']),
             'value' => 15,

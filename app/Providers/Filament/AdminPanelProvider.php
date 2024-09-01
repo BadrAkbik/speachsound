@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -11,7 +10,6 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -31,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->profile()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Cyan,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -57,40 +55,40 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.users_management'))
+                    ->label(fn(): string => __('dashboard.users_management'))
                     ->icon('heroicon-o-users')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.reports_management'))
+                    ->label(fn(): string => __('dashboard.reports_management'))
                     ->icon('heroicon-o-flag')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.settings'))
-                    ->icon('heroicon-o-cog-6-tooth')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.trainings_management'))
+                    ->label(fn(): string => __('dashboard.trainings_management'))
                     ->icon('heroicon-o-book-open')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.trainees_management'))
+                    ->label(fn(): string => __('dashboard.trainees_management'))
                     ->icon('heroicon-o-user-circle')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.subscriptions_management'))
+                    ->label(fn(): string => __('dashboard.subscriptions_management'))
                     ->icon('heroicon-o-inbox-stack')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.coupons_management'))
+                    ->label(fn(): string => __('dashboard.coupons_management'))
                     ->icon('heroicon-o-receipt-percent')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.ratings_management'))
+                    ->label(fn(): string => __('dashboard.ratings_management'))
                     ->icon('heroicon-o-star')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn (): string => __('dashboard.levels_management'))
+                    ->label(fn(): string => __('dashboard.levels_management'))
                     ->icon('heroicon-o-list-bullet')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label(fn(): string => __('dashboard.settings'))
+                    ->icon('heroicon-o-cog-6-tooth')
                     ->collapsed(),
             ])
             ->sidebarFullyCollapsibleOnDesktop()

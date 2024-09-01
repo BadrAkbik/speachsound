@@ -60,7 +60,7 @@ class RatingResource extends Resource
                     ->exists('tests', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Test $record) => "{$record->name_en} - {$record->name_ar}"),
+                    ->getOptionLabelFromRecordUsing(fn (Test $record) => "{$record->name}"),
                 TextInput::make('degree')
                     ->required()
                     ->numeric(),
@@ -75,10 +75,8 @@ class RatingResource extends Resource
             ->columns([
                 TextColumn::make('trainee.name')
                     ->label(__('dashboard.trainee_name')),
-                TextColumn::make('test.name_en')
-                    ->label(__('dashboard.test_name_en')),
-                TextColumn::make('test.name_ar')
-                    ->label(__('dashboard.test_name_ar')),
+                TextColumn::make('test.name')
+                    ->label(__('dashboard.test_name')),
                 TextColumn::make('degree')
                     ->numeric()
                     ->sortable(),

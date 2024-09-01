@@ -46,12 +46,8 @@ class LevelResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
-                    ->maxLength(255)
-                    ->default(null),
-                TextInput::make('name_en')
-                    ->label(__('dashboard.name_en'))
+                TextInput::make('name')
+                    ->label(__('dashboard.name'))
                     ->maxLength(255)
                     ->default(null),
                 Select::make('age_group_id')
@@ -60,7 +56,7 @@ class LevelResource extends Resource
                     ->exists('age_groups', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (AgeGroup $record) => "{$record->name_en} - {$record->name_ar}"),
+                    ->getOptionLabelFromRecordUsing(fn (AgeGroup $record) => "{$record->name}"),
                 Select::make('gender')
                     ->label(__('dashboard.gender'))
                     ->enum('male', 'female')
@@ -92,17 +88,11 @@ class LevelResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
+                TextColumn::make('name')
+                    ->label(__('dashboard.name'))
                     ->searchable(),
-                TextColumn::make('name_en')
-                    ->label(__('dashboard.name_en'))
-                    ->searchable(),
-                TextColumn::make('ageGroup.name_ar')
-                    ->label(__('dashboard.age_group_name_ar'))
-                    ->sortable(),
-                TextColumn::make('ageGroup.name_en')
-                    ->label(__('dashboard.age_group_name_en'))
+                TextColumn::make('ageGroup.name')
+                    ->label(__('dashboard.age_group_name'))
                     ->sortable(),
                 TextColumn::make('gender')
                     ->label(__('dashboard.gender'))

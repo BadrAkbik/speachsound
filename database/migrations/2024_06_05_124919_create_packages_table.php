@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar')->unique()->nullable();
+            $table->string('name')->unique()->nullable();
             $table->string('name_en')->unique()->nullable();
             $table->float('price');
             $table->integer('patiant_count');

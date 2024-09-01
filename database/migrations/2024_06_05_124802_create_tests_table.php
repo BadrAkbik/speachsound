@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar')->unique()->nullable();
+            $table->string('name')->unique()->nullable();
             $table->string('name_en')->unique()->nullable();
             $table->foreignId('word_id')->constrained('words')->cascadeOnDelete();
             $table->timestamps();

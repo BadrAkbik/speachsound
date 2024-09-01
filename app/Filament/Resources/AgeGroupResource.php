@@ -40,12 +40,8 @@ class AgeGroupResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
-                    ->maxLength(255)
-                    ->default(null),
-                TextInput::make('name_en')
-                    ->label(__('dashboard.name_en'))
+                TextInput::make('name')
+                    ->label(__('dashboard.name'))
                     ->maxLength(255)
                     ->default(null),
                 TextInput::make('from_age')
@@ -63,11 +59,8 @@ class AgeGroupResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
-                    ->searchable(),
-                TextColumn::make('name_en')
-                    ->label(__('dashboard.name_en'))
+                TextColumn::make('name')
+                    ->label(__('dashboard.name'))
                     ->searchable(),
                 TextColumn::make('from_age')
                     ->label(__('dashboard.from_age'))

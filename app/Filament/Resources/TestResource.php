@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class TestResource extends Resource
 {
     protected static ?string $model = Test::class;
-
     public static function getNavigationGroup(): ?string
     {
         return __('dashboard.trainings_management');
@@ -47,12 +46,8 @@ class TestResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
-                    ->maxLength(255)
-                    ->default(null),
-                TextInput::make('name_en')
-                    ->label(__('dashboard.name_en'))
+                TextInput::make('name')
+                    ->label(__('dashboard.name'))
                     ->maxLength(255)
                     ->default(null),
                 Select::make('level_id')
@@ -61,7 +56,7 @@ class TestResource extends Resource
                     ->exists('level', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Level $record) => "{$record->name_en} - {$record->name_ar}"),
+                    ->getOptionLabelFromRecordUsing(fn (Level $record) => "{$record->name}"),
                 FileUpload::make('audio')
                     ->default(null),
                 FileUpload::make('images')
@@ -76,16 +71,11 @@ class TestResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
+                TextColumn::make('name')
+                    ->label(__('dashboard.name'))
                     ->searchable(),
-                TextColumn::make('name_en')
-                    ->label(__('dashboard.name_en'))
-                    ->searchable(),
-                TextColumn::make('level.name_ar')
-                    ->label(__('dashboard.level_name_ar')),
-                TextColumn::make('level.name_en')
-                    ->label(__('dashboard.level_name_en')),
+                TextColumn::make('level.name')
+                    ->label(__('dashboard.level_name')),
                     TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
                     ->dateTime('d/m/Y')

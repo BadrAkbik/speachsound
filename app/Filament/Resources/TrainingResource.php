@@ -30,29 +30,25 @@ class TrainingResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('dashboard.trainings');
+        return __('dashboard.trainings_levels');
     }
 
     public static function getModelLabel(): string
     {
-        return __('dashboard.training');
+        return __('dashboard.training_level');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('dashboard.trainings');
+        return __('dashboard.trainings_levels');
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
-                    ->maxLength(255)
-                    ->default(null),
-                TextInput::make('name_en')
-                    ->label(__('dashboard.name_en'))
+                TextInput::make('name')
+                    ->label(__('dashboard.name'))
                     ->maxLength(255)
                     ->default(null),
                 Select::make('level_id')
@@ -61,7 +57,7 @@ class TrainingResource extends Resource
                     ->exists('level', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Level $record) => "{$record->name_en} - {$record->name_ar}"),
+                    ->getOptionLabelFromRecordUsing(fn (Level $record) => "{$record->name}"),
                 FileUpload::make('audio')
                     ->default(null),
                 FileUpload::make('images')
@@ -76,16 +72,11 @@ class TrainingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
+                TextColumn::make('name')
+                    ->label(__('dashboard.name'))
                     ->searchable(),
-                TextColumn::make('name_en')
-                    ->label(__('dashboard.name_en'))
-                    ->searchable(),
-                TextColumn::make('level.name_ar')
-                    ->label(__('dashboard.level_name_ar')),
-                TextColumn::make('level.name_en')
-                    ->label(__('dashboard.level_name_en')),
+                TextColumn::make('level.name')
+                    ->label(__('dashboard.level_name')),
                     TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
                     ->dateTime('d/m/Y')

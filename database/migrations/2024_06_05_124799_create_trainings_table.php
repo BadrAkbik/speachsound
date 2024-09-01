@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar')->unique()->nullable();
+            $table->string('name')->unique()->nullable();
             $table->string('name_en')->unique()->nullable();
             $table->float('success_rate', 2)->nullable();
             $table->integer('success_attempts')->nullable();

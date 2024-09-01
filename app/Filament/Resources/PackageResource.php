@@ -3,17 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PackageResource\Pages;
-use App\Filament\Resources\PackageResource\RelationManagers;
 use App\Models\Package;
-use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class PackageResource extends Resource
 {
@@ -43,12 +40,8 @@ class PackageResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
-                    ->maxLength(255)
-                    ->default(null),
-                TextInput::make('name_en')
-                    ->label(__('dashboard.name_en'))
+                TextInput::make('name')
+                    ->label(__('dashboard.name'))
                     ->maxLength(255)
                     ->default(null),
                 TextInput::make('price')
@@ -67,11 +60,8 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name_ar')
-                    ->label(__('dashboard.name_ar'))
-                    ->searchable(),
-                TextColumn::make('name_en')
-                    ->label(__('dashboard.name_en'))
+                TextColumn::make('name')
+                    ->label(__('dashboard.name'))
                     ->searchable(),
                 TextColumn::make('price')
                     ->label(__('dashboard.price'))

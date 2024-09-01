@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('words', function (Blueprint $table) {
             $table->id();
             $table->string('words');
-            $table->enum('type', ['test', 'training'])->default('training');
+            $table->enum('for', ['test', 'training'])->default('training');
             $table->foreignId('sound_id')->constrained('sounds')->cascadeOnDelete();
             $table->foreignId('training_id')->nullable()->constrained('trainings')->cascadeOnDelete();
             $table->text('images')->nullable();

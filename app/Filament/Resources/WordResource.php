@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -17,8 +18,25 @@ class WordResource extends Resource
 {
     protected static ?string $model = Word::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('dashboard.trainings_management');
+    }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('dashboard.trainings_tests_segments');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('dashboard.segment');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('dashboard.trainings_tests_segments');
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -43,20 +61,27 @@ class WordResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('words')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('sound_id')
-                    ->numeric()
+                TextColumn::make('words')
+                    ->label(__('dashboard.segments')),
+                TextColumn::make('for')
+                    ->label(__('dashboard.for'))
+                    ->formatStateUsing(fn(string $state): string => __("dashboard.{$state}"))
+                    ->badge()
+                    ->color(function ($record) {
+                        return $record->for === 'training' ? 'success' : 'danger';
+                    })
                     ->sortable(),
-                Tables\Columns\TextColumn::make('training_id')
-                    ->numeric()
+                TextColumn::make('sound.sound')
+                    ->label(__('dashboard.the_sound'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('training.name')
+                    ->label(__('dashboard.training_name'))
+                    ->sortable(),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -66,6 +91,7 @@ class WordResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

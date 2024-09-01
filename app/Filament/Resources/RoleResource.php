@@ -74,7 +74,7 @@ class RoleResource extends Resource
                     ->live()
                     ->preload()
                     ->exists('permissions', 'id')
-                    ->getOptionLabelFromRecordUsing(fn (Permission $record) => "{$record->name} - {$record->name_ar}")
+                    ->getOptionLabelFromRecordUsing(fn(Permission $record) => "{$record->name} - {$record->name_ar}")
                     ->searchable(),
             ]);
     }

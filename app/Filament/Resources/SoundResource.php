@@ -17,8 +17,25 @@ class SoundResource extends Resource
 {
     protected static ?string $model = Sound::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('dashboard.trainings_management');
+    }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('dashboard.sounds');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('dashboard.sound');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('dashboard.sounds');
+    }
     public static function form(Form $form): Form
     {
         return $form

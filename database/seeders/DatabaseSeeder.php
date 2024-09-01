@@ -8,7 +8,7 @@ use App\Models\Level;
 use App\Models\Package;
 use App\Models\Role;
 use App\Models\Sound;
-use App\Models\Subscribtion;
+use App\Models\Subscription;
 use App\Models\Test;
 use App\Models\Trainee;
 use App\Models\Training;
@@ -52,9 +52,9 @@ class DatabaseSeeder extends Seeder
         $user->each(
             function (User $user) {
                 $package_id = Package::all()->random(1)->first()->id;
-                $user->packages()->syncWithPivotValues(
-                    [$package_id],  // Use the package ID
+                $user->subscription()->create(
                     [
+                        'package_id' => $package_id,
                         'start_date' => '2024-07-01',
                         'end_date' => '2024-07-03',
                         'status' => 'active',
@@ -64,20 +64,9 @@ class DatabaseSeeder extends Seeder
             }
         );
         $package = Package::create([
-            'name_ar' => 'افتراضي',
-            'name_en' => 'default',
+            'name' => 'افتراضي',
             'price' => 1000,
             'patiant_count' => 10
         ]);
-
-        $user->packages()->syncWithPivotValues(
-            [$package->id],
-            [
-                'start_date' => '2024-07-01',
-                'end_date' => '2024-07-03',
-                'status' => 'active',
-                'renew' => false,
-            ]
-        );
     }
 }

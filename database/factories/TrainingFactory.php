@@ -18,7 +18,7 @@ class TrainingFactory extends Factory
     public function definition(): array
     {
         return [
-            'name_en' => fake()->unique()->name(),
+            'name' => fake()->unique()->name(),
             'success_attempts' => fake()->numberBetween(10,20),
             'success_rate' => fake()->numberBetween(10,20),
             'created_at' => now(),
