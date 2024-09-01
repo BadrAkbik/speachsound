@@ -3,15 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SoundResource\Pages;
-use App\Filament\Resources\SoundResource\RelationManagers;
 use App\Models\Sound;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SoundResource extends Resource
 {
@@ -40,18 +42,43 @@ class SoundResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sound')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('audio')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('start_age')
-                    ->numeric()
-                    ->default(null),
-                Forms\Components\TextInput::make('end_age')
-                    ->numeric()
-                    ->default(null),
+                Section::make()
+                    ->columns(3)
+                    ->schema([
+                        TextInput::make('sound')
+                            ->label(__('dashboard.the_sound'))
+                            ->unique(Sound::class, 'sound', ignoreRecord: true)
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('start_age')
+                            ->label(__('dashboard.from_age'))
+                            ->numeric()
+                            ->requiredWithout('end_age')
+                            ->lte('end_age')
+                            ->default(null),
+                        TextInput::make('end_age')
+                            ->label(__('dashboard.to_age'))
+                            ->requiredWithout('start_age')
+                            ->gte('start_age')
+                            ->numeric()
+                            ->default(null),
+                        FileUpload::make('audio')
+                            ->label(__('dashboard.audio'))
+                            ->disk('local')
+                            ->directory('audios')
+                            ->downloadable()
+                            ->required(),
+                        FileUpload::make('natural_videos')
+                            ->label(__('dashboard.natural_face_video'))
+                            ->disk('local')
+                            ->directory('xray_videos')
+                            ->downloadable(),
+                        FileUpload::make('xray_videos')
+                            ->label(__('dashboard.xray_face_video'))
+                            ->disk('local')
+                            ->directory('natural_videos')
+                            ->downloadable(),
+                    ])
             ]);
     }
 
@@ -59,21 +86,26 @@ class SoundResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sound')
+                TextColumn::make('sound')
+                    ->label(__('dashboard.the_sound'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('audio')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('start_age')
+                ViewColumn::make('audio')
+                    ->view('filament.tables.columns.audio')
+                    ->disableClick()
+                    ->width(325),
+                TextColumn::make('start_age')
+                    ->label(__('dashboard.from_age'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end_age')
+                TextColumn::make('end_age')
+                    ->label(__('dashboard.to_age'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -82,7 +114,21 @@ class SoundResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('viewAttachments')
+                    ->label(__('dashboard.attachments_view'))
+                    ->icon('heroicon-o-paper-clip')
+                    ->color('gray')
+                    ->modalHeading(__('dashboard.attachments'))
+                    ->modalWidth(MaxWidth::FourExtraLarge)
+                    ->modalSubmitAction(false)
+                    ->modalContent(function ($record) {
+                        $id = $record->id;
+                        if (isset($record->xray_videos) || isset($record->natural_videos)) {
+                            return view('components.attachment-viewer', compact('id'));
+                        }
+                    }),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

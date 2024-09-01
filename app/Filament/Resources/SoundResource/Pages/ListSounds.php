@@ -16,4 +16,5 @@ class ListSounds extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
 }

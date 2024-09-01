@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSound extends CreateRecord
 {
     protected static string $resource = SoundResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
 }

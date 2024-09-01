@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('sounds', function (Blueprint $table) {
             $table->id();
-            $table->string('sound');
-            $table->string('audio');
+            $table->string('sound')->unique();
+            $table->string('audio')->nullable();
+            $table->string('xray_videos')->nullable();
+            $table->string('natural_videos')->nullable();
             $table->integer('start_age')->nullable();
             $table->integer('end_age')->nullable();
             $table->timestamps();

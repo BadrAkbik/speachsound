@@ -107,8 +107,8 @@ return [
     'general' => 'General',
     'contact_us' => 'Contact us',
     'about_us' => 'About us',
-    'who_are_we'=> 'ًWho we are',
-    'our_services'=> 'Our services',
+    'who_are_we' => 'ًWho we are',
+    'our_services' => 'Our services',
     'social_media' => 'Social media',
     'application_name' => 'Application name',
     'application_description_en' => 'Application description in english',
@@ -121,6 +121,10 @@ return [
     'instagram' => 'Instagram',
     'linkedin' => 'Linkedin',
     'threads' => 'Threads',
-    'save' => 'Save'
-
+    'save' => 'Save',
+    'audio' => 'Audio',
+    'natural_face_video' => 'Natural face video',
+    'xray_face_video' => 'X-ray face video',
+    'attachments' => 'Attachments',
+    'attachments_view' => 'View attachments',
 ];
