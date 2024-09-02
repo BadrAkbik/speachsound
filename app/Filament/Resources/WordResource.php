@@ -93,7 +93,6 @@ class WordResource extends Resource
                             ->relationship('test', 'name')
                             ->exists('tests', 'id')
                             ->live()
-                            ->searchable()
                             ->preload()
                             ->required(fn(Get $get) => $get('for') == 'test')
                             ->disabled(fn(Get $get) => $get('for') == 'training'),
@@ -102,7 +101,6 @@ class WordResource extends Resource
                             ->relationship('training', 'name')
                             ->exists('trainings', 'id')
                             ->live()
-                            ->searchable()
                             ->preload()
                             ->required(fn(Get $get) => $get('for') == 'training')
                             ->disabled(fn(Get $get) => $get('for') == 'test'),
