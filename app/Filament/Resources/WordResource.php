@@ -67,6 +67,7 @@ class WordResource extends Resource
                             ->preload()
                             ->required(),
                         FileUpload::make('images')
+                            ->label(__('dashboard.image'))
                             ->disk('public')
                             ->previewable()
                             ->downloadable()
