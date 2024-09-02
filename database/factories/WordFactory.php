@@ -32,7 +32,7 @@ class WordFactory extends Factory
             ],
             'sound_id' => Sound::all()->random(1)->first()->id,
             'training_id' => Training::all()->random(1)->first()->id,
-            'test_id' => Test::all()->random(1)->first()->id,
+            // 'test_id' => Test::all()->random(1)->first()->id,
         ];
     }
 }

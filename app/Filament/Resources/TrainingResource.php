@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TrainingResource\Pages;
 use App\Filament\Resources\TrainingResource\RelationManagers;
+use App\Filament\Resources\TrainingResource\RelationManagers\WordsRelationManager;
 use App\Models\Level;
 use App\Models\Training;
 use Filament\Forms;
@@ -50,7 +51,8 @@ class TrainingResource extends Resource
         return $form
             ->schema([
                 Section::make()
-                    ->columns(2)
+                    ->columns(1)
+                    ->columnSpan(1)
                     ->schema([
                         TextInput::make('name')
                             ->label(__('dashboard.name'))
@@ -61,6 +63,15 @@ class TrainingResource extends Resource
                         TextInput::make('success_attempts')
                             ->label(__('dashboard.success_attempts'))
                             ->numeric(),
+                        Select::make('parent_id')
+                            ->label(__('dashboard.parent_level'))
+                            ->hint(__('dashboard.optional'))
+                            ->relationship('parent', 'name')
+                            ->exists('trainings', 'id')
+                            ->searchable()
+                            ->preload()
+                            ->nullable()
+                            ->default(null)
                     ])
             ]);
     }
@@ -71,6 +82,9 @@ class TrainingResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('dashboard.name'))
+                    ->searchable(),
+                TextColumn::make('parent.name')
+                    ->label(__('dashboard.parent_level'))
                     ->searchable(),
                 TextColumn::make('success_rate')
                     ->label(__('dashboard.success_rate'))
@@ -105,7 +119,7 @@ class TrainingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            WordsRelationManager::class,
         ];
     }
 

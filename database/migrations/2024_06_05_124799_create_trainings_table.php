@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique()->nullable();
             $table->string('name_en')->unique()->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('trainings', 'id')->nullOnDelete();
             $table->float('success_rate', 2)->nullable();
             $table->integer('success_attempts')->nullable();
             $table->timestamps();

@@ -39,4 +39,16 @@ class Training extends Model
     {
         return $this->hasMany(Word::class);
     }
+
+    public function children()
+    {
+        return $this->hasMany(Training::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Training::class, 'parent_id');
+    }
+
+
 }

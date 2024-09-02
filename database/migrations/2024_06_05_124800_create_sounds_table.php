@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,6 +13,7 @@ return new class extends Migration
         Schema::create('sounds', function (Blueprint $table) {
             $table->id();
             $table->string('sound')->unique();
+            $table->foreignId('age_group_id')->nullable()->constrained('age_groups', 'id')->nullOnDelete();
             $table->json('audio')->nullable();
             $table->json('xray_videos')->nullable();
             $table->json('natural_videos')->nullable();

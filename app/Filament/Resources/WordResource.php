@@ -3,17 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WordResource\Pages;
-use App\Filament\Resources\WordResource\RelationManagers;
-use App\Models\Sound;
-use App\Models\Test;
-use App\Models\Training;
 use App\Models\Word;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -50,14 +44,51 @@ class WordResource extends Resource
         return $form
             ->schema([
                 Section::make()
-                    ->columns(2)
+                    // ->description(__('dashboard.words_relation_helper'))
+                    ->schema([
+                        // ToggleButtons::make('for')
+                        //     ->label(__('dashboard.for'))
+                        //     ->options([
+                        //         'training' => __('dashboard.training'),
+                        //         'test' => __('dashboard.test')
+                        //     ])
+                        //     ->live()
+                        //     ->inline()
+                        //     ->icons(
+                        //         ['percentage' => 'heroicon-m-percent-badge', 'amount' => 'heroicon-m-currency-dollar']
+                        //     )
+                        //     ->colors([
+                        //         'training' => 'success',
+                        //         'test' => 'danger',
+                        //     ])
+                        //     ->required(),
+                        Select::make('training_id')
+                            ->label(__('dashboard.the_training_level'))
+                            ->relationship('training', 'name')
+                            ->exists('trainings', 'id')
+                            ->live()
+                            ->preload()
+                            ->required(fn(Get $get) => $get('for') == 'training')
+                            ->disabled(fn(Get $get) => $get('for') == 'test'),
+                        Select::make('sub_training_id')
+                            ->label(__('dashboard.sub_training_level'))
+                            ->relationship('subTraining', 'name')
+                            ->exists('tests', 'id')
+                            ->live()
+                            ->preload(),
+                    ])
+                    ->columns(1)
+                    ->columnSpan(1),
+                Section::make()
                     ->schema([
                         TagsInput::make('words')
+                            ->label(__('dashboard.segment'))
                             ->helperText(__('dashboard.adding_words_hint'))
                             ->placeholder(__('dashboard.add_words_or_sentences'))
                             ->reorderable()
                             ->splitKeys(['Tab'])
-                            ->required(),
+                            ->required()
+                            ->columnSpanFull(),
                         Select::make('sound_id')
                             ->label(__('dashboard.sound'))
                             ->relationship('sound', 'sound')
@@ -71,42 +102,13 @@ class WordResource extends Resource
                             ->disk('public')
                             ->previewable()
                             ->downloadable()
-                            ->directory('images/words'),
-                        ToggleButtons::make('for')
-                            ->label(__('dashboard.for'))
-                            ->options([
-                                'training' => __('dashboard.training'),
-                                'test' => __('dashboard.test')
-                            ])
-                            ->live()
-                            ->inline()
-                            ->icons(
-                                ['percentage' => 'heroicon-m-percent-badge', 'amount' => 'heroicon-m-currency-dollar']
-                            )
-                            ->colors([
-                                'training' => 'success',
-                                'test' => 'danger',
-                            ])
-                            ->required(),
-                        Select::make('test_id')
-                            ->label(__('dashboard.test'))
-                            ->helperText(__('dashboard.words_relation_helper'))
-                            ->relationship('test', 'name')
-                            ->exists('tests', 'id')
-                            ->live()
-                            ->preload()
-                            ->required(fn(Get $get) => $get('for') == 'test')
-                            ->disabled(fn(Get $get) => $get('for') == 'training'),
-                        Select::make('training_id')
-                            ->label(__('dashboard.training'))
-                            ->relationship('training', 'name')
-                            ->exists('trainings', 'id')
-                            ->live()
-                            ->preload()
-                            ->required(fn(Get $get) => $get('for') == 'training')
-                            ->disabled(fn(Get $get) => $get('for') == 'test'),
+                            ->directory('images/words')
+                            ->columnSpanFull(),
                     ])
-            ]);
+                    ->columns(2)
+                    ->columnSpan(2),
+
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table

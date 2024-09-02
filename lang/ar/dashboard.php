@@ -30,6 +30,7 @@ return [
     'tests' => 'الاختبارات',
     'test' => 'اختبار',
     'age_group' => 'فئة عمرية',
+    'the_age_group' => 'الفئة عمرية',
     'age_groups' => 'الفئات العمرية',
     'coupons' => 'الكوبونات',
     'coupon' => 'كوبون',
@@ -136,4 +137,9 @@ return [
     'trainer_name' => 'اسم المدرب',
     'trainer' => 'المدرب',
     'words_relation_helper' => 'الرجاء اختيار إما اختبار أو تدريب',
+    'media' => 'الوسائط',
+    'parent_level' => 'المرحلة الرئيسية',
+    'sub_training_level' => 'مرحلة التدريب الفرعية',
+    'optional' => 'اختياري'
+
 ];

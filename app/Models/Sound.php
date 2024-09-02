@@ -19,6 +19,11 @@ class Sound extends Model
         return $this->hasMany(Word::class);
     }
 
+    public function ageGroup()
+    {
+        return $this->belongsTo(AgeGroup::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

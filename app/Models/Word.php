@@ -19,6 +19,11 @@ class Word extends Model
         return $this->belongsTo(Training::class);
     }
 
+    public function subTraining()
+    {
+        return $this->belongsTo(Training::class)->whereNotNull('parent_id');
+    }
+
     public function sound()
     {
         return $this->belongsTo(Sound::class);

@@ -30,6 +30,7 @@ return [
     'tests' => 'Tests',
     'test' => 'Test',
     'age_group' => 'Age group',
+    'the_age_group' => 'The age group',
     'age_groups' => 'Age groups',
     'coupons' => 'Coupons',
     'coupon' => 'Coupon',
@@ -136,5 +137,9 @@ return [
     'trainer_name' => 'Trainer name',
     'trainer' => 'Trainer',
     'words_relation_helper' => 'Please select either test or training',
+    'media' => 'Media',
+    'parent_level' => 'Parent level',
+    'optional' => 'Optional',
+    'sub_training_level' => 'Sub training level',
 
 ];

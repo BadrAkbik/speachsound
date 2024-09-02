@@ -3,9 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SoundResource\Pages;
+use App\Filament\Resources\SoundResource\RelationManagers\WordsRelationManager;
 use App\Models\Sound;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -43,33 +46,23 @@ class SoundResource extends Resource
         return $form
             ->schema([
                 Section::make()
-                    ->columns(3)
                     ->schema([
                         TextInput::make('sound')
                             ->label(__('dashboard.the_sound'))
                             ->unique(Sound::class, 'sound', ignoreRecord: true)
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('start_age')
-                            ->label(__('dashboard.from_age'))
-                            ->numeric()
-                            ->minValue(1)
-                            ->maxValue(100)
-                            ->requiredWithout('end_age')
-                            ->rule(function ($get) {
-                                return $get('end_age') ? ['lte:end_age'] : [];
-                            })
-                            ->default(null),
-                        TextInput::make('end_age')
-                            ->label(__('dashboard.to_age'))
-                            ->requiredWithout('start_age')
-                            ->rule(function ($get) {
-                                return $get('start_age') ? ['gte:start_age'] : [];
-                            })
-                            ->numeric()
-                            ->minValue(1)
-                            ->maxValue(100)
-                            ->default(null),
+                        Select::make('age_group_id')
+                            ->label(__('dashboard.the_age_group'))
+                            ->relationship('ageGroup', 'name')
+                            ->exists('trainings', 'id')
+                            ->live()
+                            ->preload()
+                            ->required(),
+                    ])
+                    ->columns(1)->columnSpan(1),
+                Section::make(__('dashboard.media'))
+                    ->schema([
                         FileUpload::make('audio')
                             ->label(__('dashboard.audio'))
                             ->disk('local')
@@ -86,7 +79,8 @@ class SoundResource extends Resource
                             ->directory('natural_videos')
                             ->downloadable(),
                     ])
-            ]);
+                    ->columns(1)->columnSpan(2),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -100,11 +94,11 @@ class SoundResource extends Resource
                     ->view('filament.tables.columns.audio')
                     ->disableClick()
                     ->width(325),
-                TextColumn::make('start_age')
+                TextColumn::make('ageGroup.from_age')
                     ->label(__('dashboard.from_age'))
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('end_age')
+                TextColumn::make('ageGroup.to_age')
                     ->label(__('dashboard.to_age'))
                     ->numeric()
                     ->sortable(),

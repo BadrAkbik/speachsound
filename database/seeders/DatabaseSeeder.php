@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $users = User::factory(100)->create();
+        AgeGroup::factory(10)->create();
         Coupon::factory(10)->create();
         Package::factory(10)->create();
         Training::factory(20)->create();
