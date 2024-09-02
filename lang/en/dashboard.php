@@ -101,7 +101,7 @@ return [
     'the_sound' => 'The sound',
     'words' => 'Words',
     'word' => 'Words',
-    'trainings_tests_segments' => 'Trainings tests segments',
+    'trainings_segments' => 'Trainings segments',
     'segment' => 'Segment',
     'segments' => 'Segments',
     'for' => 'For',

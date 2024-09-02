@@ -101,7 +101,7 @@ return [
     'the_sound' => 'الصوت',
     'words' => 'الكلمات',
     'word' => 'كلمات',
-    'trainings_tests_segments' => 'مقاطع التدريبات والاختبارات',
+    'trainings_segments' => 'مقاطع التدريبات',
     'segment' => 'مقطع',
     'segments' => 'المقاطع',
     'for' => 'مخصص لـ',

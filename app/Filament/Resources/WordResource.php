@@ -27,7 +27,7 @@ class WordResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('dashboard.trainings_tests_segments');
+        return __('dashboard.trainings_segments');
     }
 
     public static function getModelLabel(): string
@@ -37,7 +37,7 @@ class WordResource extends Resource
 
     public static function getPluralModelLabel(): string
     {
-        return __('dashboard.trainings_tests_segments');
+        return __('dashboard.trainings_segments');
     }
     public static function form(Form $form): Form
     {
@@ -117,14 +117,14 @@ class WordResource extends Resource
             ->columns([
                 TextColumn::make('words')
                     ->label(__('dashboard.segments')),
-                TextColumn::make('for')
-                    ->label(__('dashboard.for'))
-                    ->formatStateUsing(fn(string $state): string => __("dashboard.{$state}"))
-                    ->badge()
-                    ->color(function ($record) {
-                        return $record->for === 'training' ? 'success' : 'danger';
-                    })
-                    ->sortable(),
+                // TextColumn::make('for')
+                //     ->label(__('dashboard.for'))
+                //     ->formatStateUsing(fn(string $state): string => __("dashboard.{$state}"))
+                //     ->badge()
+                //     ->color(function ($record) {
+                //         return $record->for === 'training' ? 'success' : 'danger';
+                //     })
+                //     ->sortable(),
                 TextColumn::make('sound.sound')
                     ->label(__('dashboard.the_sound'))
                     ->sortable(),

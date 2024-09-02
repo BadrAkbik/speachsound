@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         Trainee::factory(50)->create();
         Sound::factory(1)->create();
         Test::factory(20)->create();
-        Word::factory(2)->create();
+        Word::factory(1)->create();
 
         $user->each(
             function (User $user) {
