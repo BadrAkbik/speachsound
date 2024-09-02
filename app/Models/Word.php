@@ -24,8 +24,8 @@ class Word extends Model
         return $this->belongsTo(Sound::class);
     }
 
-    public function tests()
+    public function test()
     {
-        return $this->hasMany(Test::class);
+        return $this->belongsTo(Test::class);
     }
 }

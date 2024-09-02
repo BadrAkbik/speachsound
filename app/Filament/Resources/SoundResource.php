@@ -53,21 +53,28 @@ class SoundResource extends Resource
                         TextInput::make('start_age')
                             ->label(__('dashboard.from_age'))
                             ->numeric()
+                            ->minValue(1)
+                            ->maxValue(100)
                             ->requiredWithout('end_age')
-                            ->lte('end_age')
+                            ->rule(function ($get) {
+                                return $get('end_age') ? ['lte:end_age'] : [];
+                            })
                             ->default(null),
                         TextInput::make('end_age')
                             ->label(__('dashboard.to_age'))
                             ->requiredWithout('start_age')
-                            ->gte('start_age')
+                            ->rule(function ($get) {
+                                return $get('start_age') ? ['gte:start_age'] : [];
+                            })
                             ->numeric()
+                            ->minValue(1)
+                            ->maxValue(100)
                             ->default(null),
                         FileUpload::make('audio')
                             ->label(__('dashboard.audio'))
                             ->disk('local')
                             ->directory('audios')
-                            ->downloadable()
-                            ->required(),
+                            ->downloadable(),
                         FileUpload::make('natural_videos')
                             ->label(__('dashboard.natural_face_video'))
                             ->disk('local')
@@ -102,13 +109,11 @@ class SoundResource extends Resource
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('dashboard.created_at'))
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //

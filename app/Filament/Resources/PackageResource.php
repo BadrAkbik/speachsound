@@ -73,17 +73,17 @@ class PackageResource extends Resource
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
                     ->label(__('dashboard.deleted_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

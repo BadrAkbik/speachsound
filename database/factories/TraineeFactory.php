@@ -22,7 +22,7 @@ class TraineeFactory extends Factory
             'gender' => fake()->randomElement(['male', 'female']),
             'date_of_birth' => fake()->date(),
             'start_date' => now(),
-            'trainer_type' => 'user',
+            'trainer_type' => 'App\Models\User',
             'trainer_id' => User::all()->random(1)->first()->id,
             'created_at' => now(),
             'updated_at' => now(),

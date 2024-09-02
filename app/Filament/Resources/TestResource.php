@@ -4,12 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TestResource\Pages;
 use App\Filament\Resources\TestResource\RelationManagers;
-use App\Models\Level;
 use App\Models\Test;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,9 +18,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class TestResource extends Resource
 {
     protected static ?string $model = Test::class;
+
     public static function getNavigationGroup(): ?string
     {
-        return __('dashboard.trainings_management');
+        return __('dashboard.ratings_management');
     }
 
     public static function getNavigationLabel(): string
@@ -50,20 +47,6 @@ class TestResource extends Resource
                     ->label(__('dashboard.name'))
                     ->maxLength(255)
                     ->default(null),
-                Select::make('level_id')
-                    ->label(__('dashboard.level'))
-                    ->relationship('level')
-                    ->exists('level', 'id')
-                    ->live()
-                    ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Level $record) => "{$record->name}"),
-                FileUpload::make('audio')
-                    ->default(null),
-                FileUpload::make('images')
-                    ->multiple()
-                    ->columnSpanFull(),
-                Textarea::make('words')
-                    ->columnSpanFull(),
             ]);
     }
 
@@ -74,25 +57,17 @@ class TestResource extends Resource
                 TextColumn::make('name')
                     ->label(__('dashboard.name'))
                     ->searchable(),
-                TextColumn::make('level.name')
-                    ->label(__('dashboard.level_name')),
-                    TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -75,7 +75,7 @@ class PermissionResource extends Resource
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

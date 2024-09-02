@@ -12,6 +12,8 @@ class Sound extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    protected $casts = ['xray_videos' => 'array', 'natural_videos' => 'array', 'audio' => 'array'];
+
     public function words()
     {
         return $this->hasMany(Word::class);

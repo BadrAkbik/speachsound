@@ -49,14 +49,17 @@ class Settings extends BaseSettings
                         ->columns(2)
                         ->schema([
                             TextInput::make('general.application_name')
+                                ->maxLength(255)
                                 ->label(__('dashboard.application_name')),
                             TextInput::make('general.application_description')
                                 ->label(__('dashboard.application_description')),
                             Textarea::make('general.application_terms')
                                 ->columnSpan(2)
+                                ->maxLength(65535)
                                 ->label(__('dashboard.application_terms')),
                             Textarea::make('general.application_policy')
                                 ->columnSpan(2)
+                                ->maxLength(65535)
                                 ->label(__('dashboard.application_policy')),
                         ]),
                     Tabs\Tab::make('Contact us')
@@ -64,20 +67,23 @@ class Settings extends BaseSettings
                         ->label(__('dashboard.contact_us'))
                         ->schema([
                             TextInput::make('contacts.phone')
+                                ->suffixIcon('heroicon-o-phone')
                                 ->label(__('dashboard.phone')),
                             TextInput::make('contacts.email')
+                                ->suffixIcon('heroicon-o-at-symbol')
+                                ->email()
                                 ->label(__('dashboard.email')),
                         ]),
 
                     Tabs\Tab::make('About us')
                         ->label(__('dashboard.about_us'))
                         ->schema([
-                            MarkdownEditor::make('about.phone')
+                            MarkdownEditor::make('about.who_are_we')
                                 ->label(__('dashboard.who_are_we'))
                                 ->disableToolbarButtons([
                                     'attachFiles',
                                 ]),
-                            MarkdownEditor::make('about.email')
+                            MarkdownEditor::make('about.our_services')
                                 ->label(__('dashboard.our_services'))
                                 ->disableToolbarButtons([
                                     'attachFiles',
@@ -89,12 +95,20 @@ class Settings extends BaseSettings
                         ->label(__('dashboard.social_media'))
                         ->schema([
                             TextInput::make('media.facebook')
+                                ->suffixIcon('heroicon-m-globe-alt')
+                                ->url()
                                 ->label(__('dashboard.facebook')),
                             TextInput::make('media.instagram')
+                                ->suffixIcon('heroicon-m-globe-alt')
+                                ->url()
                                 ->label(__('dashboard.instagram')),
                             TextInput::make('media.linkedin')
+                                ->suffixIcon('heroicon-m-globe-alt')
+                                ->url()
                                 ->label(__('dashboard.linkedin')),
                             TextInput::make('media.threads')
+                                ->suffixIcon('heroicon-m-globe-alt')
+                                ->url()
                                 ->label(__('dashboard.threads')),
                         ]),
                 ]),

@@ -8,6 +8,7 @@ use App\Models\Rating;
 use App\Models\Test;
 use App\Models\Trainee;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -47,25 +48,42 @@ class RatingResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('trainee_id')
-                    ->label(__('dashboard.trainee'))
-                    ->relationship('trainee')
-                    ->exists('trainees', 'id')
-                    ->live()
-                    ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Trainee $record) => "{$record->name}"),
-                Select::make('test_id')
-                    ->label(__('dashboard.test'))
-                    ->relationship('test')
-                    ->exists('tests', 'id')
-                    ->live()
-                    ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Test $record) => "{$record->name}"),
-                TextInput::make('degree')
-                    ->required()
-                    ->numeric(),
-                Textarea::make('notes')
-                    ->columnSpanFull(),
+                Section::make()
+                    ->columns(2)
+                    ->schema([
+                        Select::make('trainee_id')
+                            ->label(__('dashboard.trainee'))
+                            ->relationship('trainee', 'id')
+                            ->exists('trainees', 'id')
+                            ->live()
+                            ->preload()
+                            ->options(
+                                function () {
+                                    return Trainee::pluck('name', 'id');
+                                }
+                            )
+                            ->required(),
+                        Select::make('test_id')
+                            ->label(__('dashboard.test'))
+                            ->relationship('test', 'id')
+                            ->exists('tests', 'id')
+                            ->live()
+                            ->preload()
+                            ->options(
+                                function () {
+                                    return Test::pluck('name', 'id');
+                                }
+                            )
+                            ->required(),
+                        TextInput::make('degree')
+                            ->label(__('dashboard.degree'))
+                            ->maxLength(255)
+                            ->required()
+                            ->numeric(),
+                        Textarea::make('notes')
+                            ->label(__('dashboard.notes'))
+                            ->maxLength(65500),
+                    ])
             ]);
     }
 
@@ -78,16 +96,17 @@ class RatingResource extends Resource
                 TextColumn::make('test.name')
                     ->label(__('dashboard.test_name')),
                 TextColumn::make('degree')
+                    ->label(__('dashboard.degree'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

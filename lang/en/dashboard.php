@@ -12,6 +12,7 @@ return [
     'trainee' => 'Trainee',
     'trainees' => 'Trainees',
     'training_level' => 'Training level',
+    'the_training_level' => 'The training level',
     'trainings_levels' => 'Trainings levels',
     'training' => 'Training',
     'level' => 'Level',
@@ -127,4 +128,13 @@ return [
     'xray_face_video' => 'X-ray face video',
     'attachments' => 'Attachments',
     'attachments_view' => 'View attachments',
+    'success_attempts' => 'Count of attempts for success',
+    'adding_words_hint' => 'You can add words or sentences (To add a word please press the Enter or Tab key',
+    'add_words_or_sentences' => 'Add words or sentences',
+    'degree' => 'Degree',
+    'notes' => 'Notes',
+    'trainer_name' => 'Trainer name',
+    'trainer' => 'Trainer',
+    'words_relation_helper' => 'Please select either test or training',
+
 ];

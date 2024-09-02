@@ -18,7 +18,6 @@ class SoundFactory extends Factory
     {
         return [
             'sound' => 'أ',
-            'audio' => fake()->url(),
         ];
     }
 }

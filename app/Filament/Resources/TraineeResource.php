@@ -4,7 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TraineeResource\Pages;
 use App\Models\Trainee;
+use App\Models\User;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\MorphToSelect;
+use Filament\Forms\Components\MorphToSelect\Type;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -50,28 +55,34 @@ class TraineeResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('gender')
-                    ->required(),
-                DatePicker::make('date_of_birth')
-                    ->required(),
-                TextInput::make('training_result')
-                    ->maxLength(255)
-                    ->default(null),
-                TextInput::make('general_rating')
-                    ->maxLength(255)
-                    ->default(null),
-                DatePicker::make('start_date')
-                    ->required(),
-                DatePicker::make('end_date'),
-                TextInput::make('trainer_type')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('trainer_id')
-                    ->required()
-                    ->numeric(),
+                Section::make()
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('name')
+                            ->label(__('dashboard.name'))
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('gender')
+                            ->label(__('dashboard.gender'))
+                            ->required(),
+                        DatePicker::make('date_of_birth')
+                            ->label(__('dashboard.date_of_birth'))
+                            ->required(),
+                        TextInput::make('general_rating')
+                            ->label(__('dashboard.general_rating'))
+                            ->maxLength(255)
+                            ->default(null),
+                        DatePicker::make('start_date')
+                            ->label(__('dashboard.start_date'))
+                            ->required(),
+                        DatePicker::make('end_date')
+                            ->label(__('dashboard.end_date')),
+                        MorphToSelect::make('trainer')
+                            ->label(__('dashboard.trainer'))
+                            ->types([
+                                Type::make(User::class)->titleAttribute('name')->label(__('dashboard.parent')),
+                            ])->preload()->searchable()
+                    ])
             ]);
     }
 
@@ -94,9 +105,6 @@ class TraineeResource extends Resource
                     ->badge()
                     ->color('gray')
                     ->sortable(),
-                TextColumn::make('training_result')
-                    ->label(__('dashboard.training_result'))
-                    ->searchable(),
                 TextColumn::make('general_rating')
                     ->label(__('dashboard.general_rating'))
                     ->searchable(),
@@ -112,24 +120,17 @@ class TraineeResource extends Resource
                     ->badge()
                     ->color('gray')
                     ->sortable(),
-                TextColumn::make('trainer_type')
-                    ->label(__('dashboard.trainer_type'))
-                    ->searchable(),
-                TextColumn::make('trainer_id')
+                TextColumn::make('trainer.name')
+                    ->label(__('dashboard.trainer_name'))
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
                     ->label(__('dashboard.deleted_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

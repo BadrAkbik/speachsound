@@ -8,7 +8,9 @@ use App\Models\Level;
 use App\Models\Training;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -47,24 +49,19 @@ class TrainingResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label(__('dashboard.name'))
-                    ->maxLength(255)
-                    ->default(null),
-                Select::make('level_id')
-                    ->label(__('dashboard.level'))
-                    ->relationship('level')
-                    ->exists('level', 'id')
-                    ->live()
-                    ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Level $record) => "{$record->name}"),
-                FileUpload::make('audio')
-                    ->default(null),
-                FileUpload::make('images')
-                    ->multiple()
-                    ->columnSpanFull(),
-                Textarea::make('words')
-                    ->columnSpanFull(),
+                Section::make()
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('name')
+                            ->label(__('dashboard.name'))
+                            ->maxLength(255),
+                        TextInput::make('success_rate')
+                            ->label(__('dashboard.success_rate'))
+                            ->numeric(),
+                        TextInput::make('success_attempts')
+                            ->label(__('dashboard.success_attempts'))
+                            ->numeric(),
+                    ])
             ]);
     }
 
@@ -75,16 +72,19 @@ class TrainingResource extends Resource
                 TextColumn::make('name')
                     ->label(__('dashboard.name'))
                     ->searchable(),
-                TextColumn::make('level.name')
-                    ->label(__('dashboard.level_name')),
-                    TextColumn::make('created_at')
+                TextColumn::make('success_rate')
+                    ->label(__('dashboard.success_rate'))
+                    ->badge()
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('success_attempts')
+                    ->label(__('dashboard.success_attempts'))
+                    ->badge()
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

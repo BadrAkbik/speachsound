@@ -7,6 +7,7 @@ use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Permission;
 use App\Models\Role;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -61,21 +62,25 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label(__('dashboard.role'))
-                    ->required()
-                    ->unique()
-                    ->hiddenOn('edit')
-                    ->maxLength(255),
-                Select::make('permissions')
-                    ->label(__('dashboard.permissions'))
-                    ->relationship('permissions')
-                    ->multiple()
-                    ->live()
-                    ->preload()
-                    ->exists('permissions', 'id')
-                    ->getOptionLabelFromRecordUsing(fn(Permission $record) => "{$record->name} - {$record->name_ar}")
-                    ->searchable(),
+                Section::make()
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('name')
+                            ->label(__('dashboard.role'))
+                            ->required()
+                            ->unique()
+                            ->hiddenOn('edit')
+                            ->maxLength(255),
+                        Select::make('permissions')
+                            ->label(__('dashboard.permissions'))
+                            ->relationship('permissions')
+                            ->multiple()
+                            ->live()
+                            ->preload()
+                            ->exists('permissions', 'id')
+                            ->getOptionLabelFromRecordUsing(fn(Permission $record) => "{$record->name} - {$record->name_ar}")
+                            ->searchable(),
+                    ])
             ]);
     }
 
@@ -99,7 +104,7 @@ class RoleResource extends Resource
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

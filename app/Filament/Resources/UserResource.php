@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
@@ -71,60 +72,64 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label(__('dashboard.name'))
-                    ->minLength(2)->maxLength(15)->string()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('email')
-                    ->label(__('dashboard.email'))
-                    ->email()
-                    ->unique(User::class, 'email', ignoreRecord: true)
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('phone_number')
-                    ->label(__('dashboard.phone_number'))
-                    ->tel()
-                    ->maxLength(255)
-                    ->default(null),
-                Select::make('role_id')
-                    ->label(__('dashboard.role'))
-                    ->relationship('role', 'id')
-                    ->exists('roles', 'id')
-                    ->notIn(Role::firstWhere('name', 'owner')->id)
-                    ->live()
-                    ->preload()
-                    ->options(
-                        function () {
-                            return Role::whereNotIn('name', ['owner'])->pluck('name', 'id');
-                        }
-                    ),
-                TextInput::make('password')
-                    ->label(__('dashboard.password'))
-                    ->password()
-                    ->hiddenOn('edit')
-                    ->required()
-                    ->maxLength(255),
-                Hidden::make('email_verified_at')->default(now()),
-                ToggleButtons::make('type')
-                    ->label(__('dashboard.type'))
-                    ->inline()
-                    ->options([
-                        'personal' => __('dashboard.personal'),
-                        'parent' => __('dashboard.parent'),
-                        'specialist' => __('dashboard.specialist')
+                Section::make()
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('name')
+                            ->label(__('dashboard.name'))
+                            ->minLength(2)->maxLength(15)->string()
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('email')
+                            ->label(__('dashboard.email'))
+                            ->email()
+                            ->unique(User::class, 'email', ignoreRecord: true)
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('phone_number')
+                            ->label(__('dashboard.phone_number'))
+                            ->tel()
+                            ->maxLength(25)
+                            ->default(null),
+                        Select::make('role_id')
+                            ->label(__('dashboard.role'))
+                            ->relationship('role', 'id')
+                            ->exists('roles', 'id')
+                            ->notIn(Role::firstWhere('name', 'owner')->id)
+                            ->live()
+                            ->preload()
+                            ->options(
+                                function () {
+                                    return Role::whereNotIn('name', ['owner'])->pluck('name', 'id');
+                                }
+                            ),
+                        TextInput::make('password')
+                            ->label(__('dashboard.password'))
+                            ->password()
+                            ->required()
+                            ->revealable()
+                            ->hiddenOn('edit')
+                            ->maxLength(255),
+                        ToggleButtons::make('type')
+                            ->label(__('dashboard.type'))
+                            ->inline()
+                            ->options([
+                                'personal' => __('dashboard.personal'),
+                                'parent' => __('dashboard.parent'),
+                            ])
+                            ->colors([
+                                'personal' => 'info',
+                                'parent' => 'success',
+                            ])
+                            ->required(),
+                        FileUpload::make('image')
+                            ->label(__('dashboard.image'))
+                            ->disk('public')
+                            ->directory('images/profile_pictures')
+                            ->previewable(false)
+                            ->image(),
+                        Hidden::make('email_verified_at')->default(now()),
                     ])
-                    ->colors([
-                        'personal' => 'info',
-                        'parent' => 'warning',
-                        'specialist' => 'success',
-                    ])
-                    ->required(),
-                FileUpload::make('image')
-                    ->disk('public')
-                    ->previewable(false)
-                    ->directory('images')
-                    ->image(),
             ]);
     }
 
@@ -136,6 +141,7 @@ class UserResource extends Resource
                     ->label(__('dashboard.id'))
                     ->sortable(),
                 ImageColumn::make('image')
+                    ->disk('public')
                     ->label(__('dashboard.image'))
                     ->circular(),
                 TextColumn::make('type')
@@ -144,8 +150,8 @@ class UserResource extends Resource
                     ->color(function ($record) {
                         return $record->type == 'personal' ? 'info' : ($record->type == 'parent' ? 'danger' : ($record->type == 'specialist' ?? 'success'));
                     })
-                    ->formatStateUsing(fn ($record) =>
-                    $record->type == 'personal' ? __('dashboard.personal') : ($record->type == 'parent' ? __('dashboard.parent') : ($record->type == 'specialist' ?? __('dashboard.specialist')))),
+                    ->formatStateUsing(fn($record) =>
+                        $record->type == 'personal' ? __('dashboard.personal') : ($record->type == 'parent' ? __('dashboard.parent') : ($record->type == 'specialist' ?? __('dashboard.specialist')))),
                 TextColumn::make('name')
                     ->label(__('dashboard.name'))
                     ->searchable(),
@@ -165,7 +171,7 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

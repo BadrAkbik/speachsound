@@ -42,6 +42,6 @@ class Test extends Model
 
     public function word()
     {
-        return $this->belongsTo(Word::class);
+        return $this->hasMany(Word::class);
     }
 }

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,11 +12,12 @@ return new class extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
-            $table->string('words');
+            $table->json('words');
             $table->enum('for', ['test', 'training'])->default('training');
             $table->foreignId('sound_id')->constrained('sounds')->cascadeOnDelete();
             $table->foreignId('training_id')->nullable()->constrained('trainings')->cascadeOnDelete();
-            $table->text('images')->nullable();
+            $table->foreignId('test_id')->nullable()->constrained('tests')->cascadeOnDelete();
+            $table->json('images')->nullable();
             $table->timestamps();
         });
     }

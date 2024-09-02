@@ -20,7 +20,6 @@ class TestFactory extends Factory
     {
         return [
             'name' => fake()->unique()->name(),
-            'word_id' => Word::all()->random(1)->first()->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];
