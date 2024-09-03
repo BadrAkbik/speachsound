@@ -25,9 +25,14 @@ class WordsRelationManager extends RelationManager
         return __('dashboard.segment');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('dashboard.trainings_segments');
+    }
+
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
-        return __('dashboard.trainings_tests_segments');
+        return __('dashboard.trainings_segments');
     }
 
     public function form(Form $form): Form
@@ -63,13 +68,11 @@ class WordsRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('words')
                     ->label(__('dashboard.segments')),
-                TextColumn::make('for')
-                    ->label(__('dashboard.for'))
-                    ->formatStateUsing(fn(string $state): string => __("dashboard.{$state}"))
-                    ->badge()
-                    ->color(function ($record) {
-                        return $record->for === 'training' ? 'success' : 'danger';
-                    })
+                TextColumn::make('training.name')
+                    ->label(__('dashboard.the_training_level'))
+                    ->sortable(),
+                TextColumn::make('subTraining.name')
+                    ->label(__('dashboard.sub_training_level'))
                     ->sortable(),
                 TextColumn::make('sound.sound')
                     ->label(__('dashboard.the_sound'))
@@ -80,6 +83,7 @@ class WordsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make(),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

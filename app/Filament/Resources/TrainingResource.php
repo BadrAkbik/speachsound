@@ -3,24 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TrainingResource\Pages;
-use App\Filament\Resources\TrainingResource\RelationManagers;
 use App\Filament\Resources\TrainingResource\RelationManagers\WordsRelationManager;
-use App\Models\Level;
 use App\Models\Training;
-use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TrainingResource extends Resource
 {
@@ -63,15 +55,16 @@ class TrainingResource extends Resource
                         TextInput::make('success_attempts')
                             ->label(__('dashboard.success_attempts'))
                             ->numeric(),
-                        Select::make('parent_id')
-                            ->label(__('dashboard.parent_level'))
+                        Select::make('parents')
+                            ->label(__('dashboard.parent_levels'))
+                            ->helperText(__('dashboard.parent_level_helper'))
                             ->hint(__('dashboard.optional'))
-                            ->relationship('parent', 'name')
+                            ->multiple()
+                            ->relationship('parents', 'name')
                             ->exists('trainings', 'id')
                             ->searchable()
                             ->preload()
                             ->nullable()
-                            ->default(null)
                     ])
             ]);
     }
@@ -83,8 +76,21 @@ class TrainingResource extends Resource
                 TextColumn::make('name')
                     ->label(__('dashboard.name'))
                     ->searchable(),
-                TextColumn::make('parent.name')
-                    ->label(__('dashboard.parent_level'))
+                TextColumn::make('parents.name')
+                    ->label(__('dashboard.parent_levels'))
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->limitList(10)
+                    ->expandableLimitedList()
+                    ->wrap()
+                    ->searchable(),
+                TextColumn::make('children.name')
+                    ->label(__('dashboard.children_levels'))
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->limitList(10)
+                    ->expandableLimitedList()
+                    ->wrap()
                     ->searchable(),
                 TextColumn::make('success_rate')
                     ->label(__('dashboard.success_rate'))
@@ -119,7 +125,6 @@ class TrainingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            WordsRelationManager::class,
         ];
     }
 

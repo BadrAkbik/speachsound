@@ -52,7 +52,7 @@ class SoundResource extends Resource
                             ->unique(Sound::class, 'sound', ignoreRecord: true)
                             ->required()
                             ->maxLength(255),
-                        Select::make('age_group_id')
+                        Select::make('ageGroup')
                             ->label(__('dashboard.the_age_group'))
                             ->relationship('ageGroup', 'name')
                             ->exists('trainings', 'id')

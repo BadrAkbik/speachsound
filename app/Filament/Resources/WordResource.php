@@ -44,7 +44,6 @@ class WordResource extends Resource
         return $form
             ->schema([
                 Section::make()
-                    // ->description(__('dashboard.words_relation_helper'))
                     ->schema([
                         // ToggleButtons::make('for')
                         //     ->label(__('dashboard.for'))
@@ -62,18 +61,17 @@ class WordResource extends Resource
                         //         'test' => 'danger',
                         //     ])
                         //     ->required(),
-                        Select::make('training_id')
+                        Select::make('training')
                             ->label(__('dashboard.the_training_level'))
                             ->relationship('training', 'name')
                             ->exists('trainings', 'id')
                             ->live()
                             ->preload()
-                            ->required(fn(Get $get) => $get('for') == 'training')
-                            ->disabled(fn(Get $get) => $get('for') == 'test'),
+                            ->required(),
                         Select::make('sub_training_id')
                             ->label(__('dashboard.sub_training_level'))
                             ->relationship('subTraining', 'name')
-                            ->exists('tests', 'id')
+                            ->exists('trainings', 'id')
                             ->live()
                             ->preload(),
                     ])
@@ -130,6 +128,9 @@ class WordResource extends Resource
                     ->sortable(),
                 TextColumn::make('training.name')
                     ->label(__('dashboard.the_training_level'))
+                    ->sortable(),
+                TextColumn::make('subTraining.name')
+                    ->label(__('dashboard.sub_training_level'))
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))

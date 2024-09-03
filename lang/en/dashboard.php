@@ -138,8 +138,9 @@ return [
     'trainer' => 'Trainer',
     'words_relation_helper' => 'Please select either test or training',
     'media' => 'Media',
-    'parent_level' => 'Parent level',
+    'parent_levels' => 'Parent levels',
     'optional' => 'Optional',
     'sub_training_level' => 'Sub training level',
-
+    'parent_level_helper'=> 'If you this level to be a sub level please choose one or more main level for it',
+    'children_levels' => 'Children levels',
 ];

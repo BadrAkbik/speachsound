@@ -16,12 +16,12 @@ class Word extends Model
 
     public function training()
     {
-        return $this->belongsTo(Training::class);
+        return $this->belongsTo(Training::class)->whereDoesntHave('parents');
     }
 
     public function subTraining()
     {
-        return $this->belongsTo(Training::class)->whereNotNull('parent_id');
+        return $this->belongsTo(Training::class)->whereHas('parents');
     }
 
     public function sound()

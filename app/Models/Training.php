@@ -11,30 +11,6 @@ class Training extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'words' => 'array',
-            'images' => 'array',
-        ];
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function ($trainig) {
-            if ($trainig->videos()) {
-                //delete
-            }
-        });
-    }
-
     public function words()
     {
         return $this->hasMany(Word::class);
@@ -42,12 +18,12 @@ class Training extends Model
 
     public function children()
     {
-        return $this->hasMany(Training::class, 'parent_id');
+        return $this->belongsToMany(Training::class, 'sub_trainings_trainings', 'parent_id', 'children_id');
     }
 
-    public function parent()
+    public function parents()
     {
-        return $this->belongsTo(Training::class, 'parent_id');
+        return $this->belongsToMany(Training::class, 'sub_trainings_trainings', 'children_id', 'parent_id')->withTimestamps();
     }
 
 
