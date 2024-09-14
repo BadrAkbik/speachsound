@@ -6,6 +6,7 @@ use App\Filament\Resources\SubscriptionResource\Pages;
 use App\Models\Package;
 use App\Models\Subscription;
 use App\Models\User;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -20,10 +21,25 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubscriptionResource extends Resource
+class SubscriptionResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Subscription::class;
 
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'restore',
+            'restore_any',
+            'force_delete',
+            'force_delete_any',
+        ];
+    }
     public static function getNavigationGroup(): ?string
     {
         return __('dashboard.subscriptions_management');

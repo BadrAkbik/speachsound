@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PackageResource\Pages;
 use App\Models\Package;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,9 +13,25 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 
-class PackageResource extends Resource
+class PackageResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Package::class;
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'restore',
+            'restore_any',
+            'force_delete',
+            'force_delete_any',
+        ];
+    }
 
     public static function getNavigationGroup(): ?string
     {

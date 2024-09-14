@@ -143,4 +143,9 @@ return [
     'sub_training_level' => 'Sub training level',
     'parent_level_helper'=> 'If you this level to be a sub level please choose one or more main level for it',
     'children_levels' => 'Children levels',
+    'states' => 'States',
+    'charts' => 'Charts',
+    'new_users' => 'New users',
+    'within_month' => 'With in a month',
+    'new_tranees' => 'New tranees'
 ];

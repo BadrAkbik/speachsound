@@ -12,19 +12,56 @@ class StatsOverview extends BaseWidget
 {
     protected static ?int $sort = 1;
 
+    protected int|string|array $columnSpan = 12;
+
+    public function getHeading(): string
+    {
+        return __('dashboard.states');
+    }
+
+
     protected function getStats(): array
     {
         return [
             Stat::make(__('dashboard.The number of users'), User::count())
-                ->description('new users')
-                ->descriptionIcon('heroicon-o-users', IconPosition::Before)
-                ->chart([1, 3, 6, 7, 8, 12])
+                ->icon('heroicon-o-users')
                 ->color('success'),
             Stat::make(__('dashboard.The number of trainees'), Trainee::count())
-                ->description('new users')
+                ->icon('heroicon-o-users')
+                ->color('success'),
+            Stat::make(__('dashboard.new_users'), User::whereBetween('created_at', [now()->subWeeks(4), now()])->count())
+                ->icon('heroicon-o-users')
+                ->description(__('dashboard.within_month'))
                 ->descriptionIcon('heroicon-o-users', IconPosition::Before)
-                ->chart([1, 3, 6, 7, 8, 12])
-                ->color('success')
+                ->chart($this->getModelCountBetweenWeeks(User::class, 4))
+                ->color('primary'),
+            Stat::make(__('dashboard.new_tranees'), Trainee::whereBetween('created_at', [now()->subWeeks(4), now()])->count())
+                ->icon('heroicon-o-users')
+                ->description(__('dashboard.within_month'))
+                ->descriptionIcon('heroicon-o-users', IconPosition::Before)
+                ->chart($this->getModelCountBetweenWeeks(Trainee::class, 4))
+                ->color('primary'),
         ];
     }
+
+    public function getModelCountBetweenWeeks($model, $weeks)
+    {
+        $modelByWeek = [];
+
+        $now = now();
+        for ($i = $weeks; $i > 0; $i--) {
+            
+            $startOfWeek = $now->copy()->subWeeks($i);
+            $endOfWeek = $now->copy()->subWeeks($i - 1);
+            
+            $modelByWeek[] = $model::whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
+        }
+        return $modelByWeek;
+    }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('widget_StatsOverview');
+    }
+
 }

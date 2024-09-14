@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\Role;
 use App\Models\User;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
@@ -19,10 +20,25 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 
-class UserResource extends Resource
+class UserResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = User::class;
 
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'restore',
+            'restore_any',
+            'force_delete',
+            'force_delete_any',
+        ];
+    }
 
     public static function getNavigationBadgeTooltip(): ?string
     {
@@ -54,18 +70,35 @@ class UserResource extends Resource
         return static::getModel()::count();
     }
 
-    public static function canEdit($record): bool
-    {
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        return $record->role->name !== 'owner' && $user->hasPermission('user.update');
-    }
+    // public static function canEdit($record): bool
+    // {
+    //     /** @var \App\Models\User $user */
+    //     $user = auth()->user();
+    //     return $record->role->name !== 'owner' && $user->hasPermission('user.update');
+    // }
 
     public static function canDelete($record): bool
     {
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        return $record->role->name !== 'owner' && $user->hasPermission('user.delete');
+
+        $hasSuperAdminRole = $record->roles->contains(function ($role) {
+            return $role->name === 'super_admin';
+        });
+
+        return !$hasSuperAdminRole && $user->can('delete_user');
+    }
+
+    public static function canEdit($record): bool
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        $hasSuperAdminRole = $record->roles->contains(function ($role) {
+            return $role->name === 'super_admin';
+        });
+
+        return !$hasSuperAdminRole && $user->can('update_user');
     }
 
     public static function form(Form $form): Form
@@ -91,18 +124,12 @@ class UserResource extends Resource
                             ->tel()
                             ->maxLength(25)
                             ->default(null),
-                        Select::make('role_id')
-                            ->label(__('dashboard.role'))
-                            ->relationship('role', 'id')
-                            ->exists('roles', 'id')
-                            ->notIn(Role::firstWhere('name', 'owner')->id)
-                            ->live()
+                        Select::make('roles')
+                            ->label(__('filament-shield::filament-shield.resource.label.roles'))
+                            ->relationship('roles', 'name')
+                            ->multiple()
                             ->preload()
-                            ->options(
-                                function () {
-                                    return Role::whereNotIn('name', ['owner'])->pluck('name', 'id');
-                                }
-                            ),
+                            ->searchable(),
                         TextInput::make('password')
                             ->label(__('dashboard.password'))
                             ->password()
@@ -161,11 +188,11 @@ class UserResource extends Resource
                 TextColumn::make('phone_num')
                     ->label(__('dashboard.phone_number'))
                     ->searchable(),
-                TextColumn::make('role.name')
-                    ->label(__('dashboard.role'))
+                TextColumn::make('roles.name')
+                    ->label(__('filament-shield::filament-shield.resource.label.roles'))
                     ->badge()
                     ->color(function ($record) {
-                        return $record->role->name == 'owner' ? 'danger' : 'warning';
+                        return $record->roles == 'owner' ? 'danger' : 'warning';
                     })
                     ->searchable()
                     ->sortable(),

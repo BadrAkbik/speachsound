@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements IMustVerifyMobile
 {
-    use HasFactory, Notifiable, HasApiTokens, MustVerifyMobile, SoftDeletes;
+    use HasFactory, Notifiable, HasApiTokens, MustVerifyMobile, SoftDeletes, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -46,10 +47,6 @@ class User extends Authenticatable implements IMustVerifyMobile
         ];
     }
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'role_id');
-    }
 
     public function package()
     {

@@ -29,7 +29,6 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
             'email_verified_at' => now(),
-            'role_id' => Role::firstWhere('name', 'user')->id,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'created_at' => now(),

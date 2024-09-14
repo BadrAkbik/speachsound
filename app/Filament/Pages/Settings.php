@@ -15,6 +15,11 @@ class Settings extends BaseSettings
 
     protected static ?string $navigationIcon = '';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->can('page_Settings');
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return __('dashboard.settings');

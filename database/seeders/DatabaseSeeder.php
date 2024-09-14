@@ -25,19 +25,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        $role_id = Role::firstOrCreate(['name' => 'owner'])->id;
-        Role::firstOrCreate(['name' => 'user']);
         $user = User::where('email', 'admin@admin.com')->first();
         if (!$user) {
             $user = User::create([
                 'name' => 'admin',
                 'phone_number' => '945496372',
                 'email' => 'admin@admin.com',
-                'role_id' => $role_id,
                 'password' => 'admin123456',
             ]);
         }
+        $user->assignRole('super_admin');
 
         $users = User::factory(100)->create();
         AgeGroup::factory(10)->create();
