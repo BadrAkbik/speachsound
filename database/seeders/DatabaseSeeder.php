@@ -34,7 +34,6 @@ class DatabaseSeeder extends Seeder
                 'password' => 'admin123456',
             ]);
         }
-        $user->assignRole('super_admin');
 
         $users = User::factory(100)->create();
         AgeGroup::factory(10)->create();
