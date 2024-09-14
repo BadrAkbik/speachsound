@@ -9,13 +9,14 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\MorphToSelect;
 use Filament\Forms\Components\MorphToSelect\Type;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TraineeResource extends Resource
 {
@@ -109,13 +110,13 @@ class TraineeResource extends Resource
                     ->label(__('dashboard.general_rating'))
                     ->searchable(),
                 TextColumn::make('start_date')
-                    ->label(__('dashboard.start_date'))
+                    ->label(__('dashboard.training_start_date'))
                     ->date('Y/m/d')
                     ->badge()
                     ->color('gray')
                     ->sortable(),
                 TextColumn::make('end_date')
-                    ->label(__('dashboard.end_date'))
+                    ->label(__('dashboard.training_end_date'))
                     ->date('Y/m/d')
                     ->badge()
                     ->color('gray')
@@ -135,15 +136,28 @@ class TraineeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 

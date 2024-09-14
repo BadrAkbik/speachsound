@@ -70,14 +70,14 @@ class SubscriptionResource extends Resource implements HasShieldPermissions
                     ->exists('packages', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (Package $record) => "{$record->name}"),
+                    ->getOptionLabelFromRecordUsing(fn(Package $record) => "{$record->name}"),
                 Select::make('user_id')
                     ->label(__('dashboard.user'))
                     ->relationship('user')
                     ->exists('users', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn (User $record) => "{$record->name} - {$record->phone_number}"),
+                    ->getOptionLabelFromRecordUsing(fn(User $record) => "{$record->name} - {$record->phone_number}"),
                 DatePicker::make('start_date')
                     ->label(__('dashboard.start_date'))
                     ->required(),
@@ -142,16 +142,28 @@ class SubscriptionResource extends Resource implements HasShieldPermissions
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 

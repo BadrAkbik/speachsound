@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique()->nullable();
             $table->string('name_en')->unique()->nullable();
+            $table->text('description')->nullable();
             $table->float('price');
             $table->integer('patiant_count');
             $table->timestamps();

@@ -147,5 +147,11 @@ return [
     'charts' => 'Charts',
     'new_users' => 'New users',
     'within_month' => 'With in a month',
-    'new_tranees' => 'New tranees'
+    'new_tranees' => 'New tranees',
+    'training_start_date' => 'Training start date',
+    'training_end_date' => 'Training end date',
+    'subscribers_count' => 'Subscribers count',
+    'subscription_start_date' => 'Subscription start date',
+    'subscription_end_date' => 'Subscription end date',
+
 ];

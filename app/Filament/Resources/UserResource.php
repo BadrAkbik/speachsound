@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Models\Role;
 use App\Models\User;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\FileUpload;
@@ -18,6 +17,8 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 
 class UserResource extends Resource implements HasShieldPermissions
@@ -196,6 +197,14 @@ class UserResource extends Resource implements HasShieldPermissions
                     })
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('subscription.start_date')
+                    ->label(__('dashboard.subscription_start_date'))
+                    ->badge()
+                    ->dateTime('d/m/Y'),
+                TextColumn::make('subscription.end_date')
+                    ->label(__('dashboard.subscription_end_date'))
+                    ->badge()
+                    ->dateTime('d/m/Y'),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
                     ->dateTime('d/m/Y H:i:s')
@@ -203,16 +212,29 @@ class UserResource extends Resource implements HasShieldPermissions
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
+            ]);
+    }
+
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 

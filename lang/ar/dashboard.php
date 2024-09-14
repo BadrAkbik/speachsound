@@ -141,11 +141,16 @@ return [
     'parent_levels' => 'المراحل الرئيسية',
     'sub_training_level' => 'مرحلة التدريب الفرعية',
     'optional' => 'اختياري',
-    'parent_level_helper'=> 'في حال كنت تريد أن تكون هذه المرحلة فرعية الرجاء اختيار مرحلة رئيسية أو أكثر لهذه المرحلة',
+    'parent_level_helper' => 'في حال كنت تريد أن تكون هذه المرحلة فرعية الرجاء اختيار مرحلة رئيسية أو أكثر لهذه المرحلة',
     'children_levels' => 'المراحل الفرعية',
     'states' => 'الإحصائيات',
     'charts' => 'المخططات البيانية',
     'new_users' => 'المستخدمون الجدد',
     'within_month' => 'في غضون شهر',
-    'new_tranees' => 'المتدربون الجدد'
+    'new_tranees' => 'المتدربون الجدد',
+    'training_start_date' => 'تاريخ بداية التدريب',
+    'training_end_date' => 'تاريخ نهاية التدريب',
+    'subscribers_count' => 'عدد المشتركين',
+    'subscription_start_date' => 'تاريخ بداية الإشتراك',
+    'subscription_end_date' => 'تاريخ نهاية الإشتراك',
 ];

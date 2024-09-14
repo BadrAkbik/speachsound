@@ -5,12 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PackageResource\Pages;
 use App\Models\Package;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 
 class PackageResource extends Resource implements HasShieldPermissions
@@ -57,19 +60,23 @@ class PackageResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label(__('dashboard.name'))
-                    ->maxLength(255)
-                    ->default(null),
-                TextInput::make('price')
-                    ->label(__('dashboard.price'))
-                    ->required()
-                    ->numeric()
-                    ->prefix('SAR'),
-                TextInput::make('patiant_count')
-                    ->label(__('dashboard.patiant_count'))
-                    ->required()
-                    ->numeric(),
+                Section::make()
+                    ->columnSpan(1)
+                    ->schema([
+                        TextInput::make('name')
+                            ->label(__('dashboard.name'))
+                            ->maxLength(255)
+                            ->default(null),
+                        TextInput::make('price')
+                            ->label(__('dashboard.price'))
+                            ->required()
+                            ->numeric()
+                            ->prefix('SAR'),
+                        TextInput::make('patiant_count')
+                            ->label(__('dashboard.patiant_count'))
+                            ->required()
+                            ->numeric(),
+                    ])
             ]);
     }
 
@@ -82,12 +89,21 @@ class PackageResource extends Resource implements HasShieldPermissions
                     ->searchable(),
                 TextColumn::make('price')
                     ->label(__('dashboard.price'))
-                    ->money()
+                    ->money('SAR')
                     ->sortable(),
                 TextColumn::make('patiant_count')
                     ->label(__('dashboard.patiant_count'))
+                    ->badge()
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('subscriptions')
+                    ->label(__('dashboard.subscribers_count'))
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->getStateUsing(function ($record) {
+                        return $record->subscriptions()->count();
+                    }),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
                     ->dateTime('d/m/Y H:i:s')
@@ -105,16 +121,28 @@ class PackageResource extends Resource implements HasShieldPermissions
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 
