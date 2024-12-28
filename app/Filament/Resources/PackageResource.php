@@ -9,6 +9,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -71,7 +72,10 @@ class PackageResource extends Resource implements HasShieldPermissions
                             ->label(__('dashboard.price'))
                             ->required()
                             ->numeric()
-                            ->prefix('SAR'),
+                            ->prefix('SAR')
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->maxValue(99999999),
                         TextInput::make('patiant_count')
                             ->label(__('dashboard.patiant_count'))
                             ->required()
@@ -106,17 +110,17 @@ class PackageResource extends Resource implements HasShieldPermissions
                     }),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
                     ->label(__('dashboard.deleted_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

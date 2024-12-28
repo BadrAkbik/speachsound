@@ -7,20 +7,19 @@ use App\Services\AudioErrorsDetection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class AiModelControleller extends Controller
+class AiModelController extends Controller
 {
     public function upload_audio(Request $request)
     {
-        /* dd($request->file('audio')->guessExtension()); */
-        $request->validate([
-            'audio' => ['required', 'file', 'mimes:mp4,mp3,wav']
+        $validated = $request->validate([
+            'audio' => ['required', 'file', 'mimes:mp4,mp3,wav'],
+            'correct_word' => ['required', 'string']
         ]);
-
         $response = Http::attach(
             'audio',
             file_get_contents($request->file('audio')),
             $request->file('audio')->getClientOriginalName()
-        )->post('http://54.39.8.96:5050/api/ai_analyser/', [
+        )->post('http://nanteq.net:8000/api/ai_analyser/', [
             'audio' => $request->file('audio')
         ]);
 
@@ -31,7 +30,7 @@ class AiModelControleller extends Controller
             $transcribedText = json_decode($response)->text;
             $audio->splitFilterText($transcribedText);
 
-            return $this->sendResponse($audio->compareWords(['الشمس']), '', $response->status());
+            return $this->sendResponse($audio->compareWords($validated['correct_word']), '', $response->status());
         } else {
             return $this->throw(__('api.Something went wrong, please try again'), $response->status());
         }

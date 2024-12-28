@@ -78,12 +78,12 @@ class AgeGroupResource extends Resource
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('Y/m/d')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y')
+                    ->dateTime('Y/m/d')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

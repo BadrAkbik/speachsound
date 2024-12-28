@@ -200,14 +200,14 @@ class UserResource extends Resource implements HasShieldPermissions
                 TextColumn::make('subscription.start_date')
                     ->label(__('dashboard.subscription_start_date'))
                     ->badge()
-                    ->dateTime('d/m/Y'),
+                    ->dateTime('Y/m/d'),
                 TextColumn::make('subscription.end_date')
                     ->label(__('dashboard.subscription_end_date'))
                     ->badge()
-                    ->dateTime('d/m/Y'),
+                    ->dateTime('Y/m/d'),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

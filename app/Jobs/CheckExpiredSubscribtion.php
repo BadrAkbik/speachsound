@@ -18,12 +18,12 @@ class CheckExpiredSubscribtion implements ShouldQueue
      */
     public function handle(): void
     {
-        $users = User::has('subscribtions')->with('subscribtions')->get();
+        $users = User::has('subscriptions')->with('subscriptions')->get();
         foreach ($users as $user) {
-            foreach ($user->subscribtions as $subscribtion) {
-                $end_date = $subscribtion->end_date;
+            foreach ($user->subscriptions as $subscription) {
+                $end_date = $subscription->end_date;
                 if ($end_date < now()) {
-                    $subscribtion->delete();
+                    $subscription->delete();
                 }
             }
         }

@@ -2,21 +2,20 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\User;
+use App\Models\Subscription;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 
-class UsersChart extends ChartWidget
+class SubscriptionsChart extends ChartWidget
 {
-
-    protected static ?int $sort = 2;
+    public function getHeading(): string
+    {
+        return __('dashboard.subscriptions');
+    }
 
     protected int|string|array $columnSpan = 6;
 
-    public function getHeading(): string
-    {
-        return __('dashboard.users');
-    }
+    protected static ?int $sort = 3;
 
     protected function getData(): array
     {
@@ -24,8 +23,8 @@ class UsersChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('dashboard.user'),
-                    'data' => $this->getUsersCountInYear(),
+                    'label' => __('dashboard.subscription'),
+                    'data' => $this->getSubscriptionsCountInYear(),
                     'fill' => 'start',
                 ],
             ],
@@ -38,21 +37,16 @@ class UsersChart extends ChartWidget
         return 'line';
     }
 
-    public static function canView(): bool
+    public function getSubscriptionsCountInYear()
     {
-        return auth()->user()->can('widget_UsersChart');
-    }
-
-    public function getUsersCountInYear()
-    {
-        $usersByMonth = [];
+        $subscriptionsByMonth = [];
 
         for ($month = 1; $month <= 12; $month++) {
             $startOfMonth = Carbon::createFromDate(null, $month, 1)->startOfMonth();
             $endOfMonth = Carbon::createFromDate(null, $month, 1)->endOfMonth();
         
-            $usersByMonth[] = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->count();
+            $subscriptionsByMonth[] = Subscription::whereBetween('created_at', [$startOfMonth, $endOfMonth])->count();
         }
-        return $usersByMonth;
+        return $subscriptionsByMonth;
     }
 }

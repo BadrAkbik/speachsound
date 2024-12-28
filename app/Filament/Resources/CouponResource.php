@@ -114,13 +114,13 @@ class CouponResource extends Resource
                 TextColumn::make('start')
                     ->label(__('dashboard.start_date'))
                     ->badge()
-                    ->date('d/m/Y')
+                    ->date('Y/m/d')
                     ->sortable(),
                 TextColumn::make('end')
                     ->label(__('dashboard.end_date'))
                     ->badge()
                     ->color('danger')
-                    ->date('d/m/Y')
+                    ->date('Y/m/d')
                     ->sortable(),
                 TextColumn::make('name')
                     ->label(__('dashboard.name'))
@@ -150,16 +150,17 @@ class CouponResource extends Resource
                     ->formatStateUsing(fn($record) => __("dashboard.{$record->type}")),
                 TextColumn::make('value')
                     ->label(__('dashboard.value'))
+                    ->badge()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

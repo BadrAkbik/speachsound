@@ -59,7 +59,7 @@ class TestResource extends Resource
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
             ])

@@ -111,13 +111,13 @@ class SubscriptionResource extends Resource implements HasShieldPermissions
                     ->label(__('dashboard.start_date'))
                     ->badge()
                     ->color('gray')
-                    ->date('d/m/Y')
+                    ->date('Y/m/d')
                     ->sortable(),
                 TextColumn::make('end_date')
                     ->label(__('dashboard.end_date'))
                     ->badge()
                     ->color('gray')
-                    ->date('d/m/Y')
+                    ->date('Y/m/d')
                     ->sortable(),
                 TextColumn::make('status')
                     ->label(__('dashboard.status'))
@@ -127,17 +127,17 @@ class SubscriptionResource extends Resource implements HasShieldPermissions
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->label(__('dashboard.updated_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
                     ->label(__('dashboard.deleted_at'))
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
