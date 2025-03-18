@@ -1,10 +1,10 @@
 <?php
 return [
-    'login successfully, but code is needed' => 'تم تسجيل الدخول بنجاح، ولكن هناك حاجة إلى الرمز',
+    'otp_sent' => 'تم إرسال رمز التحقق بنجاح إلى رقم هاتفك',
     'login successfully' => 'تم التسجيل بنجاح',
     'You have registred to our app successfully please use your phone number to login' => 'تم التسجيل في التطبيق بنجاح، الرجاء استخدام رقم الهاتف لتسجيل الدخول ',
     'auth failed' => 'فشلت المصادقه',
-    'Logged out' => 'تسجيل الخروج',
+    'logged_out' => 'تم تسجيل الخروج',
     'Delete user successfully' => 'تم حذف المستخدم بنجاح',
     'finish current order first or clear the cart' => 'قم بإنهاء الطلب الحالي أولاً أو قم بمسح العربة',
     'Added To Cart Successfully' => 'تمت الإضافة إلى سلة التسوق بنجاح',

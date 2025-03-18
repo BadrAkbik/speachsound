@@ -1,10 +1,10 @@
 <?php
 return [
-    'login successfully, but code is needed' => 'login successfully, but code is needed',
+    'otp_sent' => 'Verification code has been sent successfully to your phone number',
     'You have registred to our app successfully please use your phone number to login' => 'You have registred to our app successfully please use your phone number to login',
     'login successfully' => 'login successfully',
     'auth failed' => 'auth failed',
-    'Logged out' => 'Logged out',
+    'logged_out' => 'logged_out',
     'Delete user successfully' => 'Delete user successfully',
     'finish current order first or clear the cart' => 'finish current order first or clear the cart',
     'Added To Cart Successfully' => 'Added To Cart Successfully',

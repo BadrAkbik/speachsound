@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -46,19 +45,19 @@ class UserController extends Controller
     public function delete(User $user)
     {
         if ($user->trashed()) {
-            return $this->sendMessage(__('api.This account has been deleted'), 200);
+            return $this->withSuccess(message:__('api.This account has been deleted'));
         }
         $user->delete();
-        return $this->sendMessage(__('api.This account has been deleted'), 200);
+        return $this->withSuccess(message:__('api.This account has been deleted'));
     }
 
     public function forceDelete(User $user)
     {
         if (!$user->trashed()) {
             $user->delete();
-            return $this->sendMessage(__('api.This account has been deleted'), 200);
+            return $this->withSuccess(message:__('api.This account has been deleted'));
         }
         $user->forceDelete();
-        return $this->sendMessage(__('api.This account has been deleted for ever'), 200);
+        return $this->withSuccess(message:__('api.This account has been deleted for ever'));
     }
 }

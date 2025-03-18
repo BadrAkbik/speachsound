@@ -15,9 +15,8 @@ class SendVerifySMS extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(protected string $code)
     {
-        //
     }
 
     /**
@@ -35,22 +34,15 @@ class SendVerifySMS extends Notification
      */
     public function toMail(object $notifiable)
     {
-        if ($notifiable->phone_number == '945496372') {
-            return true;
-        } else {
-            $code = $this->generateCode($notifiable);
-        }
+        // if ($notifiable->phone_number == '945496372') {
+        //     return true;
+        // } else {
+        //     $code = $this->generateCode($notifiable);
+        // }
         /* return (new MailMessage)
             ->line('The introduction to the notification.')
             ->action('Notification Action', url('/'))
             ->line('Thank you for using our application!'); */
-    }
-
-    public function generateCode($notifiable)
-    {
-        $code = mt_rand(100000, 999999);
-        Cache::put('verification_code_' . $notifiable->phone_number, now()->addHour());
-        return $code;
     }
 
     /**
@@ -63,5 +55,6 @@ class SendVerifySMS extends Notification
         return [
             //
         ];
+
     }
 }

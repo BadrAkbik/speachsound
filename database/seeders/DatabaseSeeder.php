@@ -29,40 +29,40 @@ class DatabaseSeeder extends Seeder
         if (!$user) {
             $user = User::create([
                 'name' => 'admin',
-                'phone_number' => '945496372',
+                'phone_number' => '999999999',
                 'email' => 'admin@admin.com',
                 'password' => 'admin123456',
             ]);
         }
 
-        $users = User::factory(100)->create();
-        AgeGroup::factory(10)->create();
-        Coupon::factory(10)->create();
-        Package::factory(10)->create();
-        Training::factory(20)->create();
-        Trainee::factory(50)->create();
-        Sound::factory(1)->create();
-        Test::factory(20)->create();
-        Word::factory(1)->create();
+        $users = User::factory(10)->create();
+        // AgeGroup::factory(10)->create();
+        // Coupon::factory(10)->create();
+        // Package::factory(10)->create();
+        // Training::factory(20)->create();
+        // Trainee::factory(50)->create();
+        // Sound::factory(1)->create();
+        // Test::factory(20)->create();
+        // Word::factory(1)->create();
 
-        $user->each(
-            function (User $user) {
-                $package_id = Package::all()->random(1)->first()->id;
-                $user->subscription()->create(
-                    [
-                        'package_id' => $package_id,
-                        'start_date' => '2024-07-01',
-                        'end_date' => '2024-07-03',
-                        'status' => 'active',
-                        'renew' => false
-                    ]
-                );
-            }
-        );
-        $package = Package::create([
-            'name' => 'افتراضي',
-            'price' => 1000,
-            'patiant_count' => 10
-        ]);
+        // $user->each(
+        //     function (User $user) {
+        //         $package_id = Package::all()->random(1)->first()->id;
+        //         $user->subscription()->create(
+        //             [
+        //                 'package_id' => $package_id,
+        //                 'start_date' => '2024-07-01',
+        //                 'end_date' => '2024-07-03',
+        //                 'status' => 'active',
+        //                 'renew' => false
+        //             ]
+        //         );
+        //     }
+        // );
+        // $package = Package::create([
+        //     'name' => 'افتراضي',
+        //     'price' => 1000,
+        //     'patiant_count' => 10
+        // ]);
     }
 }
