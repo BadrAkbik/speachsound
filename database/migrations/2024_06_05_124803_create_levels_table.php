@@ -4,18 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('trainings', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->nullable();
-            $table->string('name_en')->unique()->nullable();
-            // $table->foreignId('parent_id')->nullable()->constrained('trainings', 'id')->nullOnDelete();
+            $table->json('words');
+            $table->foreignId('sound_id')->constrained('sounds')->cascadeOnDelete();
+            $table->string('audio')->nullable();
+            $table->string('xray_video')->nullable();
+            $table->string('natural_video')->nullable();
             $table->float('success_rate', 2)->nullable();
             $table->integer('success_attempts')->nullable();
             $table->timestamps();
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trainings');
+        Schema::dropIfExists('words');
     }
 };

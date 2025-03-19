@@ -14,9 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('sound')->unique();
             $table->foreignId('age_group_id')->nullable()->constrained('age_groups', 'id')->nullOnDelete();
-            $table->json('audio')->nullable();
-            $table->json('xray_videos')->nullable();
-            $table->json('natural_videos')->nullable();
+            $table->string('image')->nullable();
             $table->integer('start_age')->nullable();
             $table->integer('end_age')->nullable();
             $table->timestamps();

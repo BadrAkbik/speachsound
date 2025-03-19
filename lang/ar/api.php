@@ -44,7 +44,8 @@ return [
     'Your order price didnt reach the minimum value for the coupon !' => 'سعر طلبك لم يصل إلى الحد الأدنى لقيمة القسيمة!',
     'Invalid Code !' => 'الرمز غير صحيح !',
     'This coupon con not be used to any of these services !' => 'لا يمكن استخدام هذا الكوبون لأي من هذه الخدمات !',
-    'Something went wrong, please try again' => 'حدث خطأ ما الرجاء إعادة المحاولة',
+    'Something_went_wrong' => 'حدث خطأ ما الرجاء إعادة المحاولة',
     'Please subscribe to a package to use the app' => 'الرجاء الاشتراك في أحد الباقات لاستخدام التطبيق',
-    'This account has been deleted' => 'تم حذف هذا الحساب'
+    'This account has been deleted' => 'تم حذف هذا الحساب',
+    'operation_done_successfully' => 'تمت العملية بنجاح'
 ];

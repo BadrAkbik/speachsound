@@ -17,9 +17,15 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone_code')->nullable();
             $table->string('phone_number')->unique()->nullable();
-            $table->string('image')->nullable();
+            $table->string('profile_picture')->nullable();
+            $table->string('year_of_birth')->nullable();
+            $table->enum('gender', ['male', 'female']);
             $table->enum('type', ['personal', 'parent', 'specialist'])->default('personal');
             $table->string('profile_completion_status')->default('pending');
+            // $table->string('training_result')->nullable();
+            // $table->string('general_rating')->nullable();
+            // $table->date('start_date')->nullable();
+            // $table->date('end_date')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
