@@ -7,19 +7,21 @@ use Illuminate\Support\Str;
 
 trait ImageTrait
 {
-    public function storeImage ($image, $path, $drive = "public")
+    public function storeImage($image, $path, $drive = 'public')
     {
         $extension = $image->getClientOriginalExtension();
 
         $filename = Str::uuid() . '.' . $extension;
 
         $path = Storage::disk($drive)->putFileAs($path, $image, $filename);
-        
+
         return $path;
     }
 
-    public function deleteImage($path)
+    public function deleteImage($path, $drive = 'public')
     {
-        Storage::disk('public')->delete($path);    
+        if (Storage::disk($drive)->exists($path)) {
+            Storage::disk($drive)->delete($path);
+        }
     }
 }
