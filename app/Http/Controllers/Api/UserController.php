@@ -25,8 +25,7 @@ class UserController extends BaseController
         try {
             $user = auth()->user();
 
-            $age_record = Age::find($validated['age'])->age;
-            
+            $age_record = Age::find($validated['age']);
             $year_of_birth = Carbon::now()->format('Y') - $age_record->age;
 
             if($request->has('profile_picture')){
@@ -46,6 +45,7 @@ class UserController extends BaseController
             ]);
             return $this->withSuccess(message: __('api.operation_done_successfully'));
         } catch (\Exception $e) {
+            \Log::error($e->getMessage());
             return $this->withError(__('api.Something_went_wrong'), 500);
         }
     }
