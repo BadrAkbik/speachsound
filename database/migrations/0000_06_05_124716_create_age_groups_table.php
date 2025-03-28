@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('age_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('name_en')->nullable();
             $table->integer('from_age');
             $table->integer('to_age');
             $table->softDeletes();

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ages', function (Blueprint $table) {
             $table->id();
             $table->integer('age');
+            $table->string('name_written')->nullable();
             $table->foreignId('age_group_id')->nullable()->constrained('age_groups')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
