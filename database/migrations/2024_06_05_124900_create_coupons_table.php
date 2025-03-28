@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->enum('type', ['amount', 'percentage']);
             $table->float('value', 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

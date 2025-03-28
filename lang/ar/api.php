@@ -45,7 +45,7 @@ return [
     'Invalid Code !' => 'الرمز غير صحيح !',
     'This coupon con not be used to any of these services !' => 'لا يمكن استخدام هذا الكوبون لأي من هذه الخدمات !',
     'Something_went_wrong' => 'حدث خطأ ما الرجاء إعادة المحاولة',
-    'Please subscribe to a package to use the app' => 'الرجاء الاشتراك في أحد الباقات لاستخدام التطبيق',
+    'unsubscribed_message' => 'الرجاء الاشتراك لاستخدام كامل مزايا التطبيق',
     'This account has been deleted' => 'تم حذف هذا الحساب',
     'operation_done_successfully' => 'تمت العملية بنجاح'
 ];

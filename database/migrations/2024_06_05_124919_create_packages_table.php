@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name_en')->unique()->nullable();
             $table->text('description')->nullable();
             $table->float('price');
-            $table->integer('patiant_count');
             $table->timestamps();
             $table->softDeletes();
         });

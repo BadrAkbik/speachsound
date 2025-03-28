@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->float('success_rate', 2)->nullable();
             $table->integer('success_attempts')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

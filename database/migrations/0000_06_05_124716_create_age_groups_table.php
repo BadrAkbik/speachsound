@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name_en')->nullable();
             $table->integer('from_age');
             $table->integer('to_age');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

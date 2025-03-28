@@ -2,7 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Trainee;
 use App\Models\User;
 use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -23,24 +22,24 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make(__('dashboard.The number of users'), User::count())
-                ->icon('heroicon-o-users')
-                ->color('success'),
-            Stat::make(__('dashboard.The number of trainees'), Trainee::count())
-                ->icon('heroicon-o-users')
-                ->color('success'),
+            // Stat::make(__('dashboard.The number of users'), User::count())
+            //     ->icon('heroicon-o-users')
+            //     ->color('success'),
+            // Stat::make(__('dashboard.The number of trainees'), Trainee::count())
+            //     ->icon('heroicon-o-users')
+            //     ->color('success'),
             Stat::make(__('dashboard.new_users'), User::whereBetween('created_at', [now()->subWeeks(4), now()])->count())
                 ->icon('heroicon-o-users')
                 ->description(__('dashboard.within_month'))
                 ->descriptionIcon('heroicon-o-users', IconPosition::Before)
                 ->chart($this->getModelCountBetweenWeeks(User::class, 4))
                 ->color('primary'),
-            Stat::make(__('dashboard.new_tranees'), Trainee::whereBetween('created_at', [now()->subWeeks(4), now()])->count())
-                ->icon('heroicon-o-users')
-                ->description(__('dashboard.within_month'))
-                ->descriptionIcon('heroicon-o-users', IconPosition::Before)
-                ->chart($this->getModelCountBetweenWeeks(Trainee::class, 4))
-                ->color('primary'),
+            // Stat::make(__('dashboard.new_tranees'), Trainee::whereBetween('created_at', [now()->subWeeks(4), now()])->count())
+            //     ->icon('heroicon-o-users')
+            //     ->description(__('dashboard.within_month'))
+            //     ->descriptionIcon('heroicon-o-users', IconPosition::Before)
+            //     ->chart($this->getModelCountBetweenWeeks(Trainee::class, 4))
+            //     ->color('primary'),
         ];
     }
 

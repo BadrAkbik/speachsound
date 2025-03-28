@@ -5,9 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RatingResource\Pages;
 use App\Filament\Resources\RatingResource\RelationManagers;
 use App\Models\Rating;
-use App\Models\Test;
-use App\Models\Trainee;
-use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -51,30 +48,30 @@ class RatingResource extends Resource
                 Section::make()
                     ->columns(2)
                     ->schema([
-                        Select::make('trainee_id')
-                            ->label(__('dashboard.trainee'))
-                            ->relationship('trainee', 'id')
-                            ->exists('trainees', 'id')
-                            ->live()
-                            ->preload()
-                            ->options(
-                                function () {
-                                    return Trainee::pluck('name', 'id');
-                                }
-                            )
-                            ->required(),
-                        Select::make('test_id')
-                            ->label(__('dashboard.test'))
-                            ->relationship('test', 'id')
-                            ->exists('tests', 'id')
-                            ->live()
-                            ->preload()
-                            ->options(
-                                function () {
-                                    return Test::pluck('name', 'id');
-                                }
-                            )
-                            ->required(),
+                        // Select::make('trainee_id')
+                        //     ->label(__('dashboard.trainee'))
+                        //     ->relationship('trainee', 'id')
+                        //     ->exists('trainees', 'id')
+                        //     ->live()
+                        //     ->preload()
+                        //     ->options(
+                        //         function () {
+                        //             return Trainee::pluck('name', 'id');
+                        //         }
+                        //     )
+                        //     ->required(),
+                        // Select::make('test_id')
+                        //     ->label(__('dashboard.test'))
+                        //     ->relationship('test', 'id')
+                        //     ->exists('tests', 'id')
+                        //     ->live()
+                        //     ->preload()
+                        //     ->options(
+                        //         function () {
+                        //             return Test::pluck('name', 'id');
+                        //         }
+                        //     )
+                        //     ->required(),
                         TextInput::make('degree')
                             ->label(__('dashboard.degree'))
                             ->maxLength(255)

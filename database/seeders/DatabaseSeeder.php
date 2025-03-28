@@ -9,8 +9,6 @@ use App\Models\Package;
 use App\Models\Role;
 use App\Models\Sound;
 use App\Models\Subscription;
-use App\Models\Test;
-use App\Models\Trainee;
 use App\Models\Training;
 use App\Models\User;
 use App\Models\Video;
@@ -35,7 +33,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $users = User::factory(10)->create();
+        // $users = User::factory(10)->create();
         // AgeGroup::factory(10)->create();
         // Coupon::factory(10)->create();
         // Package::factory(10)->create();

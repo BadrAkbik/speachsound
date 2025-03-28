@@ -26,6 +26,7 @@ return new class extends Migration
             // $table->string('general_rating')->nullable();
             // $table->date('start_date')->nullable();
             // $table->date('end_date')->nullable();
+            $table->foreignId('age_group_id')->nullable()->constrained('age_groups')->nullOnDelete();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();

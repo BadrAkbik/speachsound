@@ -20,6 +20,7 @@ class AuthController extends BaseController
         $this->forgetOtpCode($user->phone_number);
         return $this->withSuccess([
             'profile_completion_status' => $user->profile_completion_status,
+            'user_subscription' => $user->subscription,
             'token' => $token
         ]);
     }

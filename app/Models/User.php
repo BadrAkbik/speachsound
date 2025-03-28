@@ -58,10 +58,11 @@ class User extends Authenticatable implements IMustVerifyMobile
         return $this->hasOne(Subscription::class, 'user_id');
     }
 
-    public function trainees()
+    public function ageGroup()
     {
-        return $this->morphMany(Trainee::class, 'trainer');
+        return $this->belongsTo(AgeGroup::class);
     }
+
 
     /**
      * Check if the user has a specific permission.

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Age;
+use App\Models\AgeGroup;
 use App\Models\User;
 use App\Traits\ImageTrait;
 use Carbon\Carbon;
@@ -15,7 +17,7 @@ class UserController extends BaseController
     public function completeProfile(Request $request)
     {
         $validated = $request->validate([
-            'age' => ['required', 'int'],
+            'age' => ['required', 'int', 'exists:ages,id'],
             'profile_picture' => ['nullable', 'image'],
             'gender' => ['required', 'in:male,female'],
             'name' => ['required', 'string']
@@ -23,7 +25,9 @@ class UserController extends BaseController
         try {
             $user = auth()->user();
 
-            $year_of_birth = Carbon::now()->format('Y') - $validated['age'];
+            $age_record = Age::find($validated['age'])->age;
+            
+            $year_of_birth = Carbon::now()->format('Y') - $age_record->age;
 
             if($request->has('profile_picture')){
                 if($user->profile_picture){
@@ -34,6 +38,7 @@ class UserController extends BaseController
 
             $user->update([
                 'year_of_birth' => $year_of_birth,
+                'age_group_id' => $age_record->age_group_id,
                 'profile_picture' => $image_path ?? null,
                 'gender' => $validated['gender'],
                 'name' => $validated['name'],

@@ -45,7 +45,7 @@ return [
     'Invalid Code !' => 'Invalid Code !',
     'This coupon con not be used to any of these services !' => 'This coupon con not be used to any of these services !',
     'Something_went_wrong' => 'Something went wrong, please try again',
-    'Please subscribe to a package to use the app' => 'Please subscribe to a package to use the app',
+    'unsubscribed_message' => 'Please subscribe to use all features in the app',
     'This account has been deleted' => 'This account has been deleted',
     'operation_done_successfully' => 'Operation done successfully'
 ];

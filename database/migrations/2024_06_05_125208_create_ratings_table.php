@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('success_attempts')->nullable();
             $table->integer('failure_attempts')->nullable();
             $table->json('records')->nullable();
-            $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -12,12 +12,14 @@ return new class extends Migration {
     {
         Schema::create('sounds', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->string('sound')->unique();
             $table->foreignId('age_group_id')->nullable()->constrained('age_groups', 'id')->nullOnDelete();
+            $table->boolean('is_demo')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->string('image')->nullable();
-            $table->integer('start_age')->nullable();
-            $table->integer('end_age')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

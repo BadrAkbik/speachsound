@@ -29,8 +29,4 @@ class Word extends Model
         return $this->belongsTo(Sound::class);
     }
 
-    public function test()
-    {
-        return $this->belongsTo(Test::class);
-    }
 }
