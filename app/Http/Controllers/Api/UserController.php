@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Age;
-use App\Models\AgeGroup;
 use App\Models\User;
 use App\Traits\ImageTrait;
 use Carbon\Carbon;
@@ -17,7 +16,7 @@ class UserController extends BaseController
     public function completeProfile(Request $request)
     {
         $validated = $request->validate([
-            'age' => ['required', 'int', 'exists:ages,id'],
+            'age' => ['required', 'integer', 'exists:ages,id'],
             'profile_picture' => ['nullable', 'image'],
             'gender' => ['required', 'in:male,female'],
             'name' => ['required', 'string']

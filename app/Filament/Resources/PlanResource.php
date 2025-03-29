@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PackageResource\Pages;
-use App\Models\Package;
+use App\Filament\Resources\PlanResource\Pages;
+use App\Models\Plan;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -17,9 +17,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 
-class PackageResource extends Resource implements HasShieldPermissions
+class PlanResource extends Resource implements HasShieldPermissions
 {
-    protected static ?string $model = Package::class;
+    protected static ?string $model = Plan::class;
 
     public static function getPermissionPrefixes(): array
     {
@@ -44,17 +44,17 @@ class PackageResource extends Resource implements HasShieldPermissions
 
     public static function getNavigationLabel(): string
     {
-        return __('dashboard.packages');
+        return __('dashboard.Plans');
     }
 
     public static function getModelLabel(): string
     {
-        return __('dashboard.package');
+        return __('dashboard.Plan');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('dashboard.packages');
+        return __('dashboard.Plans');
     }
 
     public static function form(Form $form): Form
@@ -160,9 +160,9 @@ class PackageResource extends Resource implements HasShieldPermissions
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPackages::route('/'),
-            'create' => Pages\CreatePackage::route('/create'),
-            'edit' => Pages\EditPackage::route('/{record}/edit'),
+            'index' => Pages\ListPlans::route('/'),
+            'create' => Pages\CreatePlan::route('/create'),
+            'edit' => Pages\EditPlan::route('/{record}/edit'),
         ];
     }
 }

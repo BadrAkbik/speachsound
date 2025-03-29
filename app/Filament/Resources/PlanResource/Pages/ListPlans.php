@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\PackageResource\Pages;
+namespace App\Filament\Resources\PlanResource\Pages;
 
-use App\Filament\Resources\PackageResource;
+use App\Filament\Resources\PlanResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListPackages extends ListRecords
+class ListPlans extends ListRecords
 {
-    protected static string $resource = PackageResource::class;
+    protected static string $resource = PlanResource::class;
 
     protected function getHeaderActions(): array
     {

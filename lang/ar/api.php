@@ -47,5 +47,9 @@ return [
     'Something_went_wrong' => 'حدث خطأ ما الرجاء إعادة المحاولة',
     'unsubscribed_message' => 'الرجاء الاشتراك لاستخدام كامل مزايا التطبيق',
     'This account has been deleted' => 'تم حذف هذا الحساب',
-    'operation_done_successfully' => 'تمت العملية بنجاح'
+    'operation_done_successfully' => 'تمت العملية بنجاح',
+    'subscribed_successfully' => 'تم الاشتراك بنجاح',
+    'uncompleted_profile_message' => 'الرجاء إكمال البيانات الشخصية أولاً',
+    'already_subscribed' => 'لديك بالفعل اشتراك ساري المفعول',
+    'no_subscription' => 'لا يوجد اشتراك',
 ];

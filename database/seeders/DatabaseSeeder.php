@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\AgeGroup;
 use App\Models\Coupon;
 use App\Models\Level;
-use App\Models\Package;
 use App\Models\Role;
 use App\Models\Sound;
 use App\Models\Subscription;
@@ -45,10 +44,10 @@ class DatabaseSeeder extends Seeder
 
         // $user->each(
         //     function (User $user) {
-        //         $package_id = Package::all()->random(1)->first()->id;
+        //         $plan_id = Package::all()->random(1)->first()->id;
         //         $user->subscription()->create(
         //             [
-        //                 'package_id' => $package_id,
+        //                 'plan_id' => $plan_id,
         //                 'start_date' => '2024-07-01',
         //                 'end_date' => '2024-07-03',
         //                 'status' => 'active',

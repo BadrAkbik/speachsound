@@ -15,13 +15,18 @@ class Subscription extends Model
     protected $casts = [
         'renew' => 'boolean',
     ];
-    public function package()
+    public function plan()
     {
-        return $this->belongsTo(Package::class, 'package_id');
+        return $this->belongsTo(Plan::class, 'plan_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function paymentSubscription()
+    {
+        return $this->hasOne(PaymentSubscription::class);
     }
 }

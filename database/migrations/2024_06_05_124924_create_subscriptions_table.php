@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,15 +12,16 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('package_id')->constrained('packages')->cascadeOnDelete();
+            $table->foreignId('plan_id')->constrained('plans')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->boolean('was_switched')->default(false);
+            $table->date('suppressed_at')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->string('status')->nullable();
             $table->boolean('renew')->default(false);
             $table->timestamps();
             $table->softDeletes();
-            $table->unique(['package_id', 'user_id']);
         });
     }
 

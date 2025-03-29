@@ -47,5 +47,9 @@ return [
     'Something_went_wrong' => 'Something went wrong, please try again',
     'unsubscribed_message' => 'Please subscribe to use all features in the app',
     'This account has been deleted' => 'This account has been deleted',
-    'operation_done_successfully' => 'Operation done successfully'
+    'operation_done_successfully' => 'Operation done successfully',
+    'subscribed_successfully' => 'Subscribed successfully',
+    'uncompleted_profile_message' => 'Please complete profile data first',
+    'already_subscribed' => 'You already has active subscription',
+    'no_subscription' => 'No subscription',
 ];

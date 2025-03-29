@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubscriptionResource\Pages;
-use App\Models\Package;
+use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\User;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -64,13 +64,13 @@ class SubscriptionResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Select::make('package_id')
+                Select::make('plan_id')
                     ->label(__('dashboard.package'))
                     ->relationship('package')
                     ->exists('packages', 'id')
                     ->live()
                     ->preload()
-                    ->getOptionLabelFromRecordUsing(fn(Package $record) => "{$record->name}"),
+                    ->getOptionLabelFromRecordUsing(fn(Plan $record) => "{$record->name}"),
                 Select::make('user_id')
                     ->label(__('dashboard.user'))
                     ->relationship('user')

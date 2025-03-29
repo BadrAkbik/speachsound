@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Package;
+use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +19,7 @@ class SubscriptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'package_id' => Package::all()->random(1)->first()->id,
+            'plan_id' => Package::all()->random(1)->first()->id,
             'user_id' => User::all()->random(1)->first()->id,
             'start_date' => fake()->dateTimeBetween(now()->subMonths(3), now()->addYear()),
             'end_date' => fake()->dateTimeBetween(now(), now()->addYear()),
