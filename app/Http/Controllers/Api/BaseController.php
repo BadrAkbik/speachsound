@@ -11,7 +11,7 @@ class BaseController extends Controller
     public function withSuccess($data = [], $message = null)
     {
         $response = [
-            'success' => true,
+            'status' => true,
         ];
         if($message){
             $response['message'] = $message;
@@ -25,7 +25,7 @@ class BaseController extends Controller
     public function withError($message, $code)
     {
         $response = [
-            'success' => false,
+            'status' => false,
             'message' => $message,
         ];
         return response()->json($response, $code);

@@ -17,23 +17,24 @@ class SubscriptionController extends BaseController
         ]);
         $user = auth()->user();
         if($user->has('subscription')->count()){
-            return $this->withError(__('api.already_subscribed'), 400);
+            return $this->withError(__('api.already_subscribed'), 403);
         }
 
         $plan = Plan::find($validated['plan_id']);
 
-        if($plan->periodicity_type === 'month'){
-            $period = $plan->period  * 30;
-        }elseif($plan->periodicity_type === 'year'){
-            $period = $plan->period  * 365;
-        }else{
-            $period = $plan->period;
+        $endDate = Carbon::now();
+        if ($plan->periodicity_type === 'month') {
+            $endDate = $endDate->addMonths($plan->period);
+        } elseif ($plan->periodicity_type === 'year') {
+            $endDate = $endDate->addYears($plan->period);
+        } else {
+            $endDate = $endDate->addDays($plan->period);
         }
 
         $subscription = $user->subscription()->create([
             'plan_id' => (int) $validated['plan_id'],
             'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addDays($period),
+            'end_date' => $endDate,
             'status' => 'active',
         ]);
 
