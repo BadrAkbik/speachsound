@@ -7,11 +7,11 @@ use App\Http\Resources\PlanCollection;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
-class PlanController extends Controller
+class PlanController extends BaseController
 {
 
     public function index()
     {
-        return new PlanCollection(Plan::select('id', 'name', 'period', 'periodicity_type', 'price')->get());        
+        return $this->withSuccess(new PlanCollection(Plan::select('id', 'name', 'period', 'periodicity_type', 'price')->get()));        
     }
 }

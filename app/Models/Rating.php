@@ -11,4 +11,22 @@ class Rating extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'records' => 'array'
+        ];
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    public function sound()
+    {
+        return $this->belongsTo(Sound::class);
+    }
 }

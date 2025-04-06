@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Resources\SoundCollection;
 use App\Models\Sound;
 
-class SoundController extends Controller
+class SoundController extends BaseController
 {
     public function index()
     {
@@ -17,6 +16,6 @@ class SoundController extends Controller
             ->orderBy('id')
             ->get();
 
-        return new SoundCollection($sounds);
+        return $this->withSuccess(new SoundCollection($sounds));
     }
 }

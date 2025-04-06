@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\SoundController;
+use App\Http\Controllers\Api\RatingController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
@@ -21,6 +22,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('plans', [PlanController::class, 'index']);
 
     Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
+
+    Route::get('ratings/{sound_id?}', [RatingController::class, 'index'])->whereNumber('sound_id');
 });
 Route::post('upload', [AiModelController::class, 'upload_audio']);
 Route::post('test', [AiModelController::class, 'test']);

@@ -48,9 +48,9 @@ class User extends Authenticatable implements IMustVerifyMobile
     }
 
 
-    public function package()
+    public function plan()
     {
-        return $this->hasOneThrough(Package::class, Subscription::class);
+        return $this->hasOneThrough(Plan::class, Subscription::class);
     }
 
     public function subscription()
@@ -61,6 +61,11 @@ class User extends Authenticatable implements IMustVerifyMobile
     public function ageGroup()
     {
         return $this->belongsTo(AgeGroup::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
     }
 
 

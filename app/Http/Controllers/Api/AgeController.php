@@ -7,10 +7,10 @@ use App\Http\Resources\AgeCollection;
 use App\Models\Age;
 
 
-class AgeController extends Controller
+class AgeController extends BaseController
 {
     public function index()
     {
-        return new AgeCollection(Age::select('id', 'age')->get());
+        return $this->withSuccess(new AgeCollection(Age::select('id', 'age')->get()));
     }
 }
