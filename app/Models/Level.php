@@ -17,4 +17,9 @@ class Level extends Model
             'words' => 'array'
         ];
     }
+
+    public function rating($user_id, $sound_id)
+    {
+        return $this->hasOne(Rating::class)->where('trainee_id', $user_id)->where('sound_id', $sound_id);
+    }
 }
