@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LevelCollection;
 use App\Http\Resources\LevelResource;
 use App\Models\Level;
 use Illuminate\Http\Request;
@@ -14,7 +15,12 @@ class LevelController extends BaseController
      */
     public function index(int $sound_id)
     {
-        return $this->withSuccess(LevelResource::collection(Level::where('sound_id', $sound_id)->get()));
+        return $this->withSuccess(new LevelCollection(Level::where('sound_id', $sound_id)->get()));
+    }
+
+    public function show(string $id)
+    {
+        return $this->withSuccess(new LevelResource(Level::findOrFail($id)));
     }
 
     /**
@@ -24,15 +30,7 @@ class LevelController extends BaseController
     {
         //
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      */

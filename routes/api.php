@@ -25,7 +25,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
 
     Route::get('ratings/{sound_id?}', [RatingController::class, 'index'])->whereNumber('sound_id');
+    
     Route::get('levels/{sound_id}', [LevelController::class, 'index'])->whereNumber('sound_id');
+
+    Route::get('progress', [RatingController::class, 'currentProgress']);
 });
 Route::post('upload', [AiModelController::class, 'upload_audio']);
 Route::post('test', [AiModelController::class, 'test']);

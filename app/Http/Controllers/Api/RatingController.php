@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\CurrentProgress;
 use App\Http\Resources\RatingResource;
 use App\Models\Rating;
 
@@ -24,5 +25,10 @@ class RatingController extends BaseController
         $lists = RatingResource::collection($ratings);
 
         return $this->withSuccess($lists);
+    }
+
+    public function currentProgress()
+    {
+        return CurrentProgress::collection(Rating::where('trainee_id', auth()->user()->id)->get());
     }
 }

@@ -22,4 +22,9 @@ class Level extends Model
     {
         return $this->hasOne(Rating::class)->where('trainee_id', $user_id)->where('sound_id', $sound_id);
     }
+
+    public function sound()
+    {
+        return $this->belongsTo(Sound::class);
+    }
 }

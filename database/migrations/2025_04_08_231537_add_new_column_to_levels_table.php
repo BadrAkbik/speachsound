@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('levels', function (Blueprint $table) {
-            $table->string('banner_image')->nullable()->after('success_attempts');
+            $table->removeColumn('success_rate');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('levels', function (Blueprint $table) {
-            $table->dropColumn('banner_image');
+            $table->float('success_rate', 2)->nullable();
         });
     }
 };
