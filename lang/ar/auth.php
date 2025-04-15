@@ -38,8 +38,9 @@ return [
     'Your mobile number is not verified.' => 'رقم هاتفك غير مؤكد',
     'Your phone number has been verified successfully' => 'تم تأكيد رقم هاتفك بنجاح',
     'not_registered' => 'غير مسجل',
-    
-    
+    'the_code_you_entered_is_expired_or_incorrect' => 'الرمز المدخل قد انتهت صلاحيته او خاطئ',
+    'otp_not_sent' => 'فشل ارسال الكود',
+    'otp_sent' => 'تم ارسال الكود الى جوالك',
 
     //------------------ mail -------------------------------------
     'mail_acc_activation' => 'تفعيل الحساب',

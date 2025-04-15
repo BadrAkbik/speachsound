@@ -24,16 +24,10 @@ class codeValidate implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-
-        $code = Cache::get('verification_code_' . $this->user->phone_number);
-
-        if (!$code) {
-            $fail(__('auth.The code you entered is expired.'));
-            return;
-        }
-
-        if ($code != $value) {
-            $fail(__('auth.The code you entered is incorrect.'));
+        $code =  $this->user->code;
+        
+        if (!$code || $code != $value) {
+            $fail(__('auth.the_code_you_entered_is_expired_or_incorrect'));
             return;
         }
     }

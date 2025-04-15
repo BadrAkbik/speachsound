@@ -32,5 +32,8 @@ return [
     'password has been successfully reseted' => 'password has been successfully reseted',
     'Your mobile number is not verified.' => 'Your mobile number is not verified.',
     'Your phone number has been verified successfully' => 'Your phone number has been verified successfully',
-    'not_registered' => 'not_registered'
+    'not_registered' => 'not_registered',
+    'the_code_you_entered_is_expired_or_incorrect' => 'The code you entered is expired or incorrect',
+    'otp_not_sent' => 'failed to send OTP',
+    'otp_sent' => 'OTP sent to your phone number',
 ];

@@ -22,10 +22,6 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female']);
             $table->enum('type', ['personal', 'parent', 'specialist'])->default('personal');
             $table->string('profile_completion_status')->default('pending');
-            // $table->string('training_result')->nullable();
-            // $table->string('general_rating')->nullable();
-            // $table->date('start_date')->nullable();
-            // $table->date('end_date')->nullable();
             $table->foreignId('age_group_id')->nullable()->constrained('age_groups')->nullOnDelete();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

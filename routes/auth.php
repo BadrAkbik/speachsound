@@ -14,6 +14,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
 });
 
-Route::post('otp-request', [AuthController::class, 'otpRequest'])->name('otp-request')->middleware(['throttle:1,1']);
+Route::post('otp-request', [AuthController::class, 'otpRequest'])->name('otp-request')->middleware(['throttle:10,1']);
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
