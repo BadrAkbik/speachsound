@@ -3,15 +3,14 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Traits\SMSTrait;
 class AuthService
 {
     use SMSTrait;
     protected $whitelist = [
         '966580111196',
-        '963945496372'
+        '963945496372',
+        '966999999999',
     ];
 
     public function requestOtp($data)
