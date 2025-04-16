@@ -12,19 +12,17 @@ class Sound extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $casts = ['xray_videos' => 'array', 'natural_videos' => 'array', 'audio' => 'array'];
-
-    public function words()
+    public function letter()
     {
-        return $this->hasMany(Word::class);
+        return $this->belongsTo(Letter::class);
     }
 
-    public function ageGroup()
+    public function level()
     {
-        return $this->belongsTo(AgeGroup::class);
+        return $this->belongsTo(Level::class);
     }
 
-    protected static function boot()
+        protected static function boot()
     {
         parent::boot();
 

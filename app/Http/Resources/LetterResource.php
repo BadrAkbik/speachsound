@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SoundResource extends JsonResource
+class LetterResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,7 @@ class SoundResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'sound' => $this->sound,
+            'letter' => $this->letter,
             'is_demo' => $this->is_demo,
             'image' => $this->image,
         ];

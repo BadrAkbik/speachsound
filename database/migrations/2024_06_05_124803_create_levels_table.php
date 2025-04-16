@@ -12,13 +12,10 @@ return new class extends Migration {
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
-            $table->json('words');
-            $table->foreignId('sound_id')->constrained('sounds')->cascadeOnDelete();
-            $table->string('audio')->nullable();
-            $table->string('xray_video')->nullable();
-            $table->string('natural_video')->nullable();
-            $table->float('success_rate', 2)->nullable();
-            $table->integer('success_attempts')->nullable();
+            $table->string('name')->nullable();
+            $table->foreignId('letter_id')->nullable()->constrained('letters')->nullOnDelete();
+            $table->integer('completed_sounds_to_success')->nullable();
+            $table->integer('sort_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('words');
+        Schema::dropIfExists('levels');
     }
 };

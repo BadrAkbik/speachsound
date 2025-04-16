@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Level;
+use App\Models\LevelProgress;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -18,10 +20,24 @@ class LevelCollection extends ResourceCollection
             fn($level) =>
             [
                 'name' => $level->name,
-                'progress' => $level->rating(auth()->user()->id, $level->sound_id)->first()?->progress ?? 0 . '%',
-                'attempt_to_success' => $level->attempt_to_success,
-                'sound' => new SoundResource($level->sound)
+                'completed_sounds_to_success' => $level->completed_sounds_to_success,
+                'letter' => new LetterResource($level->letter),
+                'progress' => new LevelProgressResource($level->letterProgress),
+                'locked' => $this->isLocked($level),
+                'sort_order' => $level->sort_order,
             ]
         )->toArray();
+    }
+
+    private function isLocked($level)
+    {
+        $previous_level_id = Level::where('id', $level->letterProgress->previous_level_id)->first()?->id;
+        if (!$previous_level_id) {
+            return false;
+        }
+        if (LevelProgress::where('level_id', $previous_level_id)->where('trainee_id', auth()->user()->id)->first()?->status == 'completed') {
+            return false;
+        }
+        return true;
     }
 }

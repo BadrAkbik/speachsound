@@ -20,12 +20,12 @@ return new class extends Migration
             $table->string('profile_picture')->nullable();
             $table->string('year_of_birth')->nullable();
             $table->enum('gender', ['male', 'female']);
-            $table->enum('type', ['personal', 'parent', 'specialist'])->default('personal');
             $table->string('profile_completion_status')->default('pending');
             $table->foreignId('age_group_id')->nullable()->constrained('age_groups')->nullOnDelete();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
+            $table->string('code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

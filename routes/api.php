@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\SoundController;
 use App\Http\Controllers\Api\RatingController;
+use App\Http\Controllers\Api\LetterController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
@@ -16,6 +17,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('complete-profile', [UserController::class, 'completeProfile']);
    
     Route::get('sounds', [SoundController::class, 'index']);
+
+    Route::get('letters', [LetterController::class, 'index']);
     Route::get('ages', [AgeController::class, 'index']);
 
     Route::post('subscribe', [SubscriptionController::class, 'subscribe'])->middleware('completed-profile');
@@ -24,9 +27,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
 
-    Route::get('ratings/{sound_id?}', [RatingController::class, 'index'])->whereNumber('sound_id');
+    Route::get('ratings/{letter_id?}', [RatingController::class, 'index'])->whereNumber('letter_id');
     
-    Route::get('levels/{sound_id}', [LevelController::class, 'index'])->whereNumber('sound_id');
+    Route::get('levels/{letter_id}', [LevelController::class, 'index'])->whereNumber('letter_id');
+    
+    Route::get('sounds/{level_id}', [SoundController::class, 'index'])->whereNumber('level_id');
 
     Route::get('progress', [RatingController::class, 'currentProgress']);
 });

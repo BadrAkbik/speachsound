@@ -5,28 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
+class LevelProgress extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'records' => 'array'
-        ];
-    }
-
+    protected $table = 'level_progresses';
     public function level()
     {
         return $this->belongsTo(Level::class);
     }
 
-    public function sound()
+    public function letter()
     {
         return $this->belongsTo(Letter::class);
+    }
+
+    public function trainee()
+    {
+        return $this->belongsTo(User::class);
     }
 }

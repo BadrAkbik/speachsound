@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('sounds', function (Blueprint $table) {
+        Schema::create('letters', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('sound')->unique();
+            $table->string('letter')->unique();
             $table->foreignId('age_group_id')->nullable()->constrained('age_groups', 'id')->nullOnDelete();
             $table->boolean('is_demo')->default(false);
             $table->boolean('is_active')->default(true);
@@ -28,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('sounds');
+        Schema::dropIfExists('letters');
     }
 };

@@ -13,9 +13,10 @@ class LevelController extends BaseController
     /**
      * Display a listing of the resource.
      */
-    public function index(int $sound_id)
+    public function index(int $letter_id)
     {
-        return $this->withSuccess(new LevelCollection(Level::where('sound_id', $sound_id)->get()));
+        $levels = Level::with('letterProgress')->where('letter_id', $letter_id)->get();
+        return $this->withSuccess(new LevelCollection($levels));
     }
 
     public function show(string $id)

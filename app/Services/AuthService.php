@@ -11,6 +11,7 @@ class AuthService
         '966580111196',
         '963945496372',
         '966999999999',
+        '966575838591',
     ];
 
     public function requestOtp($data)

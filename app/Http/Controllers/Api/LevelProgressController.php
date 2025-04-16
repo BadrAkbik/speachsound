@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SpecialistController extends Controller
+class LevelProgressController extends Controller
 {
     //
 }

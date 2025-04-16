@@ -4,7 +4,7 @@ return [
     [
         'id' => 1,
         'name' => 'حرف الألف',
-        'sound' => 'أ',
+        'letter' => 'أ',
         'age_group_id' => 1,
         'is_demo' => 1,
         'is_active' => 1,
@@ -14,7 +14,7 @@ return [
     [
         'id' => 2,
         'name' => 'حرف الباء',
-        'sound' => 'ب',
+        'letter' => 'ب',
         'age_group_id' => 1,
         'is_demo' => 1,
         'is_active' => 1,
@@ -24,7 +24,7 @@ return [
     [
         'id' => 3,
         'name' => 'حرف التاء',
-        'sound' => 'ت',
+        'letter' => 'ت',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -34,7 +34,7 @@ return [
     [
         'id' => 4,
         'name' => 'حرف الثاء',
-        'sound' => 'ث',
+        'letter' => 'ث',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -44,7 +44,7 @@ return [
     [
         'id' => 5,
         'name' => 'حرف الجيم',
-        'sound' => 'ج',
+        'letter' => 'ج',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -54,7 +54,7 @@ return [
     [
         'id' => 6,
         'name' => 'حرف الحاء',
-        'sound' => 'ح',
+        'letter' => 'ح',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -64,7 +64,7 @@ return [
     [
         'id' => 7,
         'name' => 'حرف الخاء',
-        'sound' => 'خ',
+        'letter' => 'خ',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -74,7 +74,7 @@ return [
     [
         'id' => 8,
         'name' => 'حرف الدال',
-        'sound' => 'د',
+        'letter' => 'د',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -84,7 +84,7 @@ return [
     [
         'id' => 9,
         'name' => 'حرف الذال',
-        'sound' => 'ذ',
+        'letter' => 'ذ',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -94,7 +94,7 @@ return [
     [
         'id' => 10,
         'name' => 'حرف الراء',
-        'sound' => 'ر',
+        'letter' => 'ر',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -104,7 +104,7 @@ return [
     [
         'id' => 11,
         'name' => 'حرف الزاي',
-        'sound' => 'ز',
+        'letter' => 'ز',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -114,7 +114,7 @@ return [
     [
         'id' => 12,
         'name' => 'حرف السين',
-        'sound' => 'س',
+        'letter' => 'س',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -124,7 +124,7 @@ return [
     [
         'id' => 13,
         'name' => 'حرف الشين',
-        'sound' => 'ش',
+        'letter' => 'ش',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -134,7 +134,7 @@ return [
     [
         'id' => 14,
         'name' => 'حرف الصاد',
-        'sound' => 'ص',
+        'letter' => 'ص',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -144,7 +144,7 @@ return [
     [
         'id' => 15,
         'name' => 'حرف الضاد',
-        'sound' => 'ض',
+        'letter' => 'ض',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -154,7 +154,7 @@ return [
     [
         'id' => 16,
         'name' => 'حرف الطاء',
-        'sound' => 'ط',
+        'letter' => 'ط',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -164,7 +164,7 @@ return [
     [
         'id' => 17,
         'name' => 'حرف الظاء',
-        'sound' => 'ظ',
+        'letter' => 'ظ',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -174,7 +174,7 @@ return [
     [
         'id' => 18,
         'name' => 'حرف العين',
-        'sound' => 'ع',
+        'letter' => 'ع',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -184,7 +184,7 @@ return [
     [
         'id' => 19,
         'name' => 'حرف الغين',
-        'sound' => 'غ',
+        'letter' => 'غ',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -194,7 +194,7 @@ return [
     [
         'id' => 20,
         'name' => 'حرف الفاء',
-        'sound' => 'ف',
+        'letter' => 'ف',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -204,7 +204,7 @@ return [
     [
         'id' => 21,
         'name' => 'حرف القاف',
-        'sound' => 'ق',
+        'letter' => 'ق',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -214,7 +214,7 @@ return [
     [
         'id' => 22,
         'name' => 'حرف الكاف',
-        'sound' => 'ك',
+        'letter' => 'ك',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -224,7 +224,7 @@ return [
     [
         'id' => 23,
         'name' => 'حرف اللام',
-        'sound' => 'ل',
+        'letter' => 'ل',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -234,7 +234,7 @@ return [
     [
         'id' => 24,
         'name' => 'حرف الميم',
-        'sound' => 'م',
+        'letter' => 'م',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -244,7 +244,7 @@ return [
     [
         'id' => 25,
         'name' => 'حرف النون',
-        'sound' => 'ن',
+        'letter' => 'ن',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -254,7 +254,7 @@ return [
     [
         'id' => 26,
         'name' => 'حرف الهاء',
-        'sound' => 'هـ',
+        'letter' => 'هـ',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -264,7 +264,7 @@ return [
     [
         'id' => 27,
         'name' => 'حرف الواو',
-        'sound' => 'و',
+        'letter' => 'و',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,
@@ -274,7 +274,7 @@ return [
     [
         'id' => 28,
         'name' => 'حرف الياء',
-        'sound' => 'ي',
+        'letter' => 'ي',
         'age_group_id' => 1,
         'is_demo' => 0,
         'is_active' => 1,

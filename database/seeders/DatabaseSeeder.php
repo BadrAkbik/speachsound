@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 
 use App\Models\AgeGroup;
+use App\Models\Letter;
 use App\Models\User;
 use App\Models\Age;
 use App\Models\Sound;
@@ -21,13 +22,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'phone_number' => '999999999',
             'password' => 'admin123456',
+            'phone_code' => '+966',
+            'gender' => 'male',
+            'profile_completion_status' => 'completed',
         ]);
         $ages = require_once base_path('data/default_ages.php');
-        $sounds = require_once base_path('data/default_sounds.php');
+        $letters = require_once base_path('data/default_letters.php');
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         AgeGroup::truncate();
         Age::truncate();
-        Sound::truncate();
+        Letter::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         AgeGroup::create([
             'name' => 'افتراضي',
@@ -35,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'to_age' => 10,
         ]);
         Age::insert($ages);
-        Sound::insert($sounds);
+        Letter::insert($letters);
 
     }
 }

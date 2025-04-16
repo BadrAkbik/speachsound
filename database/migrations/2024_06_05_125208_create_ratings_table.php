@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('trainee_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('level_id')->nullable()->constrained('levels')->nullOnDelete();
+            $table->foreignId('letter_id')->nullable()->constrained('letters')->nullOnDelete();
             $table->foreignId('sound_id')->nullable()->constrained('sounds')->nullOnDelete();
-            $table->float('degree', 2)->nullable();
             $table->integer('success_attempts')->nullable();
             $table->integer('failure_attempts')->nullable();
+            $table->string('status')->nullable(); // completed, in_progress
             $table->json('records')->nullable();
             $table->timestamps();
             $table->softDeletes();

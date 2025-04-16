@@ -11,20 +11,18 @@ class Level extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected function casts(): array
+    public function letter()
     {
-        return [
-            'words' => 'array'
-        ];
+        return $this->belongsTo(Letter::class);
     }
 
-    public function rating($user_id, $sound_id)
+    public function letterProgress()
     {
-        return $this->hasOne(Rating::class)->where('trainee_id', $user_id)->where('sound_id', $sound_id);
+        return $this->hasOne(LevelProgress::class)->where('trainee_id', auth()->user()->id);
     }
 
-    public function sound()
+    public function previousLevel()
     {
-        return $this->belongsTo(Sound::class);
+        return $this->belongsTo(Level::class, 'previous_level_id');
     }
 }
