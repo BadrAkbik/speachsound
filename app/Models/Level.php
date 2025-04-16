@@ -25,4 +25,9 @@ class Level extends Model
     {
         return $this->belongsTo(Level::class, 'previous_level_id');
     }
+
+    public function sounds()
+    {
+        return $this->hasMany(Sound::class);
+    }
 }

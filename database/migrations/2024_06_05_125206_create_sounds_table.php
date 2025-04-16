@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('letter_id')->constrained('letters')->cascadeOnDelete();
             $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();
+            $table->foreignId('sound_id')->constrained('sounds')->cascadeOnDelete();
             $table->string('written_word');
             $table->string('audio')->nullable();
             $table->string('picture')->nullable();

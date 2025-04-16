@@ -25,8 +25,18 @@ class Rating extends Model
         return $this->belongsTo(Level::class);
     }
 
-    public function sound()
+    public function letter()
     {
         return $this->belongsTo(Letter::class);
+    }
+
+    public function trainee()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function sound()
+    {
+        return $this->belongsTo(Sound::class);
     }
 }

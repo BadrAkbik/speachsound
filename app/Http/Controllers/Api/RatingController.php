@@ -8,7 +8,7 @@ use App\Models\Rating;
 
 class RatingController extends BaseController
 {
-    public function index(int $sound_id = null)
+    public function index(int $sound_id)
     {
         // Rating::create([
         //     'sound_id' => 1,
@@ -21,8 +21,11 @@ class RatingController extends BaseController
         //         ['path' => '', 'type' => 'success', 'date' => now()->format('Y-m-d H:i')]
         //     ]
         //     ]);
-        $ratings = Rating::where('trainee_id', auth()->user()->id)->when($sound_id, fn($q) => $q->where('sound_id', $sound_id))->get();
-        $lists = RatingResource::collection($ratings);
+        $rating = Rating::where('trainee_id', auth()->user()->id)->where('sound_id', $sound_id)->first();
+        if(!$rating) {
+            return $this->withError('هذا الصوت غير موجود', 404);
+        }
+        $lists = new RatingResource($rating);
 
         return $this->withSuccess($lists);
     }

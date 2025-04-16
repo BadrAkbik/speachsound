@@ -16,13 +16,9 @@ class LevelResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'words' => $this->words,
-            'progress' => (($this->rating(auth()->user()->id, $request->sound_id)->first()->success_attempts / $this->success_attempts) * 100) . '%',
-            'banner_image' => $this->banner_image,
-            'audio' => $this->audio,
-            'xray_video' => $this->xray_video,
-            'natural_video' => $this->natural_video,
-            'success_attempts' => $this->success_attempts
+            'completed_sounds_to_success' => $this->completed_sounds_to_success,
+            'progress' => new LevelProgressResource($this->letterProgress),
+            'sounds' => $this->sounds ? new SoundCollection($this->sounds) : [],
         ];
     }
 }
