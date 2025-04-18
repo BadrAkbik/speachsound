@@ -8,10 +8,10 @@ class AuthService
 {
     use SMSTrait;
     protected $whitelist = [
-        '966580111196',
-        '963945496372',
-        '966999999999',
-        '966575838591',
+        '580111196',
+        '945496372',
+        '999999999',
+        '575838591',
     ];
 
     public function requestOtp($data)
