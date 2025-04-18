@@ -19,7 +19,7 @@ class LevelProgressResource extends JsonResource
             'sounds_count' => $this->sounds_count,
             'completed_sounds_count' => $this->completed_sounds_count,
             'last_completed_sound_date' => $this->last_completed_sound_date,
-            'status' => $this->status,
+            'status' => $this->status === 'completed' ? 1 : 0,
         ];
     }
 }

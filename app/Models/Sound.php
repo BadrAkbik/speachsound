@@ -22,7 +22,12 @@ class Sound extends Model
         return $this->belongsTo(Level::class);
     }
 
-        protected static function boot()
+    public function soundProgress()
+    {
+        return $this->hasOne(SoundProgress::class)->where('trainee_id', auth()->user()->id);
+    }
+
+    protected static function boot()
     {
         parent::boot();
 

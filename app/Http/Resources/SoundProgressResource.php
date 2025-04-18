@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RatingResource extends JsonResource
+class SoundProgressResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,7 +18,7 @@ class RatingResource extends JsonResource
             'success_attempts' => $this->success_attempts,
             'failure_attempts' => $this->failure_attempts,
             'records' => $this->records,
-            'status' => $this->status,
+            'status' => $this->status === 'completed' ? 1 : 0,
         ];
     }
 }

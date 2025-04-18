@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\SoundController;
-use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\LetterController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,15 +26,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
 
-    Route::get('ratings/{sound_id}', [RatingController::class, 'index'])->whereNumber('sound_id');
-    
     Route::get('levels/{letter_id}', [LevelController::class, 'index'])->whereNumber('letter_id');
-
+    
     Route::get('level-details/{level_id}', [LevelController::class, 'show'])->whereNumber('level_id');
     
     Route::get('sounds/{level_id}', [SoundController::class, 'index'])->whereNumber('level_id');
-
-    Route::get('progress', [RatingController::class, 'currentProgress']);
+    
+    // Route::get('ratings/{sound_id}', [RatingController::class, 'index'])->whereNumber('sound_id');
+    // Route::get('progress', [RatingController::class, 'currentProgress']);
 });
 Route::post('upload', [AiModelController::class, 'upload_audio']);
 Route::post('test', [AiModelController::class, 'test']);

@@ -61,9 +61,9 @@ class User extends Authenticatable
         return $this->belongsTo(AgeGroup::class);
     }
 
-    public function ratings()
+    public function soundProgresses()
     {
-        return $this->hasMany(Rating::class);
+        return $this->hasMany(SoundProgress::class);
     }
 
     public function levelProgresses()
