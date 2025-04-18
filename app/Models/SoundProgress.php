@@ -18,7 +18,8 @@ class SoundProgress extends Model
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'records' => 'array'
+            'records' => 'array',
+            'result' => 'array'
         ];
     }
 

@@ -33,7 +33,7 @@ class AudioService
 
     public function handle($data)
     {
-        try {
+        // try {
             $response = $this->aiModel($data['audio']);
 
             if (!$response->successful()) {
@@ -65,9 +65,9 @@ class AudioService
                 ];
             });
 
-        } catch (\Exception $e) {
-            throw new \Exception(__('api.Something_went_wrong'));
-        }
+        // } catch (\Exception $e) {
+        //     throw new \Exception(__('api.Something_went_wrong'));
+        // }
     }
 
     protected function storeRecord($audio, $success)
@@ -93,7 +93,8 @@ class AudioService
                 'success_attempts' => $success ? 1 : 0,
                 'failure_attempts' => !$success ? 1 : 0,
                 'status' => $attempts_to_success === 1 ? 'completed' : 'in_progress',
-                'records' => $this->records
+                'records' => $this->records,
+                'result' => $result
             ]);
         } else {
             $previous_success_attempts = $soundProgress->success_attempts ?? 0;

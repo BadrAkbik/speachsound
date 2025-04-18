@@ -18,6 +18,7 @@ class SoundProgressResource extends JsonResource
             'success_attempts' => $this->success_attempts,
             'failure_attempts' => $this->failure_attempts,
             'records' => $this->records,
+            'result' => $this->result,
             'status' => $this->status === 'completed' ? 1 : 0,
         ];
     }
