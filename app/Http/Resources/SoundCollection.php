@@ -29,6 +29,7 @@ class SoundCollection extends ResourceCollection
                     'id' => $sound->id,
                     'written_word' => $sound->written_word,
                     'attempts_to_success' => $sound->attempts_to_success,
+                    'success_rate' => $sound->success_rate,
                     'letter' => new LetterResource($sound->letter),
                     'sound_progress' => new SoundProgressResource($sound->soundProgress),
                     'type' => $sound->type,
