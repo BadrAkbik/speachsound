@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SoundResource\Pages;
-use App\Filament\Resources\SoundResource\RelationManagers\WordsRelationManager;
-use App\Models\Sound;
+use App\Filament\Resources\LetterResource\Pages;
+use App\Filament\Resources\LetterResource\RelationManagers\WordsRelationManager;
+use App\Models\Letter;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -18,9 +18,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 
-class SoundResource extends Resource
+class LetterResource extends Resource
 {
-    protected static ?string $model = Sound::class;
+    protected static ?string $model = Letter::class;
 
     public static function getNavigationGroup(): ?string
     {
@@ -146,9 +146,9 @@ class SoundResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSounds::route('/'),
-            'create' => Pages\CreateSound::route('/create'),
-            'edit' => Pages\EditSound::route('/{record}/edit'),
+            'index' => Pages\ListLetters::route('/'),
+            'create' => Pages\CreateLetter::route('/create'),
+            'edit' => Pages\EditLetter::route('/{record}/edit'),
         ];
     }
 }

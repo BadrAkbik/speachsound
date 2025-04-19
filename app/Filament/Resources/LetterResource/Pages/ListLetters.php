@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\SoundResource\Pages;
+namespace App\Filament\Resources\LetterResource\Pages;
 
-use App\Filament\Resources\SoundResource;
+use App\Filament\Resources\LetterResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListSounds extends ListRecords
+class ListLetters extends ListRecords
 {
-    protected static string $resource = SoundResource::class;
+    protected static string $resource = LetterResource::class;
 
     protected function getHeaderActions(): array
     {

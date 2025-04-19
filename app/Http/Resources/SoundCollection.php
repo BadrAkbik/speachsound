@@ -19,11 +19,11 @@ class SoundCollection extends ResourceCollection
         return $this->collection->transform(
             function ($sound) {
                 if ($sound->type == 'audio') {
-                    $media = ['media' => $sound->audio];
+                    $media = ['media' => ['audio' => $sound->audio, 'xray_video' => null, 'natural_video' => null, 'picture' => null]];
                 } else if ($sound->type == 'video') {
-                    $media = ['media' => ['xray_video' => $sound->xray_video, 'natural_video' => $sound->natural_video]];
+                    $media = ['media' => ['xray_video' => $sound->xray_video, 'natural_video' => $sound->natural_video, 'audio' => null, 'picture' => null]];
                 } else if ($sound->type == 'picture') {
-                    $media = ['media' => $sound->picture];
+                    $media = ['media' => ['picture' => $sound->picture, 'audio' => null, 'xray_video' => null, 'natural_video' => null]];
                 }
                 return array_merge([
                     'id' => $sound->id,
