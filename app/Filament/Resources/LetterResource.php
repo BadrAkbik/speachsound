@@ -3,10 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LetterResource\Pages;
-use App\Filament\Resources\LetterResource\RelationManagers\WordsRelationManager;
 use App\Models\Letter;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -14,7 +12,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
+use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 
@@ -24,22 +24,22 @@ class LetterResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('dashboard.trainings_management');
+        return __('dashboard.letters_management');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('dashboard.sounds');
+        return __('dashboard.letters');
     }
 
     public static function getModelLabel(): string
     {
-        return __('dashboard.sound');
+        return __('dashboard.letter');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('dashboard.sounds');
+        return __('dashboard.letters');
     }
     public static function form(Form $form): Form
     {
@@ -47,39 +47,15 @@ class LetterResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        TextInput::make('sound')
-                            ->label(__('dashboard.the_sound'))
-                            ->unique(Sound::class, 'sound', ignoreRecord: true)
-                            ->required()
-                            ->maxLength(255),
                         Select::make('ageGroup')
                             ->label(__('dashboard.the_age_group'))
                             ->relationship('ageGroup', 'name')
-                            ->exists('trainings', 'id')
+                            ->exists('age_groups', 'id')
                             ->live()
                             ->preload()
                             ->required(),
                     ])
                     ->columns(1)->columnSpan(1),
-                Section::make(__('dashboard.media'))
-                    ->schema([
-                        FileUpload::make('audio')
-                            ->label(__('dashboard.audio'))
-                            ->disk('local')
-                            ->directory('audios')
-                            ->downloadable(),
-                        FileUpload::make('natural_videos')
-                            ->label(__('dashboard.natural_face_video'))
-                            ->disk('local')
-                            ->directory('xray_videos')
-                            ->downloadable(),
-                        FileUpload::make('xray_videos')
-                            ->label(__('dashboard.xray_face_video'))
-                            ->disk('local')
-                            ->directory('natural_videos')
-                            ->downloadable(),
-                    ])
-                    ->columns(1)->columnSpan(2),
             ])->columns(3);
     }
 
@@ -87,13 +63,17 @@ class LetterResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('sound')
-                    ->label(__('dashboard.the_sound'))
+                TextColumn::make('name')
+                    ->label(__('dashboard.the_letter'))
                     ->searchable(),
-                ViewColumn::make('audio')
-                    ->view('filament.tables.columns.audio')
-                    ->disableClick()
-                    ->width(325),
+                // ViewColumn::make('audio')
+                //     ->view('filament.tables.columns.audio')
+                //     ->disableClick()
+                //     ->width(325),
+                TextColumn::make('ageGroup.name')
+                    ->label(__('dashboard.age_group_name'))
+                    ->numeric()
+                    ->sortable(),
                 TextColumn::make('ageGroup.from_age')
                     ->label(__('dashboard.from_age'))
                     ->numeric()
@@ -102,37 +82,40 @@ class LetterResource extends Resource
                     ->label(__('dashboard.to_age'))
                     ->numeric()
                     ->sortable(),
+                CheckboxColumn::make('is_demo')
+                    ->label(__('dashboard.is_letter_demo'))
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
                     ->dateTime('Y/m/d H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
             ])
+            ->paginated(false)
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('viewAttachments')
-                    ->label(__('dashboard.attachments_view'))
-                    ->icon('heroicon-o-paper-clip')
-                    ->color('gray')
-                    ->modalHeading(__('dashboard.attachments'))
-                    ->modalWidth(MaxWidth::FourExtraLarge)
-                    ->modalSubmitAction(false)
-                    ->modalContent(function ($record) {
-                        $id = $record->id;
-                        if (isset($record->xray_videos) || isset($record->natural_videos)) {
-                            return view('components.attachment-viewer', compact('id'));
-                        }
-                    }),
+                // Tables\Actions\Action::make('viewAttachments')
+                //     ->label(__('dashboard.attachments_view'))
+                //     ->icon('heroicon-o-paper-clip')
+                //     ->color('gray')
+                //     ->modalHeading(__('dashboard.attachments'))
+                //     ->modalWidth(MaxWidth::FourExtraLarge)
+                //     ->modalSubmitAction(false)
+                //     ->modalContent(function ($record) {
+                //         $id = $record->id;
+                //         if (isset($record->xray_videos) || isset($record->natural_videos)) {
+                //             return view('components.attachment-viewer', compact('id'));
+                //         }
+                //     }),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -147,7 +130,6 @@ class LetterResource extends Resource
     {
         return [
             'index' => Pages\ListLetters::route('/'),
-            'create' => Pages\CreateLetter::route('/create'),
             'edit' => Pages\EditLetter::route('/{record}/edit'),
         ];
     }

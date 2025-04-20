@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Word;
+use App\Models\Level;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class WordPolicy
+class LevelPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class WordPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_word');
+        return $user->can('view_any_level');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Word $word): bool
+    public function view(User $user, Level $level): bool
     {
-        return $user->can('view_word');
+        return $user->can('view_level');
     }
 
     /**
@@ -31,23 +31,23 @@ class WordPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_word');
+        return $user->can('create_level');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Word $word): bool
+    public function update(User $user, Level $level): bool
     {
-        return $user->can('update_word');
+        return $user->can('update_level');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Word $word): bool
+    public function delete(User $user, Level $level): bool
     {
-        return $user->can('delete_word');
+        return $user->can('delete_level');
     }
 
     /**
@@ -55,13 +55,13 @@ class WordPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_word');
+        return $user->can('delete_any_level');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Word $word): bool
+    public function forceDelete(User $user, Level $level): bool
     {
         return $user->can('{{ ForceDelete }}');
     }
@@ -77,7 +77,7 @@ class WordPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Word $word): bool
+    public function restore(User $user, Level $level): bool
     {
         return $user->can('{{ Restore }}');
     }
@@ -93,7 +93,7 @@ class WordPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Word $word): bool
+    public function replicate(User $user, Level $level): bool
     {
         return $user->can('{{ Replicate }}');
     }

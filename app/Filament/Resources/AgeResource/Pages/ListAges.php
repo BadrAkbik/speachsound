@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\WordResource\Pages;
+namespace App\Filament\Resources\AgeResource\Pages;
 
-use App\Filament\Resources\WordResource;
+use App\Filament\Resources\AgeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListWords extends ListRecords
+class ListAges extends ListRecords
 {
-    protected static string $resource = WordResource::class;
+    protected static string $resource = AgeResource::class;
 
     protected function getHeaderActions(): array
     {

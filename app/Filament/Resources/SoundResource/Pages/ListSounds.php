@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\RatingResource\Pages;
+namespace App\Filament\Resources\SoundResource\Pages;
 
-use App\Filament\Resources\RatingResource;
+use App\Filament\Resources\SoundResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListRatings extends ListRecords
+class ListSounds extends ListRecords
 {
-    protected static string $resource = RatingResource::class;
+    protected static string $resource = SoundResource::class;
 
     protected function getHeaderActions(): array
     {

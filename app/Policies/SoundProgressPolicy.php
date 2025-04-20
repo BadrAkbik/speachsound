@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Training;
+use App\Models\SoundProgress;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TrainingPolicy
+class SoundProgressPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class TrainingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_training');
+        return $user->can('view_any_sound::progress');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Training $training): bool
+    public function view(User $user, SoundProgress $soundProgress): bool
     {
-        return $user->can('view_training');
+        return $user->can('view_sound::progress');
     }
 
     /**
@@ -31,23 +31,23 @@ class TrainingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_training');
+        return $user->can('create_sound::progress');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Training $training): bool
+    public function update(User $user, SoundProgress $soundProgress): bool
     {
-        return $user->can('update_training');
+        return $user->can('update_sound::progress');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Training $training): bool
+    public function delete(User $user, SoundProgress $soundProgress): bool
     {
-        return $user->can('delete_training');
+        return $user->can('delete_sound::progress');
     }
 
     /**
@@ -55,13 +55,13 @@ class TrainingPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_training');
+        return $user->can('delete_any_sound::progress');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Training $training): bool
+    public function forceDelete(User $user, SoundProgress $soundProgress): bool
     {
         return $user->can('{{ ForceDelete }}');
     }
@@ -77,7 +77,7 @@ class TrainingPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Training $training): bool
+    public function restore(User $user, SoundProgress $soundProgress): bool
     {
         return $user->can('{{ Restore }}');
     }
@@ -93,7 +93,7 @@ class TrainingPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Training $training): bool
+    public function replicate(User $user, SoundProgress $soundProgress): bool
     {
         return $user->can('{{ Replicate }}');
     }

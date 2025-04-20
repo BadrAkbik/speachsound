@@ -44,17 +44,17 @@ class PlanResource extends Resource implements HasShieldPermissions
 
     public static function getNavigationLabel(): string
     {
-        return __('dashboard.Plans');
+        return __('dashboard.plans');
     }
 
     public static function getModelLabel(): string
     {
-        return __('dashboard.Plan');
+        return __('dashboard.plan');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('dashboard.Plans');
+        return __('dashboard.plans');
     }
 
     public static function form(Form $form): Form

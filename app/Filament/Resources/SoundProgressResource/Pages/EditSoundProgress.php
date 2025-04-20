@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\WordResource\Pages;
+namespace App\Filament\Resources\SoundProgressResource\Pages;
 
-use App\Filament\Resources\WordResource;
+use App\Filament\Resources\SoundProgressResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditWord extends EditRecord
+class EditSoundProgress extends EditRecord
 {
-    protected static string $resource = WordResource::class;
+    protected static string $resource = SoundProgressResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -21,5 +21,4 @@ class EditWord extends EditRecord
     {
         return $this->getResource()::getUrl('index');
     }
-
 }

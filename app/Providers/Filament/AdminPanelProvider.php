@@ -62,8 +62,12 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-flag')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label(fn(): string => __('dashboard.trainings_management'))
+                    ->label(fn(): string => __('dashboard.letters_management'))
                     ->icon('heroicon-o-book-open')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label(fn(): string => __('dashboard.level_sounds_management'))
+                    ->icon('heroicon-o-star')
                     ->collapsed(),
                 NavigationGroup::make()
                     ->label(fn(): string => __('dashboard.trainees_management'))
@@ -76,10 +80,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label(fn(): string => __('dashboard.coupons_management'))
                     ->icon('heroicon-o-receipt-percent')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label(fn(): string => __('dashboard.ratings_management'))
-                    ->icon('heroicon-o-star')
                     ->collapsed(),
                 NavigationGroup::make()
                     ->label(fn(): string => __('dashboard.levels_management'))

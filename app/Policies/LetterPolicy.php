@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Rating;
+use App\Models\Letter;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RatingPolicy
+class LetterPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class RatingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_rating');
+        return $user->can('view_any_letter');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Rating $rating): bool
+    public function view(User $user, Letter $letter): bool
     {
-        return $user->can('view_rating');
+        return $user->can('view_letter');
     }
 
     /**
@@ -31,23 +31,23 @@ class RatingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_rating');
+        return $user->can('create_letter');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Rating $rating): bool
+    public function update(User $user, Letter $letter): bool
     {
-        return $user->can('update_rating');
+        return $user->can('update_letter');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Rating $rating): bool
+    public function delete(User $user, Letter $letter): bool
     {
-        return $user->can('delete_rating');
+        return $user->can('delete_letter');
     }
 
     /**
@@ -55,13 +55,13 @@ class RatingPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_rating');
+        return $user->can('delete_any_letter');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Rating $rating): bool
+    public function forceDelete(User $user, Letter $letter): bool
     {
         return $user->can('{{ ForceDelete }}');
     }
@@ -77,7 +77,7 @@ class RatingPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Rating $rating): bool
+    public function restore(User $user, Letter $letter): bool
     {
         return $user->can('{{ Restore }}');
     }
@@ -93,7 +93,7 @@ class RatingPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Rating $rating): bool
+    public function replicate(User $user, Letter $letter): bool
     {
         return $user->can('{{ Replicate }}');
     }

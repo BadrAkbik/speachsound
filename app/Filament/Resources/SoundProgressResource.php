@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RatingResource\Pages;
-use App\Filament\Resources\RatingResource\RelationManagers;
-use App\Models\Rating;
+use App\Filament\Resources\SoundProgressResource\Pages;
+use App\Filament\Resources\SoundProgressResource\RelationManagers;
+use App\Models\SoundProgress;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -17,9 +17,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RatingResource extends Resource
+class SoundProgressResource extends Resource
 {
-    protected static ?string $model = Rating::class;
+    protected static ?string $model = SoundProgress::class;
 
     public static function getNavigationGroup(): ?string
     {
@@ -131,9 +131,9 @@ class RatingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRatings::route('/'),
-            'create' => Pages\CreateRating::route('/create'),
-            'edit' => Pages\EditRating::route('/{record}/edit'),
+            'index' => Pages\ListSoundProgresses::route('/'),
+            'create' => Pages\CreateSoundProgress::route('/create'),
+            'edit' => Pages\EditSoundProgress::route('/{record}/edit'),
         ];
     }
 }

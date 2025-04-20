@@ -19,7 +19,7 @@ class AgeGroupResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('dashboard.trainings_management');
+        return __('dashboard.letters_management');
     }
 
     public static function getNavigationLabel(): string

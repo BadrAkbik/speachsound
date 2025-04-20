@@ -12,9 +12,15 @@ class LevelProgress extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $table = 'level_progresses';
+    
     public function level()
     {
         return $this->belongsTo(Level::class);
+    }
+
+    public function previousLevel()
+    {
+        return $this->belongsTo(Level::class, 'previous_level_id');
     }
 
     public function letter()
