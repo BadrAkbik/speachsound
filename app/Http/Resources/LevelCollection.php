@@ -19,6 +19,7 @@ class LevelCollection extends ResourceCollection
         return $this->collection->transform(
             fn($level) =>
             [
+                'id' => $level->id,
                 'name' => $level->name,
                 'completed_sounds_to_success' => $level->completed_sounds_to_success,
                 'letter' => new LetterResource($level->letter),
