@@ -175,4 +175,11 @@ return [
     'in_progress' => 'In progress',
     'complete_sounds_to_success' => 'Number of completed sounds to success',
     'sort_order' => 'Sort order',
+    'attempts_to_success' => 'Number of attempts to success',
+    'written_word' => 'Written word',
+    'spelled_word' => 'Spelled word',
+    'xray_video' => 'X-ray face video',
+    'natural_video' => 'Natural face video',
+    'picture' => 'Picture',
+    'the_level' => 'Level',
 ];

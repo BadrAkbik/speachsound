@@ -179,4 +179,11 @@ return [
     'sort_order' => 'الترتيب',
     'plans' => 'الباقات',
     'plan' => 'الباقة',
+    'attempts_to_success' => 'عدد المحاولات للنجاح',
+    'written_word' => 'الكلمة كتابةً',
+    'spelled_word' => 'الكلمة حسب التهجئة',
+    'xray_video' => 'فيديو الوجه بالأشعة السينية',
+    'natural_video' => 'فيديو الوجه الطبيعي',
+    'picture' => 'صورة',
+    'the_level' => 'المرحلة',
 ];
