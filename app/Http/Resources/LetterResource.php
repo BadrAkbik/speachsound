@@ -19,7 +19,7 @@ class LetterResource extends JsonResource
             'name' => $this->name,
             'letter' => $this->letter,
             'is_demo' => $this->is_demo,
-            'image' => $this->image,
+            'image' => $this->image ? get_media_url($this->image) : null,
         ];
     }
 }

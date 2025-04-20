@@ -17,24 +17,16 @@ class SoundCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(
-            function ($sound) {
-                if ($sound->type == 'audio') {
-                    $media = ['media' => ['audio' => $sound->audio, 'xray_video' => null, 'natural_video' => null, 'picture' => null]];
-                } else if ($sound->type == 'video') {
-                    $media = ['media' => ['xray_video' => $sound->xray_video, 'natural_video' => $sound->natural_video, 'audio' => null, 'picture' => null]];
-                } else if ($sound->type == 'picture') {
-                    $media = ['media' => ['picture' => $sound->picture, 'audio' => null, 'xray_video' => null, 'natural_video' => null]];
-                }
-                return array_merge([
-                    'id' => $sound->id,
-                    'written_word' => $sound->written_word,
-                    'attempts_to_success' => $sound->attempts_to_success,
-                    'success_rate' => $sound->success_rate,
-                    'letter' => new LetterResource($sound->letter),
-                    'sound_progress' => new SoundProgressResource($sound->soundProgress),
-                    'type' => $sound->type,
-                ], $media);
-            }
+            fn($sound) => [
+                'id' => $sound->id,
+                'written_word' => $sound->written_word,
+                'attempts_to_success' => $sound->attempts_to_success,
+                'success_rate' => $sound->success_rate,
+                'letter' => new LetterResource($sound->letter),
+                'sound_progress' => new SoundProgressResource($sound->soundProgress),
+                'type' => $sound->type,
+                'media' => ['audio' => $sound->audio ? get_media_url($sound->audio) : null, 'xray_video' => $sound->xray_video ? get_media_url($sound->xray_video) : null, 'natural_video' => $sound->natural_video ? get_media_url($sound->natural_video) : null, 'picture' => $sound->picture ? get_media_url($sound->picture) : null]
+            ]
         )->toArray();
     }
 
