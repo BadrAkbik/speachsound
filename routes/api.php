@@ -16,27 +16,34 @@ require __DIR__ . '/auth.php';
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('complete-profile', [UserController::class, 'completeProfile']);
-   
+
     Route::get('sounds', [SoundController::class, 'index']);
 
     Route::get('letters', [LetterController::class, 'index']);
     Route::get('ages', [AgeController::class, 'index']);
 
-    Route::post('subscribe', [SubscriptionController::class, 'subscribe'])->middleware('completed-profile');
-
-    Route::get('plans', [PlanController::class, 'index']);
-
-    Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
-
-    Route::get('levels/{letter_id}', [LevelController::class, 'index'])->whereNumber('letter_id');
     
-    Route::get('level-details/{level_id}', [LevelController::class, 'show'])->whereNumber('level_id');
-    
-    Route::get('sounds/{level_id}', [SoundController::class, 'index'])->whereNumber('level_id');
-    
-    Route::post('assign-sound', [AudioController::class, 'assignSound']);
-    
-    Route::get('letters-progresses', [LetterController::class, 'lettersProgresses']);
+    Route::middleware('completed-profile')->group(function () {
+        Route::post('subscribe', [SubscriptionController::class, 'subscribe']);
+        
+        Route::get('plans', [PlanController::class, 'index']);
+        
+        Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
+        
+        Route::get('levels/{letter_id}', [LevelController::class, 'index'])->whereNumber('letter_id');
+        
+        Route::get('level-details/{level_id}', [LevelController::class, 'show'])->whereNumber('level_id');
+        
+        Route::get('sounds/{level_id}', [SoundController::class, 'index'])->whereNumber('level_id');
+        
+        Route::post('assign-sound', [AudioController::class, 'assignSound']);
+        
+        Route::get('letters-progresses', [LetterController::class, 'lettersProgresses']);
+        
+        Route::get('user-details', [UserController::class, 'userDetails']);
 
-    Route::get('user-details', [UserController::class, 'userDetails']);
+        Route::middleware('has-subscription')->group(function () {
+            Route::get('user-details', [UserController::class, 'userDetails']);
+        });
+    });
 });
