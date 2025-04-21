@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\CurrentProgress;
 use App\Http\Resources\SoundProgressResource;
 use App\Models\SoundProgress;
 
@@ -17,10 +16,5 @@ class SoundProgressController extends BaseController
         $lists = new SoundProgressResource($rating);
 
         return $this->withSuccess($lists);
-    }
-
-    public function currentProgress()
-    {
-        return CurrentProgress::collection(SoundProgress::where('trainee_id', auth()->user()->id)->get());
     }
 }

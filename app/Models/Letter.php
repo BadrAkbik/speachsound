@@ -21,4 +21,9 @@ class Letter extends Model
     {
         return $this->belongsTo(AgeGroup::class);
     }
+
+    public function LevelsProgresses()
+    {
+        return $this->hasMany(LevelProgress::class);
+    }
 }

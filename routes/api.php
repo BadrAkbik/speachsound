@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AiModelController;
 use App\Http\Controllers\Api\AudioController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\PlanController;
+use App\Http\Controllers\Api\SoundProgressController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\SoundController;
@@ -35,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('assign-sound', [AudioController::class, 'assignSound']);
     
-    // Route::get('ratings/{sound_id}', [RatingController::class, 'index'])->whereNumber('sound_id');
-    // Route::get('progress', [RatingController::class, 'currentProgress']);
+    Route::get('letters-progresses', [LetterController::class, 'lettersProgresses']);
+
+    Route::get('user-details', [UserController::class, 'userDetails']);
 });

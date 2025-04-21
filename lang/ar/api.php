@@ -52,4 +52,6 @@ return [
     'uncompleted_profile_message' => 'الرجاء إكمال البيانات الشخصية أولاً',
     'already_subscribed' => 'لديك بالفعل اشتراك ساري المفعول',
     'no_subscription' => 'لا يوجد اشتراك',
+    'completed' => 'مكتمل',
+    'not_completed' => 'غير مكتمل',
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\UserResource;
 use App\Models\Age;
 use App\Models\User;
 use App\Traits\ImageTrait;
@@ -47,6 +48,14 @@ class UserController extends BaseController
             \Log::error($e->getMessage());
             return $this->withError(__('api.Something_went_wrong'), 500);
         }
+    }
+    
+
+    public function userDetails()
+    {
+        $user = auth()->user();
+
+        return $this->withSuccess(new UserResource($user));
     }
 
     /**

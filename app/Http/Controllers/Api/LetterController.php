@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\LetterCollection;
+use App\Http\Resources\LetterProgressResource;
 use App\Models\Letter;
+use App\Models\LevelProgress;
+use App\Models\SoundProgress;
 
 class LetterController extends BaseController
 {
@@ -17,5 +20,14 @@ class LetterController extends BaseController
             ->get();
 
         return $this->withSuccess(new LetterCollection($letters));
+    }
+
+    public function lettersProgresses()
+    {
+        $inProgressLetters = Letter::with('LevelsProgresses')->whereHas('LevelsProgresses', function($query) {
+            $query->where('trainee_id', auth()->user()->id);
+        })
+        ->get();
+        return LetterProgressResource::collection($inProgressLetters);
     }
 }

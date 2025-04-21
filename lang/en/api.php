@@ -52,4 +52,6 @@ return [
     'uncompleted_profile_message' => 'Please complete profile data first',
     'already_subscribed' => 'You already has active subscription',
     'no_subscription' => 'No subscription',
+    'completed' => 'Completed',
+    'not_completed' => 'Not Completed',
 ];
