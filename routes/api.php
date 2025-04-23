@@ -31,18 +31,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
         Route::get('user-details', [UserController::class, 'userDetails']);
-        // Route::middleware('has-subscription')->group(function () {
-        Route::get('letters-progresses', [LetterController::class, 'lettersProgresses']);
+        Route::middleware('has-subscription')->group(function () {
+            Route::get('letters-progresses', [LetterController::class, 'lettersProgresses']);
 
-        Route::get('sounds/{level_id}', [SoundController::class, 'index'])->whereNumber('level_id');
+            Route::get('sounds/{level_id}', [SoundController::class, 'index'])->whereNumber('level_id');
 
-        Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
+            Route::get('current-subscription', [SubscriptionController::class, 'currentSubscription']);
 
-        Route::get('levels/{letter_id}', [LevelController::class, 'index'])->whereNumber('letter_id');
+            Route::get('levels/{letter_id}', [LevelController::class, 'index'])->whereNumber('letter_id');
 
-        Route::get('level-details/{level_id}', [LevelController::class, 'show'])->whereNumber('level_id');
+            Route::get('level-details/{level_id}', [LevelController::class, 'show'])->whereNumber('level_id');
 
-        Route::post('assign-sound', [AudioController::class, 'assignSound']);
-        // });
+            Route::post('assign-sound', [AudioController::class, 'assignSound']);
+        });
     });
 });

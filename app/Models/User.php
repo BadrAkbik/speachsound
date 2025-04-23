@@ -63,12 +63,17 @@ class User extends Authenticatable
 
     public function soundProgresses()
     {
-        return $this->hasMany(SoundProgress::class);
+        return $this->hasMany(SoundProgress::class, 'trainee_id');
     }
 
     public function levelProgresses()
     {
-        return $this->hasMany(LevelProgress::class);
+        return $this->hasMany(LevelProgress::class, 'trainee_id');
+    }
+
+    public function lastProgress()
+    {
+        return $this->hasOne(LevelProgress::class, 'trainee_id')->latest();
     }
     
 

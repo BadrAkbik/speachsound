@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Letter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +15,9 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $last_progress = Letter::where('id', $this->lastProgress?->letter_id)->with('LevelsProgresses')->whereHas('LevelsProgresses', function($query) {
+            $query->where('trainee_id', auth()->user()->id);
+        })->latest()->first();
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -25,6 +29,7 @@ class UserResource extends JsonResource
             'profile_completion_status' => $this->profile_completion_status,
             'phone_code' => $this->phone_code,
             'phone_number' => $this->phone_number,
+            'last_progress' =>  new LetterProgressResource($last_progress),
         ];
     }
 }

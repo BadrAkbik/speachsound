@@ -20,6 +20,8 @@ class LetterResource extends JsonResource
             'letter' => $this->letter,
             'is_demo' => $this->is_demo,
             'image' => $this->image ? get_media_url($this->image) : null,
+            'total_levels_count' => $this->levels()->count(),
+            'completed_levels_count' => $this->LevelsProgresses()->where('trainee_id', auth()->user()->id)->where('status', 'completed')->count() ?? 0,
         ];
     }
 }
