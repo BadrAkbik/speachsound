@@ -1,6 +1,8 @@
 <?php
 namespace App\Traits;
 
+use App\Exceptions\GeneralException;
+
 trait SMSTrait
 {
     public static function data($numbers = "", $message = '')
@@ -9,19 +11,19 @@ trait SMSTrait
         $userSender = config('msegat.MSEGAT_USER_SENDER');
         $apiKey = config('msegat.MSEGAT_API_KEY');
         if (empty($username)) {
-            throw new \Exception('Please add msegata username in file env');
+            throw new GeneralException('Please add msegata username in file env');
         }
 
         if (empty($userSender)) {
-            throw new \Exception('Please add msegata user sender in file env');
+            throw new GeneralException('Please add msegata user sender in file env');
         }
 
         if (empty($apiKey)) {
-            throw new \Exception('Please add msegata ApiKey in file env');
+            throw new GeneralException('Please add msegata ApiKey in file env');
         }
 
         if (empty($numbers)) {
-            throw new \Exception('Please add numbers to send message');
+            throw new GeneralException('Please add numbers to send message');
         }
 
         $fields = json_encode([

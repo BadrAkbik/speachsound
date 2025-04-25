@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,14 +19,11 @@ class CheckExpiredSubscribtion implements ShouldQueue
      */
     public function handle(): void
     {
-        $users = User::has('subscriptions')->with('subscriptions')->get();
-        foreach ($users as $user) {
-            foreach ($user->subscriptions as $subscription) {
-                $end_date = $subscription->end_date;
-                if ($end_date < now()) {
-                    $subscription->delete();
-                }
-            }
+        $subscriptions = Subscription::where('end_date', '<', now())->get();
+        foreach ($subscriptions as $subscription) {
+            $subscription->update([
+                'status' => 'inactive',
+            ]);
         }
     }
 }

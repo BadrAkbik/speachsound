@@ -16,8 +16,8 @@ class EnsureUserHasSubscription
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user()?->subscription?->count() || $request->user()?->subscription?->status == 'inactive' || $request->user()?->subscription?->end_date < Carbon::now()->format('Y-m-d')) {
-            return response()->json(['success' => false, 'message' => __('api.unsubscribed_message')], 402);
+        if (! $request->user()?->subscription?->status == 'active') {
+            return response()->json(['status' => false, 'message' => __('api.unsubscribed_message')], 402);
         }
         return $next($request);
     }

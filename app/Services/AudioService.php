@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\GeneralException;
 use App\Http\Resources\SoundProgressResource;
 use App\Models\Sound;
 use App\Models\SoundProgress;
@@ -37,7 +38,7 @@ class AudioService
             $response = $this->aiModel($data['audio']);
 
             if (!$response->successful()) {
-                throw new \Exception(__('api.Something_went_wrong'));
+                throw new GeneralException(__('api.Something_went_wrong'));
             }
 
             return \DB::transaction(function () use ($data, $response) {
