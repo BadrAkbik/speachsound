@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateAge extends CreateRecord
 {
     protected static string $resource = AgeResource::class;
+
+    
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

@@ -11,8 +11,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LevelResource extends Resource
 {
@@ -41,23 +39,31 @@ class LevelResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label(__('dashboard.name'))
-                    ->maxLength(255)
-                    ->default(null),
-                Select::make('letter')
-                    ->label(__('dashboard.the_letter'))
-                    ->relationship('letter', 'name')
-                    ->exists('letters', 'id')
-                    ->live()
-                    ->preload()
-                    ->required(),
-                Forms\Components\TextInput::make('completed_sounds_to_success')
-                    ->numeric()
-                    ->default(null),
-                Forms\Components\TextInput::make('sort_order')
-                    ->numeric()
-                    ->default(null),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('dashboard.name'))
+                            ->maxLength(255)
+                            ->required(),
+                        Select::make('letter_id')
+                            ->label(__('dashboard.the_letter'))
+                            ->relationship('letter', 'name')
+                            ->exists('letters', 'id')
+                            ->live()
+                            ->preload()
+                            ->required(),
+                        Forms\Components\TextInput::make('completed_sounds_to_success')
+                            ->label(__('dashboard.complete_sounds_to_success'))
+                            ->numeric()
+                            ->required()
+                            ->minValue(0),
+                        Forms\Components\TextInput::make('sort_order')
+                            ->label(__('dashboard.sort_order'))
+                            ->numeric()
+                            ->required()
+                            ->minValue(0),
+                    ])->columns(1)
+                    ->columnSpan(1)
             ]);
     }
 
@@ -67,9 +73,11 @@ class LevelResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('dashboard.name'))
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('letter.name')
                     ->label(__('dashboard.the_letter'))
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('completed_sounds_to_success')
                     ->label(__('dashboard.complete_sounds_to_success'))
@@ -96,10 +104,10 @@ class LevelResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
