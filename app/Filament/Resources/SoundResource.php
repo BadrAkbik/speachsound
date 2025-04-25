@@ -47,7 +47,7 @@ class SoundResource extends Resource
                         Forms\Components\Select::make('letter_id')
                             ->relationship('letter', 'name')
                             ->label(__('dashboard.the_letter'))
-                            ->exists('letters', 'name')
+                            ->exists('letters', 'id')
                             ->live()
                             ->preload()
                             ->required()
