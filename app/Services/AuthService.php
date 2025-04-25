@@ -31,6 +31,8 @@ class AuthService
             if ($this->sendMessage($data['phone_number'], $m)->code == "1") {
                 return true;
             }
+        }else{
+            return true;
         }
     }
 
