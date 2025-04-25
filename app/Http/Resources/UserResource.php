@@ -30,6 +30,7 @@ class UserResource extends JsonResource
             'phone_code' => $this->phone_code,
             'phone_number' => $this->phone_number,
             'last_progress' =>  new LetterProgressResource($last_progress),
+            'has_subscription' => $this->has('subscription') ? true : false,
         ];
     }
 }
