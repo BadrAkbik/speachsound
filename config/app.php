@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Setting;
+
 return [
 
     /*
@@ -13,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => Setting::where('key', 'app_name')->first()->value ?? env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------

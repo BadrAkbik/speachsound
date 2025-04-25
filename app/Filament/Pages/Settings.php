@@ -53,16 +53,16 @@ class Settings extends BaseSettings
                         ->label(__('dashboard.general'))
                         ->columns(2)
                         ->schema([
-                            TextInput::make('general.application_name')
+                            TextInput::make('app_name')
                                 ->maxLength(255)
                                 ->label(__('dashboard.application_name')),
-                            TextInput::make('general.application_description')
+                            TextInput::make('app_description')
                                 ->label(__('dashboard.application_description')),
-                            Textarea::make('general.application_terms')
+                            Textarea::make('app_terms')
                                 ->columnSpan(2)
                                 ->maxLength(65535)
                                 ->label(__('dashboard.application_terms')),
-                            Textarea::make('general.application_policy')
+                            Textarea::make('app_policy')
                                 ->columnSpan(2)
                                 ->maxLength(65535)
                                 ->label(__('dashboard.application_policy')),
