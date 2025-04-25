@@ -104,6 +104,11 @@ class LevelResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('letter')
+                    ->relationship('letter', 'name')
+                    ->label(__('dashboard.the_letter'))
+                    ->preload()
+                    ->searchable()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

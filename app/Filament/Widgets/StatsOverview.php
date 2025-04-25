@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -28,11 +29,25 @@ class StatsOverview extends BaseWidget
             // Stat::make(__('dashboard.The number of trainees'), Trainee::count())
             //     ->icon('heroicon-o-users')
             //     ->color('success'),
+            Stat::make(__('dashboard.users_count'), User::count())
+                ->icon('heroicon-o-users')
+                ->description(__('dashboard.total_users'))
+                ->color('success'),
+            Stat::make(__('dashboard.subscriptions_count'), Subscription::where('status', 'active')->count())
+                ->icon('heroicon-o-credit-card')
+                ->description(__('dashboard.total_subscriptions'))
+                ->color('success'),
             Stat::make(__('dashboard.new_users'), User::whereBetween('created_at', [now()->subWeeks(4), now()])->count())
                 ->icon('heroicon-o-users')
                 ->description(__('dashboard.within_month'))
                 ->descriptionIcon('heroicon-o-users', IconPosition::Before)
                 ->chart($this->getModelCountBetweenWeeks(User::class, 4))
+                ->color('primary'),
+            Stat::make(__('dashboard.new_subscriptions'), Subscription::where('status', 'active')->whereBetween('start_date', [now()->subWeeks(4), now()])->count())
+                ->icon('heroicon-o-credit-card')
+                ->description(__('dashboard.within_month'))
+                ->descriptionIcon('heroicon-o-credit-card', IconPosition::Before)
+                ->chart($this->getModelCountBetweenWeeks(Subscription::class, 4))
                 ->color('primary'),
             // Stat::make(__('dashboard.new_tranees'), Trainee::whereBetween('created_at', [now()->subWeeks(4), now()])->count())
             //     ->icon('heroicon-o-users')
@@ -49,10 +64,10 @@ class StatsOverview extends BaseWidget
 
         $now = now();
         for ($i = $weeks; $i > 0; $i--) {
-            
+
             $startOfWeek = $now->copy()->subWeeks($i);
             $endOfWeek = $now->copy()->subWeeks($i - 1);
-            
+
             $modelByWeek[] = $model::whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
         }
         return $modelByWeek;

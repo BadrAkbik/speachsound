@@ -12,7 +12,7 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.6",
+        "livewire/livewire": "3.5.12",
         "outerweb/filament-settings": "^1.2",
         "spatie/laravel-permission": "^6.9"
     },
