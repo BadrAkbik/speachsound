@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Columns\CheckboxColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Columns\ViewColumn;
@@ -54,6 +55,11 @@ class LetterResource extends Resource
                             ->live()
                             ->preload()
                             ->required(),
+                        FileUpload::make('image')
+                            ->label(__('dashboard.picture'))
+                            ->image()
+                            ->directory('images/letters')
+                            ->required(),
                     ])
                     ->columns(1)->columnSpan(1),
             ])->columns(3);
@@ -85,6 +91,12 @@ class LetterResource extends Resource
                 CheckboxColumn::make('is_demo')
                     ->label(__('dashboard.is_letter_demo'))
                     ->sortable(),
+                ImageColumn::make('image')
+                    ->label(__('dashboard.picture'))
+                    ->rounded()
+                    ->disk('public')
+                    ->width(50)
+                    ->height(50),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
                     ->dateTime('Y/m/d H:i:s')

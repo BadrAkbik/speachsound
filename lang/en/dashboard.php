@@ -182,4 +182,12 @@ return [
     'natural_video' => 'Natural face video',
     'picture' => 'Picture',
     'the_level' => 'Level',
+    'the_trainee' => 'The trainee',
+    'failure_attempts' => 'Count of attempts for failure',
+    'failed' => 'Failed',
+    'records' => 'Records',
+    'result' => 'Result',
+    'sound_progresses' => 'Sound progresses',
+    'sound_progress' => 'Sound progress',
+    'basic_information' => 'Basic information',
 ];
