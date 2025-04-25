@@ -103,22 +103,26 @@ class SoundResource extends Resource
                         Forms\Components\FileUpload::make('audio')
                             ->label(__('dashboard.audio'))
                             ->directory('sounds/audio')
+                            ->disk('public')
                             ->acceptedFileTypes(['audio/mpeg', 'audio/wav'])
                             ->maxSize(10240),
                         Forms\Components\FileUpload::make('picture')
                             ->label(__('dashboard.picture'))
                             ->directory('sounds/pictures')
+                            ->disk('public')
                             ->image()
                             ->maxSize(5120),
                         Forms\Components\FileUpload::make('xray_video')
                             ->label(__('dashboard.xray_video'))
                             ->directory('sounds/xray-videos')
                             ->acceptedFileTypes(['video/mp4'])
+                            ->disk('public')
                             ->maxSize(51200),
                         Forms\Components\FileUpload::make('natural_video')
                             ->label(__('dashboard.natural_video'))
                             ->directory('sounds/natural-videos')
                             ->acceptedFileTypes(['video/mp4'])
+                            ->disk('public')
                             ->maxSize(51200),
                     ])->columns(2),
 

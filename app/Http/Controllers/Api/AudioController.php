@@ -19,6 +19,6 @@ class AudioController extends BaseController
             'sound_id' => ['required', 'integer', 'exists:sounds,id'],
         ]);
 
-        return $this->audioService->handle($validated);
+        return $this->withSuccess($this->audioService->handle($validated));
     }
 }
