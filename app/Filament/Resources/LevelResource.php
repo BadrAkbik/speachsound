@@ -48,7 +48,7 @@ class LevelResource extends Resource
                         Select::make('letter_id')
                             ->label(__('dashboard.the_letter'))
                             ->relationship('letter', 'name')
-                            ->exists('letters', 'id')
+                            ->exists('letters', 'name')
                             ->live()
                             ->preload()
                             ->required(),
