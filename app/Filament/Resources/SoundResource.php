@@ -7,6 +7,7 @@ use App\Filament\Resources\SoundResource\RelationManagers;
 use App\Models\Sound;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -46,13 +47,27 @@ class SoundResource extends Resource
                         Forms\Components\Select::make('letter_id')
                             ->relationship('letter', 'name')
                             ->label(__('dashboard.the_letter'))
+                            ->exists('letters', 'name')
+                            ->live()
+                            ->preload()
                             ->required()
+                            ->afterStateUpdated(function (callable $set, $state) {
+                                $set('level_id', null);
+                            })
                             ->searchable(),
                         Forms\Components\Select::make('level_id')
-                            ->relationship('level', 'name')
+                            ->relationship('level', 'name', function ($query, $get) {
+                                $letterId = $get('letter_id');
+                                if ($letterId) {
+                                    $query->where('letter_id', $letterId);
+                                }
+                            })
                             ->label(__('dashboard.the_level'))
-                            ->required()
-                            ->searchable(),
+                            ->exists('levels', 'id')
+                            ->live()
+                            ->preload()
+                            ->disabled(fn(Get $get) => $get('letter_id') ? false : true)
+                            ->required(),
                         Forms\Components\TextInput::make('written_word')
                             ->label(__('dashboard.written_word'))
                             ->required()
@@ -66,9 +81,9 @@ class SoundResource extends Resource
                         Forms\Components\Select::make('type')
                             ->label(__('dashboard.type'))
                             ->options([
-                                'picture' => 'Picture',
-                                'video' => 'Video',
-                                'audio' => 'Audio'
+                                'picture' => __('dashboard.picture'),
+                                'video' => __('dashboard.video'),
+                                'audio' => __('dashboard.audio')
                             ])
                             ->required(),
                         Forms\Components\TextInput::make('attempts_to_success')

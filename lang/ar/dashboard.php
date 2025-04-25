@@ -124,7 +124,7 @@ return [
     'linkedin' => 'لينكد إن',
     'threads' => 'ثريدز',
     'save' => 'حفظ',
-    'audio' => 'الملف الصوتي',
+    'audio' => 'ملف صوتي',
     'natural_face_video' => 'فيديو الوجه الطبيعي',
     'xray_face_video' => 'فيديو الوجه بالأشعة السينية',
     'attachments' => 'المرفقات',
