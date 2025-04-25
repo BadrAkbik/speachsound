@@ -32,11 +32,17 @@ class LevelCollection extends ResourceCollection
 
     private function isLocked($level)
     {
-        $previous_level_id = Level::where('id', $level->letterProgress->previous_level_id)->first()?->id;
+        $previous_level_id = $level->letterProgress?->previous_level_id;
+        
         if (!$previous_level_id) {
             return false;
         }
-        if (LevelProgress::where('level_id', $previous_level_id)->where('trainee_id', auth()->user()->id)->first()?->status == 'completed') {
+
+        $previousLevelProgress = LevelProgress::where('level_id', $previous_level_id)
+            ->where('trainee_id', auth()->user()->id)
+            ->first();
+
+        if ($previousLevelProgress?->status === 'completed') {
             return false;
         }
         return true;
