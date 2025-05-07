@@ -14,7 +14,7 @@ class LetterController extends BaseController
     {
         $user_age_group = auth()->user()->ageGroup?->id;
 
-        $letters = Letter::where('is_active', true)
+        $letters = Letter::active()
             ->orderByRaw("age_group_id = ? DESC, id ASC", [$user_age_group])
             ->orderBy('id')
             ->get();

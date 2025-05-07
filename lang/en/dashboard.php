@@ -203,4 +203,5 @@ return [
     'new_subscriptions' => 'New subscriptions',
     'subscriptions_count' => 'Subscriptions count',
     'total_subscriptions' => 'Total subscriptions',
+    'is_active' => 'Active',
 ];

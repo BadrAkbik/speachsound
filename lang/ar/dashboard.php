@@ -207,4 +207,5 @@ return [
     'new_subscriptions' => 'الاشتراكات الجديدة',
     'subscriptions_count' => 'عدد الاشتراكات',
     'total_subscriptions' => 'إجمالي الاشتراكات',
+    'is_active' => 'مفعل',
 ];

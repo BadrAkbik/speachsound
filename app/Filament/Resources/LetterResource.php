@@ -97,6 +97,9 @@ class LetterResource extends Resource
                     ->disk('public')
                     ->width(50)
                     ->height(50),
+                ToggleColumn::make('is_active')
+                    ->label(__('dashboard.is_active'))
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('dashboard.created_at'))
                     ->dateTime('Y/m/d H:i:s')
