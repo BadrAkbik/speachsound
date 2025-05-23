@@ -23,7 +23,13 @@ class LevelCollection extends ResourceCollection
                 'name' => $level->name,
                 'completed_sounds_to_success' => $level->completed_sounds_to_success,
                 'letter' => new LetterResource($level->letter),
-                'progress' => new LevelProgressResource($level->letterProgress),
+                'progress' => $level->letterProgress ? new LevelProgressResource($level->letterProgress) : [
+                    'progress' => 0,
+                    'sounds_count' => $level->sounds()->count(),
+                    'completed_sounds_count' => 0,
+                    'last_completed_sound_date' => null,
+                    'status' => 0,
+                ],
                 'locked' => $this->isLocked($level),
                 'sort_order' => $level->sort_order,
             ]
@@ -33,7 +39,7 @@ class LevelCollection extends ResourceCollection
     private function isLocked($level)
     {
         $previous_level_id = $level->letterProgress?->previous_level_id;
-        
+
         if (!$previous_level_id) {
             return false;
         }
