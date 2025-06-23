@@ -9,12 +9,17 @@ class SoundProgressController extends BaseController
 {
     public function index(int $sound_id)
     {
-        $rating = SoundProgress::where('trainee_id', auth()->user()->id)->where('sound_id', $sound_id)->first();
-        if(!$rating) {
-            return $this->withError('هذا الصوت غير موجود', 404);
-        }
-        $lists = new SoundProgressResource($rating);
+        try {
 
-        return $this->withSuccess($lists);
+            $rating = SoundProgress::where('trainee_id', auth()->user()->id)->where('sound_id', $sound_id)->first();
+            if (!$rating) {
+                return $this->withError('هذا الصوت غير موجود', 404);
+            }
+            $lists = new SoundProgressResource($rating);
+
+            return $this->withSuccess($lists);
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 }

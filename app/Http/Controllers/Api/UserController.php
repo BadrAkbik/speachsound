@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class UserController extends BaseController
 {
-
     use ImageTrait;
 
     public function completeProfile(Request $request)
@@ -28,8 +27,8 @@ class UserController extends BaseController
             $age_record = Age::find($validated['age']);
             $year_of_birth = Carbon::now()->format('Y') - $age_record->age;
 
-            if($request->has('profile_picture')){
-                if($user->profile_picture){
+            if ($request->has('profile_picture')) {
+                if ($user->profile_picture) {
                     $this->deleteImage($user->profile_picture);
                 }
                 $image_path = $this->storeImage($validated['profile_picture'], 'images/profile_pictures');
@@ -44,18 +43,20 @@ class UserController extends BaseController
                 'profile_completion_status' => 'completed',
             ]);
             return $this->withSuccess(message: __('api.operation_done_successfully'));
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            return $this->withError(__('api.Something_went_wrong'), 500);
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
         }
     }
-    
+
 
     public function userDetails()
     {
-        $user = auth()->user();
-
-        return $this->withSuccess(new UserResource($user));
+        try {
+            $user = auth()->user();
+            return $this->withSuccess(new UserResource($user));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -63,20 +64,29 @@ class UserController extends BaseController
      */
     public function delete(User $user)
     {
-        if ($user->trashed()) {
+        try {
+            if ($user->trashed()) {
+                return $this->withSuccess(message: __('api.This account has been deleted'));
+            }
+            $user->delete();
             return $this->withSuccess(message: __('api.This account has been deleted'));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
         }
-        $user->delete();
-        return $this->withSuccess(message: __('api.This account has been deleted'));
     }
 
     public function forceDelete(User $user)
     {
-        if (!$user->trashed()) {
-            $user->delete();
-            return $this->withSuccess(message: __('api.This account has been deleted'));
+        try {
+
+            if (!$user->trashed()) {
+                $user->delete();
+                return $this->withSuccess(message: __('api.This account has been deleted'));
+            }
+            $user->forceDelete();
+            return $this->withSuccess(message: __('api.This account has been deleted for ever'));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
         }
-        $user->forceDelete();
-        return $this->withSuccess(message: __('api.This account has been deleted for ever'));
     }
 }

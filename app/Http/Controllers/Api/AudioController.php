@@ -17,13 +17,18 @@ class AudioController extends BaseController
 
     public function assignSound(Request $request)
     {
-        $validated = $request->validate([
-            'audio' => ['required', 'file', 'mimes:mp4,mp3,wav'],
-            'sound_id' => ['required', 'integer', 'exists:sounds,id'],
-        ]);
+        try {
+            $validated = $request->validate([
+                'audio' => ['required', 'file', 'mimes:mp4,mp3,wav'],
+                'sound_id' => ['required', 'integer', 'exists:sounds,id'],
+            ]);
 
-        $this->checkSubscription(Sound::find($validated['sound_id'])->letter);
+            $this->checkSubscription(Sound::find($validated['sound_id'])->letter);
 
-        return $this->withSuccess($this->audioService->handle($validated));
+            return $this->withSuccess($this->audioService->handle($validated));
+
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 }

@@ -54,4 +54,5 @@ return [
     'no_subscription' => 'لا يوجد اشتراك',
     'completed' => 'مكتمل',
     'not_completed' => 'غير مكتمل',
+    'unauthenticated' => 'عذراً، يجب تسجيل الدخول أولاً'
 ];

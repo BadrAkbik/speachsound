@@ -11,6 +11,10 @@ class AgeController extends BaseController
 {
     public function index()
     {
-        return $this->withSuccess(new AgeCollection(Age::select('id', 'age')->get()));
+        try {
+            return $this->withSuccess(new AgeCollection(Age::select('id', 'age')->get()));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 }

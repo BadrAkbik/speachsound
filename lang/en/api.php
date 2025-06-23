@@ -54,4 +54,5 @@ return [
     'no_subscription' => 'No subscription',
     'completed' => 'Completed',
     'not_completed' => 'Not Completed',
+    'unauthenticated' => 'Sorry, you must log in first'
 ];

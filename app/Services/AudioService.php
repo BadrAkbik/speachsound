@@ -34,41 +34,37 @@ class AudioService
 
     public function handle($data)
     {
-        // try {
-            $response = $this->aiModel($data['audio']);
+        $response = $this->aiModel($data['audio']);
 
-            if (!$response->successful()) {
-                throw new GeneralException(__('api.Something_went_wrong'));
-            }
+        if (!$response->successful()) {
+            throw new GeneralException(__('api.Something_went_wrong'));
+        }
 
-            return \DB::transaction(function () use ($data, $response) {
-                $transcribedText = json_decode($response)->text;
+        return \DB::transaction(function () use ($data, $response) {
+            $transcribedText = json_decode($response)->text;
 
-                $this->sound = Sound::find($data['sound_id']);
+            $this->sound = Sound::find($data['sound_id']);
 
-                $this->splitFilterText($transcribedText);
+            $this->splitFilterText($transcribedText);
 
-                $this->spelledRequiredWord = $this->sound->spelled_word ?? $this->sound->written_word;
+            $this->spelledRequiredWord = $this->sound->spelled_word ?? $this->sound->written_word;
 
-                $result = $this->compareWords();
+            $result = $this->compareWords();
 
-                $success_rate = $this->sound->success_rate ?? 100;
-                $attempts_to_success = $this->sound->attempts_to_success ?? 1;
-                $success = $result['total_accuracy'] >= $success_rate;
+            $success_rate = $this->sound->success_rate ?? 100;
+            $attempts_to_success = $this->sound->attempts_to_success ?? 1;
+            $success = $result['total_accuracy'] >= $success_rate;
 
-                $this->storeRecord($data['audio'], $success);
-                $sound_progress = $this->StoreSoundProgress($success, $attempts_to_success, $result);
+            $this->storeRecord($data['audio'], $success);
+            $sound_progress = $this->StoreSoundProgress($success, $attempts_to_success, $result);
 
 
-                return [
-                    'result' => $result,
-                    'sound_progress' => new SoundProgressResource($sound_progress)
-                ];
-            });
+            return [
+                'result' => $result,
+                'sound_progress' => new SoundProgressResource($sound_progress)
+            ];
+        });
 
-        // } catch (\Exception $e) {
-        //     throw new \Exception(__('api.Something_went_wrong'));
-        // }
     }
 
     protected function storeRecord($audio, $success)

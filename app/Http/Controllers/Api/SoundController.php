@@ -14,11 +14,16 @@ class SoundController extends BaseController
     use CheckSubscriptionTrait;
     public function index(int $level_id)
     {
-        $sounds = Sound::where('level_id', $level_id)->get();
-        $level = Level::find($level_id);
-        
-        $this->checkSubscription($level->letter);
-        
-        return $this->withSuccess(new SoundCollection($sounds));
+        try {
+
+            $sounds = Sound::where('level_id', $level_id)->get();
+            $level = Level::find($level_id);
+
+            $this->checkSubscription($level->letter);
+
+            return $this->withSuccess(new SoundCollection($sounds));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 }

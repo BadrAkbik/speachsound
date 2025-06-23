@@ -19,42 +19,27 @@ class LevelController extends BaseController
      */
     public function index(int $letter_id)
     {
-        $letter = Letter::find($letter_id);
-        $this->checkSubscription($letter);
-
-        $levels = Level::with('letterProgress')->where('letter_id', $letter_id)->get();
-        return $this->withSuccess(new LevelCollection($levels));
+        try{
+            $letter = Letter::find($letter_id);
+            $this->checkSubscription($letter);
+            
+            $levels = Level::with('letterProgress')->where('letter_id', $letter_id)->get();
+            return $this->withSuccess(new LevelCollection($levels));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 
     public function show(string $id)
     {
-        $level = Level::findOrFail($id);
-        $this->checkSubscription($level->letter);
+        try {
 
-        return $this->withSuccess(new LevelResource($level));
-    }
+            $level = Level::findOrFail($id);
+            $this->checkSubscription($level->letter);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-    
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return $this->withSuccess(new LevelResource($level));
+        } catch (\Throwable $th) {
+            return $this->withError($th->getMessage(), 500);
+        }
     }
 }

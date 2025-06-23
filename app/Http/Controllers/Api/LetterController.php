@@ -12,22 +12,30 @@ class LetterController extends BaseController
 {
     public function index()
     {
-        $user_age_group = auth()->user()->ageGroup?->id;
+        try {
+            $user_age_group = auth()->user()->ageGroup?->id;
 
-        $letters = Letter::active()
-            ->orderByRaw("age_group_id = ? DESC, id ASC", [$user_age_group])
-            ->orderBy('id')
-            ->get();
+            $letters = Letter::active()
+                ->orderByRaw("age_group_id = ? DESC, id ASC", [$user_age_group])
+                ->orderBy('id')
+                ->get();
 
-        return $this->withSuccess(new LetterCollection($letters));
+            return $this->withSuccess(new LetterCollection($letters));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 
     public function lettersProgresses()
     {
-        $inProgressLetters = Letter::with('LevelsProgresses')->whereHas('LevelsProgresses', function($query) {
-            $query->where('trainee_id', auth()->user()->id);
-        })
-        ->get();
-        return LetterProgressResource::collection($inProgressLetters);
+        try {
+
+            $inProgressLetters = Letter::with('LevelsProgresses')->whereHas('LevelsProgresses', function ($query) {
+                $query->where('trainee_id', auth()->user()->id);
+            })->get();
+            return LetterProgressResource::collection($inProgressLetters);
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 }

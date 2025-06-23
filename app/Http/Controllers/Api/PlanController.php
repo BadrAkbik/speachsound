@@ -12,6 +12,10 @@ class PlanController extends BaseController
 
     public function index()
     {
-        return $this->withSuccess(new PlanCollection(Plan::select('id', 'name', 'period', 'periodicity_type', 'price')->get()));        
+        try {
+            return $this->withSuccess(new PlanCollection(Plan::select('id', 'name', 'period', 'periodicity_type', 'price')->get()));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
+        }
     }
 }

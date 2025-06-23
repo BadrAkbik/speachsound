@@ -11,45 +11,55 @@ class SubscriptionController extends BaseController
 {
     public function subscribe(Request $request)
     {
-        $validated = $request->validate([
-            'plan_id' => ['required', 'integer', 'exists:plans,id'],
-            'coupon' => ['nullable', 'exists:table,column']
-        ]);
-        $user = auth()->user();
-        if($user->has('subscription')->count()){
-            return $this->withError(__('api.already_subscribed'), 403);
+        try {
+
+            $validated = $request->validate([
+                'plan_id' => ['required', 'integer', 'exists:plans,id'],
+                'coupon' => ['nullable', 'exists:table,column']
+            ]);
+            $user = auth()->user();
+            if ($user->has('subscription')->count()) {
+                return $this->withError(__('api.already_subscribed'), 403);
+            }
+
+            $plan = Plan::find($validated['plan_id']);
+
+            $endDate = Carbon::now();
+            if ($plan->periodicity_type === 'month') {
+                $endDate = $endDate->addMonths($plan->period);
+            } elseif ($plan->periodicity_type === 'year') {
+                $endDate = $endDate->addYears($plan->period);
+            } else {
+                $endDate = $endDate->addDays($plan->period);
+            }
+
+            $subscription = $user->subscription()->create([
+                'plan_id' => (int) $validated['plan_id'],
+                'start_date' => Carbon::now(),
+                'end_date' => $endDate,
+                'status' => 'active',
+            ]);
+
+            return $this->withSuccess([
+                'subscription' => new SubscriptionResource($subscription),
+            ], __('api.subscribed_successfully'));
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
         }
-
-        $plan = Plan::find($validated['plan_id']);
-
-        $endDate = Carbon::now();
-        if ($plan->periodicity_type === 'month') {
-            $endDate = $endDate->addMonths($plan->period);
-        } elseif ($plan->periodicity_type === 'year') {
-            $endDate = $endDate->addYears($plan->period);
-        } else {
-            $endDate = $endDate->addDays($plan->period);
-        }
-
-        $subscription = $user->subscription()->create([
-            'plan_id' => (int) $validated['plan_id'],
-            'start_date' => Carbon::now(),
-            'end_date' => $endDate,
-            'status' => 'active',
-        ]);
-
-        return $this->withSuccess([
-            'subscription' => new SubscriptionResource($subscription),
-        ], __('api.subscribed_successfully'));
     }
-    
+
     public function currentSubscription()
     {
-        $user = auth()->user();
-        if($user->has('subscription')->count()){
-            return new SubscriptionResource($user->subscription);
-        }else{
-            return $this->withSuccess(message: __('api.no_subscription'));
+        try {
+
+            $user = auth()->user();
+            if ($user->has('subscription')->count()) {
+                return new SubscriptionResource($user->subscription);
+            } else {
+                return $this->withSuccess(message: __('api.no_subscription'));
+            }
+        } catch (\Throwable $e) {
+            return $this->withError($e->getMessage(), 500);
         }
     }
 }
